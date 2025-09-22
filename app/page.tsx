@@ -345,7 +345,8 @@ export default function HomePage() {
                   "Git",
                   "Figma",
                 ].map((tech) => (
-                  <Badge key={tech} variant="secondary" className="text-sm">
+                  <Badge key={tech} variant="secondary"   
+                  className="text-sm bg-secondary text-secondary-foreground dark:bg-gray-800 dark:text-gray-100">
                     {tech}
                   </Badge>
                 ))}
@@ -359,7 +360,8 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <h3 className="text-3xl font-bold mb-12">Experience</h3>
           <div className="space-y-8">
-            <Card className="p-6 border-border">
+
+            <Card className="p-6 border border-gray-300 dark:border-gray-700">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
                   <h4 className="text-xl font-semibold">Senior Frontend Engineer </h4>
@@ -379,7 +381,7 @@ export default function HomePage() {
               </div>
             </Card>
 
-            <Card className="p-6 border-border">
+            <Card className="p-6 border border-gray-300 dark:border-gray-700">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
                   <h4 className="text-xl font-semibold">Senior Software Enginner</h4>
@@ -398,7 +400,7 @@ export default function HomePage() {
               </div>
             </Card>
 
-              <Card className="p-6 border-border">
+              <Card className="p-6 border border-gray-300 dark:border-gray-700">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
                   <h4 className="text-xl font-semibold">Senior Software Enginner</h4>
@@ -419,7 +421,7 @@ export default function HomePage() {
               </div>
             </Card>
 
-              <Card className="p-6 border-border">
+              <Card className="p-6 border border-gray-300 dark:border-gray-700">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
                   <h4 className="text-xl font-semibold">Frontend Developer</h4>
@@ -438,7 +440,7 @@ export default function HomePage() {
               </div>
             </Card>
 
-              <Card className="p-6 border-border">
+              <Card className="p-6 border border-gray-300 dark:border-gray-700">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
                   <h4 className="text-xl font-semibold">Web Developer</h4>
@@ -457,7 +459,7 @@ export default function HomePage() {
               </div>
             </Card>
 
-              <Card className="p-6 border-border">
+              <Card className="p-6 border border-gray-300 dark:border-gray-700">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
                   <h4 className="text-xl font-semibold">Software Developer</h4>
@@ -476,7 +478,7 @@ export default function HomePage() {
               </div>
             </Card>
 
-               <Card className="p-6 border-border">
+               <Card className="p-6 border border-gray-300 dark:border-gray-700">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
                   <h4 className="text-xl font-semibold">Junior Software Developer</h4>
