@@ -44,11 +44,3 @@ Proyek ini dikembangkan menggunakan *stack* teknologi berikut:
     Aplikasi akan berjalan di `http://localhost:3000`
 
 ---
-
-## 🤝 Kontribusi & Dukungan
-
-Proyek ini dikembangkan oleh **[Nama Anda/Tim Anda]**.
-
-* **[Link ke Repositori Anda yang lain/Link LinkedIn Anda]**
-
-Jika Anda menyukai proyek ini, berikan **bintang ⭐️** pada repositori ini!
