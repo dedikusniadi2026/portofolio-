@@ -368,7 +368,7 @@ export default function HomePage() {
                 <p className="text-muted-foreground">2020 — Present</p>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-               As a  Senior frontend developer, I use Angular framework and JavaScript to build user interfaces for web applications.
+               The Senior Front End Developer will be a key player in designing, developing, and maintaining high-quality user interfaces for our diverse product portfolio, including a core Software as a Service (SaaS) platform, complementary Native/Hybrid Mobile Applications, and various WordPress Plugins. This role requires strong technical expertise, leadership qualities, and the ability to seamlessly transition between different technology stacks and project requirements. You'll work closely with product managers, UX/UI designers, and back-end engineers to deliver exceptional user experiences that are performant, scalable, and maintainable.
               </p>
               <div className="flex flex-wrap gap-2 mt-4">
                 <Badge variant="outline">JavaScript</Badge>
@@ -388,8 +388,7 @@ export default function HomePage() {
                 <p className="text-muted-foreground">Jan 2020 — May 2020</p>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                Developed and shipped highly interactive web applications for millions of users. Collaborated with
-                designers and backend engineers to deliver pixel-perfect, performant user experiences.
+               We are seeking a highly skilled and motivated Senior Front End Developer to lead the development and maintenance of user interfaces for our mission-critical Restaurant and Point of Sale (POS) systems. This role focuses on creating fast, reliable, and intuitive applications for various environments, including touch-screen terminals, mobile order pads, and customer-facing interfaces. The ideal candidate will have strong technical expertise in modern front-end frameworks, a keen eye for UX/UI, and the ability to build robust applications that can handle high-volume transactions in demanding, real-time settings.
               </p>
               <div className="flex flex-wrap gap-2 mt-4">
                 <Badge variant="outline">React</Badge>
@@ -408,8 +407,7 @@ export default function HomePage() {
                 <p className="text-muted-foreground">oct 2019 — Dec 2019</p>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                Developed and shipped highly interactive web applications for millions of users. Collaborated with
-                designers and backend engineers to deliver pixel-perfect, performant user experiences.
+                We are looking for a highly accomplished and results-driven Senior Software Engineer to spearhead the development, architecture, and maintenance of our digital products. This critical role involves managing the full-stack development life cycle for our high-traffic Web Media Platform and leading the creation of performant, native-like applications for both iOS and Android using Flutter. The ideal candidate possesses deep expertise in both web and mobile technologies, strong leadership skills, and a commitment to delivering scalable, high-quality media experiences.
               </p>
               <div className="flex flex-wrap gap-2 mt-4">
                 <Badge variant="outline">Flutter</Badge>
@@ -430,8 +428,7 @@ export default function HomePage() {
                 <p className="text-muted-foreground">jun 2019 — sep 2019</p>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                Developed and shipped highly interactive web applications for millions of users. Collaborated with
-                designers and backend engineers to deliver pixel-perfect, performant user experiences.
+                We are seeking a dedicated Front End Developer to join our Technology team, focusing exclusively on building and maintaining mission-critical internal applications for Bank BTPN. This role is pivotal in enhancing the productivity, efficiency, and user experience for the bank's employees, including applications for back-office operations, compliance, risk management, and administrative tools. The ideal candidate must excel in developing secure, performant, and reliable interfaces that adhere to strict banking regulatory and security standards.
               </p>
               <div className="flex flex-wrap gap-2 mt-4">
                 <Badge variant="outline">Angular</Badge>
@@ -450,8 +447,7 @@ export default function HomePage() {
                 <p className="text-muted-foreground">Jun 2018 — Aug 2019</p>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                Developed and shipped highly interactive web applications for millions of users. Collaborated with
-                designers and backend engineers to deliver pixel-perfect, performant user experiences.
+               We are looking for a highly accomplished and results-driven Senior Software Engineer to spearhead the development, architecture, and maintenance of our digital products. This critical role involves managing the full-stack development life cycle for our high-traffic Web Media Platform and leading the creation of performant, native-like applications for both iOS and Android using Flutter. The ideal candidate possesses deep expertise in both web and mobile technologies, strong leadership skills, and a commitment to delivering scalable, high-quality media experiences.
               </p>
               <div className="flex flex-wrap gap-2 mt-4">
                 <Badge variant="outline">Codeigniter</Badge>
@@ -470,8 +466,7 @@ export default function HomePage() {
                 <p className="text-muted-foreground">Aug 2015 — Jul 2018</p>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                Developed and shipped highly interactive web applications for millions of users. Collaborated with
-                designers and backend engineers to deliver pixel-perfect, performant user experiences.
+                We are looking for a highly accomplished and results-driven Senior Software Engineer to spearhead the development, architecture, and maintenance of our digital products. This critical role involves managing the full-stack development life cycle for our high-traffic Web Media Platform and leading the creation of performant, native-like applications for both iOS and Android using Flutter. The ideal candidate possesses deep expertise in both web and mobile technologies, strong leadership skills, and a commitment to delivering scalable, high-quality media experiences.
               </p>
               <div className="flex flex-wrap gap-2 mt-4">
                 <Badge variant="outline">Angularjs</Badge>
@@ -490,8 +485,7 @@ export default function HomePage() {
                 <p className="text-muted-foreground">Aug 2013 — Dec 2013</p>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                Developed and shipped highly interactive web applications for millions of users. Collaborated with
-                designers and backend engineers to deliver pixel-perfect, performant user experiences.
+                The Junior Software Engineer will be a foundational member of the development team, contributing to the design, development, and maintenance of critical software systems for the Corruption Eradication Commission (KPK - Komisi Pemberantasan Korupsi). This role focuses on supporting the KPK's mission by building and securing internal applications, data management tools, investigative support systems, and public service portals. The ideal candidate is highly motivated, eager to learn best practices in secure and scalable development, and possesses a strong sense of integrity and commitment to anti-corruption efforts.
               </p>
               <div className="flex flex-wrap gap-2 mt-4">
                 <Badge variant="outline">Codeigniter</Badge>
