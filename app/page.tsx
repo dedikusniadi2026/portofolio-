@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { TypewriterEffect } from "@/components/typewriter-effect"
 import { FloatingHireButton } from "@/components/floating-hire-button"
 import Image from 'next/image'
@@ -22,6 +23,7 @@ import {
   Smartphone,
   Globe,
   Database,
+  Menu,
 } from "lucide-react"
 import { useEffect, useState } from "react"
 
@@ -29,6 +31,7 @@ export default function HomePage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isVisible, setIsVisible] = useState(false)
   const [activeFilter, setActiveFilter] = useState("all")
+  const navItems = ["About", "Experience", "Projects", "Contact"];
 
   useEffect(() => {
     setIsVisible(true)
@@ -180,12 +183,15 @@ export default function HomePage() {
     activeFilter === "all" ? projects : projects.filter((project) => project.category === activeFilter)
 
 
-  function handleDownload(): void {
-      const link = document.createElement("a");
-    link.href = "/cv_dedi.pdf";
-    link.download = "cv_dedi.pdf";
-    link.click();
-  }
+function handleDownload(): void {
+  const link = document.createElement("a");
+  link.href = "/cv_dedi.pdf";
+  link.download = "cv_dedi.pdf";
+  link.target = "_blank"; // buka tab baru kalau browser hanya preview
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
@@ -201,28 +207,46 @@ export default function HomePage() {
         ></div>
       </div>
 
-      <nav className="fixed top-0 w-full z-50 glass-effect">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+      <nav className="flex justify-between items-center py-4 px-6">
+        <div className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Dedi Kusniadi
-            </div>
-            <div className="hidden md:flex items-center gap-8">
-              {["About", "Experience", "Projects", "Contact"].map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 relative group"
-                >
-                  {item}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-              ))}
-              <ThemeToggle />
-            </div>
-          </div>
         </div>
-      </nav>
+      <div className="hidden md:flex items-center gap-8">
+        {navItems.map((item) => (
+          <a
+            key={item}
+            href={`#${item.toLowerCase()}`}
+            className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 relative group"
+          >
+            {item}
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+          </a>
+        ))}
+        <ThemeToggle />
+      </div>
+
+      <div className="md:hidden">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Menu className="h-6 w-6" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="flex flex-col gap-6 mt-8">
+            {navItems.map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="text-lg text-muted-foreground hover:text-primary transition-colors"
+              >
+                {item}
+              </a>
+            ))}
+            <ThemeToggle />
+          </SheetContent>
+        </Sheet>
+      </div>
+    </nav>
 
       <section className="pt-32 pb-20 px-6 relative">
         <div className="max-w-6xl mx-auto">
@@ -240,7 +264,7 @@ export default function HomePage() {
               </h1>
               <div className="text-2xl lg:text-3xl mb-6 font-mono">
                 <TypewriterEffect
-                  words={["Frontend Engineer", "React Developer", "UI/UX Designer", "Full Stack Developer"]}
+                  words={["Frontend Engineer", "React Developer", "UI/UX Designer"]}
                   className="text-muted-foreground"
                 />
               </div>
