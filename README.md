@@ -27,7 +27,7 @@ Proyek ini dikembangkan menggunakan *stack* teknologi berikut:
 
 1.  **Clone Repositori:**
     ```bash
-    git clone [https://github.com/](https://github.com/)/dedikusniadi2016/portofolio-.git
+    git clone https://github.com/dedikusniadi2016/portofolio-.git
     cd portofolio-
     ```
 
