@@ -26,13 +26,15 @@ export function FloatingHireButton() {
         isVisible ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0"
       }`}
     >
-      <Button
-        size="lg"
-        className="rounded-full bg-gradient-to-r from-primary to-accent hover:scale-110 transition-all duration-300 animate-bounce shadow-2xl"
-      >
-        <MessageCircle className="w-5 h-5 mr-2" />
-        Hire Me
-      </Button>
+      <a href="mailto:dedikusniadi.bisnis@gmail.com">
+        <Button
+          size="lg"
+          className="rounded-full bg-gradient-to-r from-primary to-accent hover:scale-110 transition-all duration-300 animate-bounce shadow-2xl"
+        >
+          <MessageCircle className="w-5 h-5 mr-2" />
+          Hire Me
+        </Button>
+      </a>
     </div>
   )
 }

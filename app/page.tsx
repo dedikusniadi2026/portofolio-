@@ -289,17 +289,23 @@ function handleDownload(): void {
                   </Button>
               </div>
               <div className="flex gap-4">
-                {[Github, Linkedin, Mail].map((Icon, index) => (
+              {[
+                { icon: Github, href: "https://github.com/dedikusniadi2026" },
+                { icon: Linkedin, href: "https://www.linkedin.com/in/dedi-kusniadi" },
+                { icon: Mail, href: "mailto:dedikusniadi.bisnis@gmail.com" },
+              ].map((item, index) => (
+                <a key={index} href={item.href} target="_blank" rel="noopener noreferrer">
                   <Button
-                    key={index}
                     variant="ghost"
                     size="sm"
                     className="hover:scale-110 hover:text-primary transition-all duration-300"
                   >
-                    <Icon className="w-5 h-5" />
+                    <item.icon className="w-5 h-5" />
                   </Button>
-                ))}
-              </div>
+                </a>
+              ))}
+            </div>
+
               <div className="mt-4">
                 <span className="text-primary font-mono text-sm">{"</developer>"}</span>
               </div>
@@ -625,6 +631,7 @@ function handleDownload(): void {
             Ready to bring your ideas to life? Let's discuss how we can build something extraordinary together.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="mailto:dedikusniadi.bisnis@gmail.com">
             <Button
               size="lg"
               className="bg-gradient-to-r from-primary to-accent hover:scale-105 transition-all duration-300 animate-glow"
@@ -632,6 +639,7 @@ function handleDownload(): void {
               <Mail className="w-4 h-4 mr-2" />
               Get In Touch
             </Button>
+          </a>
             <div className="flex gap-4 justify-center">
               <a href="https://github.com/dedikusniadi2026" target="_blank" rel="noopener noreferrer">
               <Button
