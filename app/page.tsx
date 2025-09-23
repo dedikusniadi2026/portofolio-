@@ -279,14 +279,29 @@ function handleDownload(): void {
                   <Rocket className="w-4 h-4 mr-2" />
                   View My Work
                 </Button>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="hover:scale-105 transition-all duration-300 glass-effect bg-transparent"
-                    onClick={handleDownload}>
-                    <Terminal className="w-4 h-4 mr-2" />
-                    Download CV
-                  </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="
+                    hover:scale-105 
+                    transition-all 
+                    duration-300 
+                    glass-effect 
+                    bg-transparent 
+                    text-black 
+                    dark:text-white 
+                    border border-gray-500 
+                    hover:bg-purple-600 
+                    hover:text-black 
+                    hover:border-purple-600
+                  "
+                  onClick={handleDownload}
+                >
+                  <Terminal className="w-4 h-4 mr-2" />
+                  Download CV
+                </Button>
+
+
               </div>
               <div className="flex gap-4">
               {[
@@ -552,8 +567,12 @@ function handleDownload(): void {
                   key={filter.key}
                   variant={activeFilter === filter.key ? "default" : "outline"}
                   onClick={() => setActiveFilter(filter.key)}
-                  className="transition-all duration-300 hover:scale-105"
-                >
+                  className={`
+                    transition-all duration-300 hover:scale-105
+                    ${activeFilter === filter.key 
+                      ? "bg-purple-600 text-white" 
+                      : "border border-gray-400 text-gray-700 dark:text-gray-200 dark:border-gray-500"}
+                  `}>
                   {filter.label}
                 </Button>
               ))}
