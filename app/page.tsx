@@ -405,140 +405,189 @@ function handleDownload(): void {
         <div className="max-w-6xl mx-auto">
           <h3 className="text-3xl font-bold mb-12">Experience</h3>
           <div className="space-y-8">
-
-            <Card className="p-6 border border-gray-300 dark:border-gray-700">
+            <Card className="p-6 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-md rounded-xl">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
-                  <h4 className="text-xl font-semibold">Senior Frontend Engineer </h4>
-                  <p className="text-primary font-medium">Axiata Digital Labs</p>
+                  <h4 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    Senior Frontend Engineer
+                  </h4>
+                  <p className="text-purple-600 dark:text-purple-400 font-medium">
+                    Axiata Digital Labs
+                  </p>
                 </div>
-                <p className="text-muted-foreground">2020 — Present</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  2020 — Present
+                </p>
               </div>
-              <p className="text-muted-foreground leading-relaxed">
-               The Senior Front End Developer will be a key player in designing, developing, and maintaining high-quality user interfaces for our diverse product portfolio, including a core Software as a Service (SaaS) platform, complementary Native/Hybrid Mobile Applications, and various WordPress Plugins. This role requires strong technical expertise, leadership qualities, and the ability to seamlessly transition between different technology stacks and project requirements. You'll work closely with product managers, UX/UI designers, and back-end engineers to deliver exceptional user experiences that are performant, scalable, and maintainable.
+
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                The Senior Front End Developer will be a key player in designing, developing,
+                and maintaining high-quality user interfaces for our diverse product portfolio,
+                including a core Software as a Service (SaaS) platform, complementary Native/Hybrid
+                Mobile Applications, and various WordPress Plugins. This role requires strong technical
+                expertise, leadership qualities, and the ability to seamlessly transition between different
+                technology stacks and project requirements. You'll work closely with product managers,
+                UX/UI designers, and back-end engineers to deliver exceptional user experiences that are
+                performant, scalable, and maintainable.
               </p>
+
               <div className="flex flex-wrap gap-2 mt-4">
-                <Badge variant="outline">JavaScript</Badge>
-                <Badge variant="outline">TypeScript</Badge>
-                <Badge variant="outline">React</Badge>
-                <Badge variant="outline">React Native</Badge>
-                <Badge variant="outline">Angular</Badge>
+                {["JavaScript", "TypeScript", "React", "React Native", "Angular"].map((skill) => (
+                  <Badge
+                    key={skill}
+                    variant="outline"
+                    className="border-gray-400 text-gray-700 dark:text-gray-200 dark:border-gray-500 hover:bg-purple-600 hover:text-white transition"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
               </div>
             </Card>
 
-            <Card className="p-6 border border-gray-300 dark:border-gray-700">
+
+            <Card className="p-6 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-md rounded-xl">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
-                  <h4 className="text-xl font-semibold">Senior Software Enginner</h4>
-                  <p className="text-primary font-medium">kreasi digital indo utama</p>
+                  <h4 className="text-xl font-semibold text-gray-900 dark:text-white">Senior Software Enginner</h4>
+                  <p className="text-purple-600 dark:text-purple-400 font-medium">kreasi digital indo utama</p>
                 </div>
-                <p className="text-muted-foreground">Jan 2020 — May 2020</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Jan 2020 — May 2020</p>
               </div>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                We are seeking a highly skilled and motivated Senior Front End Developer to lead the development and maintenance of user interfaces for our mission-critical Restaurant and Point of Sale (POS) systems. This role focuses on creating fast, reliable, and intuitive applications for various environments, including touch-screen terminals, mobile order pads, and customer-facing interfaces. The ideal candidate will have strong technical expertise in modern front-end frameworks, a keen eye for UX/UI, and the ability to build robust applications that can handle high-volume transactions in demanding, real-time settings.
               </p>
-              <div className="flex flex-wrap gap-2 mt-4">
-                <Badge variant="outline">React</Badge>
-                <Badge variant="outline">PHP</Badge>
-                <Badge variant="outline">Laravel</Badge>
-                <Badge variant="outline">Mysql</Badge>
+                <div className="flex flex-wrap gap-2 mt-4">
+                {["PHP", "Laravel", "React", "Mysql"].map((skill) => (
+                  <Badge
+                    key={skill}
+                    variant="outline"
+                    className="border-gray-400 text-gray-700 dark:text-gray-200 dark:border-gray-500 hover:bg-purple-600 hover:text-white transition"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
               </div>
             </Card>
 
-              <Card className="p-6 border border-gray-300 dark:border-gray-700">
+              <Card className="p-6 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-md rounded-xl">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
-                  <h4 className="text-xl font-semibold">Senior Software Enginner</h4>
-                  <p className="text-primary font-medium">ayo media network</p>
+                  <h4 className="text-xl font-semibold text-gray-900 dark:text-white">Senior Software Enginner</h4>
+                  <p className="text-purple-600 dark:text-purple-400 font-medium">ayo media network</p>
                 </div>
-                <p className="text-muted-foreground">oct 2019 — Dec 2019</p>
+                <p className="text-muted-foreground">Oct 2019 — Dec 2019</p>
               </div>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 We are looking for a highly accomplished and results-driven Senior Software Engineer to spearhead the development, architecture, and maintenance of our digital products. This critical role involves managing the full-stack development life cycle for our high-traffic Web Media Platform and leading the creation of performant, native-like applications for both iOS and Android using Flutter. The ideal candidate possesses deep expertise in both web and mobile technologies, strong leadership skills, and a commitment to delivering scalable, high-quality media experiences.
               </p>
-              <div className="flex flex-wrap gap-2 mt-4">
-                <Badge variant="outline">Flutter</Badge>
-                <Badge variant="outline">Codeigniter</Badge>
-                <Badge variant="outline">Laravel</Badge>
-                <Badge variant="outline">Mysql</Badge>
-                <Badge variant="outline">html</Badge>
-                <Badge variant="outline">css</Badge>
+               <div className="flex flex-wrap gap-2 mt-4">
+                {["Flutter", "Codeigniter", "Laravel", "Mysql","HTML","CSS"].map((skill) => (
+                  <Badge
+                    key={skill}
+                    variant="outline"
+                    className="border-gray-400 text-gray-700 dark:text-gray-200 dark:border-gray-500 hover:bg-purple-600 hover:text-white transition"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
               </div>
             </Card>
 
-              <Card className="p-6 border border-gray-300 dark:border-gray-700">
+              <Card className="p-6 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-md rounded-xl">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
-                  <h4 className="text-xl font-semibold">Frontend Developer</h4>
-                  <p className="text-primary font-medium">Bank BTPN Tbk</p>
+                  <h4 className="text-xl font-semibold text-gray-900 dark:text-white">Frontend Developer</h4>
+                  <p className="text-purple-600 dark:text-purple-400 font-medium">Bank BTPN Tbk</p>
                 </div>
-                <p className="text-muted-foreground">jun 2019 — sep 2019</p>
+                <p className="text-muted-foreground">Jun 2019 — Sep 2019</p>
               </div>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 We are seeking a dedicated Front End Developer to join our Technology team, focusing exclusively on building and maintaining mission-critical internal applications for Bank BTPN. This role is pivotal in enhancing the productivity, efficiency, and user experience for the bank's employees, including applications for back-office operations, compliance, risk management, and administrative tools. The ideal candidate must excel in developing secure, performant, and reliable interfaces that adhere to strict banking regulatory and security standards.
               </p>
               <div className="flex flex-wrap gap-2 mt-4">
-                <Badge variant="outline">Angular</Badge>
-                <Badge variant="outline">html</Badge>
-                <Badge variant="outline">SCSS</Badge>
-                <Badge variant="outline">Node.js</Badge>
+                {["Angular", "html", "Scss", "Node.js","CSS","Angular Material"].map((skill) => (
+                  <Badge
+                    key={skill}
+                    variant="outline"
+                    className="border-gray-400 text-gray-700 dark:text-gray-200 dark:border-gray-500 hover:bg-purple-600 hover:text-white transition"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
               </div>
             </Card>
 
-              <Card className="p-6 border border-gray-300 dark:border-gray-700">
+              <Card className="p-6 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-md rounded-xl">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
-                  <h4 className="text-xl font-semibold">Web Developer</h4>
-                  <p className="text-primary font-medium">Bisnis Indonesia sibertama</p>
+                  <h4 className="text-xl font-semibold text-gray-900 dark:text-white">Web Developer</h4>
+                  <p className="text-purple-600 dark:text-purple-400 font-medium">Bisnis Indonesia sibertama</p>
                 </div>
                 <p className="text-muted-foreground">Jun 2018 — Aug 2019</p>
               </div>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                We are looking for a highly accomplished and results-driven Senior Software Engineer to spearhead the development, architecture, and maintenance of our digital products. This critical role involves managing the full-stack development life cycle for our high-traffic Web Media Platform and leading the creation of performant, native-like applications for both iOS and Android using Flutter. The ideal candidate possesses deep expertise in both web and mobile technologies, strong leadership skills, and a commitment to delivering scalable, high-quality media experiences.
               </p>
+
               <div className="flex flex-wrap gap-2 mt-4">
-                <Badge variant="outline">Codeigniter</Badge>
-                <Badge variant="outline">Javascript</Badge>
-                <Badge variant="outline">Mysql</Badge>
-                <Badge variant="outline">Jquery</Badge>
+                {["Codeigniter", "Javascript", "Mysql", "Jquery"].map((skill) => (
+                  <Badge
+                    key={skill}
+                    variant="outline"
+                    className="border-gray-400 text-gray-700 dark:text-gray-200 dark:border-gray-500 hover:bg-purple-600 hover:text-white transition"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
               </div>
             </Card>
 
-              <Card className="p-6 border border-gray-300 dark:border-gray-700">
+              <Card className="p-6 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-md rounded-xl">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
-                  <h4 className="text-xl font-semibold">Software Developer</h4>
-                  <p className="text-primary font-medium">Bisnis Indonesia</p>
+                  <h4 className="text-xl font-semibold text-gray-900 dark:text-white">Software Developer</h4>
+                  <p className="text-purple-600 dark:text-purple-400 font-medium">Bisnis Indonesia</p>
                 </div>
                 <p className="text-muted-foreground">Aug 2015 — Jul 2018</p>
               </div>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 We are looking for a highly accomplished and results-driven Senior Software Engineer to spearhead the development, architecture, and maintenance of our digital products. This critical role involves managing the full-stack development life cycle for our high-traffic Web Media Platform and leading the creation of performant, native-like applications for both iOS and Android using Flutter. The ideal candidate possesses deep expertise in both web and mobile technologies, strong leadership skills, and a commitment to delivering scalable, high-quality media experiences.
               </p>
+             
               <div className="flex flex-wrap gap-2 mt-4">
-                <Badge variant="outline">Angularjs</Badge>
-                <Badge variant="outline">Flutter</Badge>
-                <Badge variant="outline">Codeigniter</Badge>
-                <Badge variant="outline">PHP</Badge>
+                {["Angularjs", "Flutter", "Mysql", "Codeigniter","PHP","Ionic"].map((skill) => (
+                  <Badge
+                    key={skill}
+                    variant="outline"
+                    className="border-gray-400 text-gray-700 dark:text-gray-200 dark:border-gray-500 hover:bg-purple-600 hover:text-white transition"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
               </div>
             </Card>
 
-               <Card className="p-6 border border-gray-300 dark:border-gray-700">
+               <Card className="p-6 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-md rounded-xl">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
-                  <h4 className="text-xl font-semibold">Junior Software Developer</h4>
-                  <p className="text-primary font-medium">Springfields</p>
+                  <h4 className="text-xl font-semibold text-gray-900 dark:text-white">Junior Software Developer</h4>
+                  <p className="text-purple-600 dark:text-purple-400 font-medium">Springfields</p>
                 </div>
                 <p className="text-muted-foreground">Aug 2013 — Dec 2013</p>
               </div>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 The Junior Software Engineer will be a foundational member of the development team, contributing to the design, development, and maintenance of critical software systems for the Corruption Eradication Commission (KPK - Komisi Pemberantasan Korupsi). This role focuses on supporting the KPK's mission by building and securing internal applications, data management tools, investigative support systems, and public service portals. The ideal candidate is highly motivated, eager to learn best practices in secure and scalable development, and possesses a strong sense of integrity and commitment to anti-corruption efforts.
               </p>
               <div className="flex flex-wrap gap-2 mt-4">
-                <Badge variant="outline">Codeigniter</Badge>
-                <Badge variant="outline">Html</Badge>
-                <Badge variant="outline">Css</Badge>
-                <Badge variant="outline">Mysql</Badge>
+                {["Html", "Mysql", "Codeigniter","PHP","CSS"].map((skill) => (
+                  <Badge
+                    key={skill}
+                    variant="outline"
+                    className="border-gray-400 text-gray-700 dark:text-gray-200 dark:border-gray-500 hover:bg-purple-600 hover:text-white transition"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
               </div>
             </Card>
           </div>
@@ -562,20 +611,26 @@ function handleDownload(): void {
                 { key: "mobile", label: "Mobile" },
                 { key: "design", label: "Design" },
                 { key: "backend", label: "Backend" },
-              ].map((filter) => (
-                <Button
-                  key={filter.key}
-                  variant={activeFilter === filter.key ? "default" : "outline"}
-                  onClick={() => setActiveFilter(filter.key)}
-                  className={`
-                    transition-all duration-300 hover:scale-105
-                    ${activeFilter === filter.key 
-                      ? "bg-purple-600 text-white" 
-                      : "border border-gray-400 text-gray-700 dark:text-gray-200 dark:border-gray-500"}
-                  `}>
-                  {filter.label}
-                </Button>
-              ))}
+              ].map((filter) => {
+                const isActive = activeFilter === filter.key;
+
+                return (
+                  <Button
+                    key={filter.key}
+                    variant={isActive ? "default" : "outline"}
+                    onClick={() => setActiveFilter(filter.key)}
+                    className={`
+                      transition-all duration-300 hover:scale-105
+                      ${isActive
+                        ? "bg-purple-600 text-white border-transparent"
+                        : "border border-gray-400 text-gray-700 dark:text-gray-200 dark:border-gray-500"}
+                      hover:bg-purple-600 hover:text-white hover:border-transparent
+                    `}
+                  >
+                    {filter.label}
+                  </Button>
+                );
+              })}
             </div>
           </div>
 
