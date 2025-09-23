@@ -594,24 +594,6 @@ function handleDownload(): void {
                       </Badge>
                     ))}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="hover:text-primary transition-colors group-hover:scale-105"
-                    >
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Live Demo
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="hover:text-primary transition-colors group-hover:scale-105"
-                    >
-                      <Github className="w-4 h-4 mr-2" />
-                      Code
-                    </Button>
-                  </div>
                 </div>
               </Card>
             ))}
