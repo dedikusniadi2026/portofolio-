@@ -35,8 +35,6 @@ Proyek ini dikembangkan menggunakan *stack* teknologi berikut:
     ```bash
     npm install  # atau yarn install
     ```
-    *Jika menggunakan *monorepo* atau *backend/frontend* terpisah, jelaskan.*
-
 3.  **Jalankan Aplikasi:**
     ```bash
     npm run dev # atau npm start
