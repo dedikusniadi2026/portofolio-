@@ -337,6 +337,8 @@ function handleDownload(): void {
                     width={500}
                     height={500}
                     alt="My Image"
+                    priority 
+                    sizes="(max-width: 768px) 100vw, 500px"
                   />
 
                   </div>
