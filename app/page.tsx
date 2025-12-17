@@ -187,7 +187,7 @@ function handleDownload(): void {
   const link = document.createElement("a");
   link.href = "/cv_dedi.pdf";
   link.download = "cv_dedi.pdf";
-  link.target = "_blank"; // buka tab baru kalau browser hanya preview
+  link.target = "_blank";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -269,7 +269,7 @@ function handleDownload(): void {
                 />
               </div>
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                My aim is to provide the best I can, to the organization I am working for, with reliability and responsibility to achieve professional and personal satisfaction as well as growth.
+              Building scalable, high-performance web applications with 10+ years of professional experience
               </p>
               <div className="flex gap-4 mb-8">
                 <Button
@@ -362,14 +362,9 @@ function handleDownload(): void {
             <div>
               <h3 className="text-3xl font-bold mb-6">About</h3>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
-                <p>
-                 I'm a developer passionate about crafting accessible, pixel-perfect user interfaces that seamlessly blend thoughtful design with solid engineering. I thrive at the intersection of design and development, creating experiences that not only look stunning but are meticulously optimized for performance, usability, and inclusivity.
-                </p>
-                <p>
-                  Currently, I serve as a Senior Front-End Engineer at <span className="text-primary font-medium"> Axiata Digital Labs </span>, specializing in accessibility. I design, build, and maintain UI components that power our platform's frontend, ensuring our applications adhere to web accessibility standards and best practices to deliver a truly inclusive user experience.
-                </p>
-                <p>
-                  Throughout my career, I've developed software in diverse environments — from advertising agencies and large corporations to startups and boutique digital product studios. This breadth of experience has honed my ability to adapt quickly, tackle complex challenges, and consistently deliver high-quality, user-centered solutions.
+                <p> I am a Frontend Developer with over 10 years of experience building web applications for enterprise and consumer products.
+                  I focus on creating clean, scalable, and maintainable UI, while collaborating closely with backend, QA, and product teams to deliver reliable and high-quality solutions.
+                  I am currently open to freelance or full-time opportunities where I can contribute my experience and continue to grow.
                 </p>
               </div>
             </div>
