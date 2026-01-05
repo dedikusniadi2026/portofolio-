@@ -67,7 +67,7 @@ export default function HomePage() {
 
     {
       icon: Code,
-      title: "Booking Online Management System (BOMS) Golang",
+      title: "Tourist Driver Booking System -> Backend -> Golang",
       desc: "",
       gradient: "from-green-500/20 to-blue-500/20",
       category: "Backend",
@@ -76,7 +76,7 @@ export default function HomePage() {
 
     {
       icon: Code,
-      title: "Booking Online Management System (BOMS) Angular",
+      title: "Tourist Driver Booking System -> Frontend -> Angular",
       desc: "",
       gradient: "from-green-500/20 to-blue-500/20",
       category: "Front End",
@@ -85,7 +85,7 @@ export default function HomePage() {
 
         {
       icon: Code,
-      title: "Booking Online Management System (BOMS) React",
+      title: "Tourist Driver Booking System -> Frontend -> React",
       desc: "",
       gradient: "from-green-500/20 to-blue-500/20",
       category: "Front End",
