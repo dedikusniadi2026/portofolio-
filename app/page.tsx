@@ -64,6 +64,34 @@ export default function HomePage() {
   }, [])
 
   const projects = [
+
+    {
+      icon: Code,
+      title: "Booking Online Management System (BOMS) Golang",
+      desc: "",
+      gradient: "from-green-500/20 to-blue-500/20",
+      category: "Backend",
+      tech: ["Golang", "Gin", "Postgresql"],
+    },
+
+    {
+      icon: Code,
+      title: "Booking Online Management System (BOMS) Angular",
+      desc: "",
+      gradient: "from-green-500/20 to-blue-500/20",
+      category: "Front End",
+      tech: ["Angular 20", "Tailwind CSS", "TypeScript"],
+    },
+
+        {
+      icon: Code,
+      title: "Booking Online Management System (BOMS) React",
+      desc: "",
+      gradient: "from-green-500/20 to-blue-500/20",
+      category: "Front End",
+      tech: ["Reactjs 19", "Tailwind CSS", "TypeScript", "framer motion"],
+    },
+
     {
       icon: Code,
       title: "Dashboard",
