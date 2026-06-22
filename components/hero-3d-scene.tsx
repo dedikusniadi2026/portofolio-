@@ -193,12 +193,23 @@ export function Hero3DScene() {
       targetRotY = nx * 0.5
     }
 
-    const resize = () => {
-      const { width, height } = mount.getBoundingClientRect()
-      renderer.setSize(width, height, false)
-      camera.aspect = width / Math.max(height, 1)
-      camera.updateProjectionMatrix()
-    }
+   const resize = () => {
+  const { width, height } = mount.getBoundingClientRect()
+
+  renderer.setSize(width, height, false)
+
+  camera.aspect = width / height
+
+  if (width < 768) {
+    camera.position.z = 9
+    camera.fov = 50
+  } else {
+    camera.position.z = 7.5
+    camera.fov = 45
+  }
+
+  camera.updateProjectionMatrix()
+}
 
     mount.addEventListener("pointermove", onPointerMove)
     window.addEventListener("resize", resize)
