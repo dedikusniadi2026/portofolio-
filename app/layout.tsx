@@ -6,7 +6,7 @@ import Script from "next/script";
 export const metadata: Metadata = {
   title: "Dedi Kusniadi | Frontend Developer",
   description:
-    "Portfolio of Dedi Kusniadi, Frontend Developer with 10+ years of experience in Angular, React, Next.js, and modern web technologies.",
+    "Portfolio of Dedi Kusniadi, Frontend Developer with 13+ years of experience in Angular, React, Next.js, and modern web technologies.",
   keywords: [
     "Dedi Kusniadi",
     "Frontend Developer",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Dedi Kusniadi | Frontend Developer",
     description:
-      "Portfolio of Dedi Kusniadi, Frontend Developer with 10+ years of experience in Angular, React, Next.js, and modern web technologies.",
+      "Portfolio of Dedi Kusniadi, Frontend Developer with 13+ years of experience in Angular, React, Next.js, and modern web technologies.",
     url: "https://portofolio-yvp2.vercel.app",
     siteName: "Dedi Kusniadi Portfolio",
     images: [
