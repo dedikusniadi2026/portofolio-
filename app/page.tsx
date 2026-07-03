@@ -15,7 +15,7 @@ import {
   Smartphone, Globe, Database, Menu, MapPin, Calendar,
   ExternalLink, ChevronRight,
 } from "lucide-react"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 
 export default function HomePage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -248,7 +248,7 @@ export default function HomePage() {
                 <span className="hero-name-dedi block">
                   Dedi
                 </span>
-                <span className="hero-name-kusniadi bg-gradient-to-r from-violet-400 via-cyan-300 to-pink-400 animate-gradient bg-clip-text text-transparent block">
+                <span className="bg-gradient-to-r from-violet-500 via-cyan-300 to-pink-400 dark:from-violet-400 dark:via-cyan-300 dark:to-pink-400 animate-gradient bg-clip-text text-transparent block">
                   Kusniadi
                 </span>
               </h1>
@@ -318,13 +318,11 @@ export default function HomePage() {
             <div className={`relative transition-all duration-1000 delay-300 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-20 opacity-0"}`}>
               <Hero3DScene />
 
-              {/* Floating badge — profile */}
+              {/* Floating badge — availability */}
               <div className="absolute -left-4 top-6 hidden md:flex rounded-2xl glass-effect border border-white/10 p-3 shadow-2xl items-center gap-3"
                 style={{ boxShadow: "0 8px 32px rgba(124,58,237,0.25)" }}>
-                <div className="relative">
-                  <Image src="/1609985817736.jpg" width={44} height={44} alt="Dedi Kusniadi"
-                    className="h-11 w-11 rounded-xl object-cover" priority />
-                  <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-green-400 border-2 border-background" />
+                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center flex-shrink-0">
+                  <span className="text-white text-sm font-black">✓</span>
                 </div>
                 <div>
                   <div className="text-sm font-semibold">Open to work</div>
@@ -348,32 +346,32 @@ export default function HomePage() {
       <section id="about" className="relative z-10 py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="animate-on-scroll">
-            <div className="inline-flex items-center gap-2 mb-4 text-xs font-semibold tracking-widest uppercase text-violet-400">
-              <span className="h-px w-8 bg-violet-400" /> About Me
+            <div className="section-kicker inline-flex items-center gap-2 mb-4 text-xs font-semibold tracking-widest uppercase text-violet-400">
+              <span className="kicker-line h-px w-8 bg-violet-400" /> About Me
             </div>
             <h2 className="text-4xl lg:text-5xl font-black mb-12 heading-glow">
               Crafting interfaces<br />
-              <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">that people love</span>
+              <span className="section-gradient-text bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">that people love</span>
             </h2>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div className="animate-on-scroll space-y-4 text-muted-foreground leading-relaxed">
               <p className="text-base">
-                I'm a Frontend Developer with over <strong className="text-foreground">6 years of experience</strong> building web applications for enterprise and consumer products. I focus on clean, scalable, and maintainable UI, collaborating closely with backend, QA, and product teams.
+                I'm a Senior Frontend Engineer with over <strong className="text-foreground">13 years of experience</strong> building web applications for enterprise and consumer products. I specialize in scalable, maintainable UI architecture — collaborating closely with backend, QA, design, and product teams.
               </p>
               <p className="text-base">
                 My approach combines solid engineering fundamentals with a sharp eye for design — turning complex requirements into interfaces that are both beautiful and fast.
               </p>
               <p className="text-base">
-                Currently open to <strong className="text-violet-400">freelance or full-time opportunities</strong> where I can contribute my experience and continue to grow.
+                Currently open to <strong className="text-violet-400">freelance or full-time opportunities</strong> where I can lead frontend architecture and ship great products.
               </p>
             </div>
 
             <div className="animate-on-scroll">
               <h4 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Tech Stack</h4>
               <div className="flex flex-wrap gap-2">
-                {["JavaScript","TypeScript","React.js","Redis","Angular Framework","Vue.js","React.js","Nest.js","Docker","RabitMQ","Codeigniter","Laravel","Next.js","Node.js","Tailwind CSS","SCSS","REST APIs","Shadcn UI","Ant Design","Figma","Git"].map((tech) => (
+                {["JavaScript","TypeScript","React.js","Vue.js","Angular","Next.js","Node.js","Nest.js","Redux / Zustand","Pinia","Tailwind CSS","SCSS","REST APIs","GraphQL","Docker","Redis","RabbitMQ","Webpack","Vite","Figma","Git","CI/CD"].map((tech) => (
                   <Badge key={tech} variant="outline"
                     className="badge-tech text-sm border-white/10 bg-white/5 hover:bg-violet-500/20 cursor-default">
                     {tech}
@@ -384,10 +382,11 @@ export default function HomePage() {
               {/* Skill bars */}
               <div className="mt-8 space-y-3">
                 {[
-                  { label: "Angular / Enterprise", pct: 95 },
-                  { label: "React / Next.js", pct: 90 },
-                  { label: "Vue.js", pct: 80 },
-                  { label: "UI/UX Design", pct: 75 },
+                  { label: "Angular / Enterprise Apps", pct: 95 },
+                  { label: "React / Next.js", pct: 92 },
+                  { label: "Vue.js / Nuxt", pct: 78 },
+                  { label: "Node.js / Backend", pct: 70 },
+                  { label: "UI/UX & Design Systems", pct: 82 },
                 ].map((s) => (
                   <div key={s.label}>
                     <div className="flex justify-between text-xs mb-1">
@@ -412,11 +411,11 @@ export default function HomePage() {
         <div className="section-wash absolute inset-0 bg-gradient-to-b from-transparent via-violet-950/10 to-transparent pointer-events-none" />
         <div className="max-w-6xl mx-auto relative">
           <div className="animate-on-scroll mb-16">
-            <div className="inline-flex items-center gap-2 mb-4 text-xs font-semibold tracking-widest uppercase text-violet-400">
-              <span className="h-px w-8 bg-violet-400" /> Career
+            <div className="section-kicker inline-flex items-center gap-2 mb-4 text-xs font-semibold tracking-widest uppercase text-violet-400">
+              <span className="kicker-line h-px w-8 bg-violet-400" /> Career
             </div>
             <h2 className="text-4xl lg:text-5xl font-black heading-glow">
-              Work <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Experience</span>
+              Work <span className="section-gradient-text bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Experience</span>
             </h2>
           </div>
 
@@ -439,7 +438,7 @@ export default function HomePage() {
 
                       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                         <div>
-                          <h4 className="text-lg font-bold text-foreground group-hover:text-violet-300 transition-colors">{exp.title}</h4>
+                          <h4 className="text-lg font-bold text-foreground group-hover:text-violet-400 transition-colors">{exp.title}</h4>
                           <p className={`text-sm font-semibold bg-gradient-to-r ${exp.accent} bg-clip-text text-transparent`}>{exp.company}</p>
                         </div>
                         <div className="flex items-center gap-1.5 text-xs text-muted-foreground whitespace-nowrap glass-effect px-3 py-1.5 rounded-full border-white/10">
@@ -472,11 +471,11 @@ export default function HomePage() {
       <section id="projects" className="relative z-10 py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="animate-on-scroll mb-12">
-            <div className="portfolio-kicker inline-flex items-center gap-2 mb-4 text-xs font-semibold tracking-widest uppercase text-violet-400">
-              <span className="h-px w-8 bg-violet-400" /> Portfolio
+            <div className="portfolio-kicker section-kicker inline-flex items-center gap-2 mb-4 text-xs font-semibold tracking-widest uppercase text-violet-400">
+              <span className="kicker-line h-px w-8 bg-violet-400" /> Portfolio
             </div>
-            <h2 className="text-4xl lg:text-5xl font-black heading-glow">
-              Featured <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Projects</span>
+            <h2 className="text-4xl lg:text-5xl font-black heading-glow text-foreground">
+              Featured <span className="section-gradient-text bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Projects</span>
             </h2>
           </div>
 
@@ -530,7 +529,7 @@ export default function HomePage() {
                   </div>
 
                   <div className="p-5">
-                    <h3 className="font-bold text-base mb-1.5 text-foreground group-hover:text-violet-300 transition-colors line-clamp-1">
+                    <h3 className="font-bold text-base mb-1.5 text-foreground dark:group-hover:text-violet-300 transition-colors line-clamp-1">
                       {project.title}
                     </h3>
                     <p className="text-xs text-muted-foreground leading-relaxed mb-4 line-clamp-2">
@@ -541,7 +540,7 @@ export default function HomePage() {
                         <Badge
                           key={t}
                           variant="outline"
-                          className="text-[10px] border-white/10 bg-white/5 badge-tech"
+                          className="text-[10px] dark:border-white/10 dark:bg-white/5 badge-tech"
                         >
                           {t}
                         </Badge>
@@ -561,11 +560,11 @@ export default function HomePage() {
         <div className="section-wash absolute inset-0 bg-gradient-to-b from-transparent via-violet-950/10 to-transparent pointer-events-none" />
         <div className="max-w-3xl mx-auto relative">
           <div className="animate-on-scroll text-center mb-12">
-            <div className="inline-flex items-center gap-2 mb-4 text-xs font-semibold tracking-widest uppercase text-violet-400">
-              <span className="h-px w-8 bg-violet-400" /> Contact
+            <div className="section-kicker inline-flex items-center gap-2 mb-4 text-xs font-semibold tracking-widest uppercase text-violet-400">
+              <span className="kicker-line h-px w-8 bg-violet-400" /> Contact
             </div>
             <h2 className="text-4xl lg:text-5xl font-black mb-4 heading-glow">
-              Let&apos;s work <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">together</span>
+              Let&apos;s work <span className="section-gradient-text bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">together</span>
             </h2>
             <p className="text-muted-foreground text-base max-w-md mx-auto">
               Open for freelance projects, full-time roles, and interesting collaborations. Drop me a message.

@@ -234,6 +234,10 @@
   to { transform: rotate(360deg); }
 }
 
+.animate-spin-slow {
+  animation: spin-slow linear infinite;
+}
+
 @keyframes counter-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(-360deg); }
@@ -282,8 +286,9 @@
 
 /* Glass morphism — light */
 .light .glass-effect {
-  background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
 }
 
 /* Neon glow text */
@@ -455,19 +460,19 @@
 
 /* Hero name — adaptive dark/light */
 .hero-name-dedi {
-  background: linear-gradient(135deg, #ffffff 0%, #ddd6fe 50%, #7c3aed 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #ddd6fe 50%, #a78bfa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-shadow: none;
-  animation: text-flicker 8s infinite;
+  /* no flicker — must stay visible at all times */
 }
 .light .hero-name-dedi {
-  background: linear-gradient(135deg, #2e1065 0%, #6d28d9 45%, #0891b2 100%);
+  background: linear-gradient(135deg, #1e0a5e 0%, #5b21b6 45%, #0e7490 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 10px 30px rgba(109, 40, 217, 0.18);
+  text-shadow: none;
 }
 
 .light .portfolio-kicker {
@@ -478,15 +483,9 @@
   background: #7c3aed;
 }
 
+/* Project section heading — light mode */
 .light #projects .heading-glow {
   color: #111827;
-}
-
-.light #projects .heading-glow span {
-  background: linear-gradient(135deg, #6d28d9 0%, #0891b2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .light .project-filter-button {
@@ -501,13 +500,40 @@
 }
 
 .light .project-card {
-  background: rgba(255, 255, 255, 0.88);
-  border-color: rgba(124, 58, 237, 0.14);
-  box-shadow: 0 16px 45px rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(124, 58, 237, 0.18);
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.07), 0 1px 4px rgba(15, 23, 42, 0.05);
 }
 
 .light .project-card:hover {
-  background: rgba(255, 255, 255, 0.96);
+  background: #ffffff;
+  box-shadow: 0 12px 40px rgba(124, 58, 237, 0.15), 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+/* Project card text — light mode */
+.light .project-card h3 {
+  color: #111827;
+}
+
+.light .project-card:hover h3 {
+  color: #5b21b6;
+}
+
+.light .project-card p {
+  color: #4b5563;
+}
+
+/* Tech badges in project cards — light mode */
+.light .project-card .badge-tech {
+  background: rgba(124, 58, 237, 0.08);
+  border-color: rgba(124, 58, 237, 0.22);
+  color: #4c1d95;
+}
+
+.light .project-card .badge-tech:hover {
+  background: rgba(124, 58, 237, 0.18);
+  border-color: rgba(124, 58, 237, 0.45);
+  color: #3b0764;
 }
 
 .light .project-category-badge {
@@ -519,6 +545,225 @@
 /* Hover glow button */
 .btn-glow:hover {
   box-shadow: 0 0 20px rgba(124,58,237,0.5), 0 0 60px rgba(124,58,237,0.2);
+}
+
+/* ══════════════════════════════════════════
+   LIGHT MODE — COMPREHENSIVE OVERRIDES
+   All rules use .light prefix so they are
+   only applied when the html element has
+   class="light" (set by our anti-FOUC script)
+══════════════════════════════════════════ */
+
+/* ── Section heading gradient spans — light mode ── */
+.light .section-gradient-text {
+  background: linear-gradient(135deg, #5b21b6, #0891b2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Hero stat badges (photo section bottom) ── */
+.hero-stat-badge {
+  background: rgba(0, 0, 0, 0.32);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 24px rgba(124,58,237,0.2), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.hero-stat-val {
+  color: var(--dark-color, rgba(167,139,250,0.95));
+}
+.hero-stat-lbl {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.light .hero-stat-badge {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(124, 58, 237, 0.2);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.12), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+.light .hero-stat-val {
+  color: var(--light-color, #5b21b6);
+}
+.light .hero-stat-lbl {
+  color: #6b7280;
+}
+.light .hero-stat-accent {
+  opacity: 0.5;
+}
+
+/* ── Background & base ── */
+.light body {
+  background: var(--background);
+  color: var(--foreground);
+}
+/* ── Background grid — lighter in light mode ── */
+.light .bg-grid {
+  background-image:
+    linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ── Nav ── */
+.light .nav-blur {
+  background: rgba(245, 245, 255, 0.88);
+  border-bottom: 1px solid rgba(124, 58, 237, 0.12);
+}
+
+/* ── Hero name "Dedi" ── */
+.light .hero-name-dedi {
+  background: linear-gradient(135deg, #1e0a5e 0%, #5b21b6 45%, #0e7490 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Hero name "Kusniadi" gradient ── */
+.light .animate-gradient {
+  background: linear-gradient(135deg, #5b21b6, #0891b2, #be185d);
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Stat values in hero ── */
+.light .stat-value {
+  background: linear-gradient(135deg, #5b21b6, #0e7490);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Section kicker labels (violet line + text) ── */
+.light .section-kicker {
+  color: #6d28d9;
+}
+.light .section-kicker .kicker-line {
+  background: #7c3aed;
+}
+
+/* ── Section headings ── */
+.light .heading-glow {
+  color: #111827;
+}
+
+/* ── Portfolio section header ── */
+.light .portfolio-kicker {
+  color: #6d28d9;
+}
+.light .portfolio-kicker span {
+  background: #7c3aed;
+}
+
+/* ── Project filter buttons ── */
+.light .project-filter-button {
+  color: #374151;
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(124, 58, 237, 0.2);
+}
+.light .project-filter-button:hover {
+  color: #111827;
+  border-color: rgba(124, 58, 237, 0.4);
+  background: rgba(255, 255, 255, 1);
+}
+
+/* ── Project cards ── */
+.light .project-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(124, 58, 237, 0.15);
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.07);
+}
+.light .project-card:hover {
+  background: #ffffff;
+  box-shadow: 0 12px 40px rgba(124, 58, 237, 0.14), 0 2px 8px rgba(15, 23, 42, 0.05);
+}
+.light .project-card h3 {
+  color: #111827;
+}
+.light .project-card:hover h3 {
+  color: #5b21b6;
+}
+.light .project-card p {
+  color: #4b5563;
+}
+.light .project-card .badge-tech {
+  background: rgba(124, 58, 237, 0.08);
+  border-color: rgba(124, 58, 237, 0.25);
+  color: #4c1d95;
+}
+.light .project-card .badge-tech:hover {
+  background: rgba(124, 58, 237, 0.16);
+  border-color: rgba(124, 58, 237, 0.45);
+  color: #3b0764;
+}
+.light .project-category-badge {
+  color: #ffffff;
+  background: rgba(17, 24, 39, 0.72);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+/* ── About section badges ── */
+.light .badge-tech {
+  background: rgba(124, 58, 237, 0.07);
+  border-color: rgba(124, 58, 237, 0.22);
+  color: #4c1d95;
+}
+.light .badge-tech:hover {
+  background: rgba(124, 58, 237, 0.15);
+  border-color: rgba(124, 58, 237, 0.4);
+  color: #3b0764;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
+}
+
+/* ── Experience / timeline cards ── */
+.light .timeline-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(124, 58, 237, 0.12);
+  box-shadow: 0 2px 16px rgba(15, 23, 42, 0.06);
+}
+.light .timeline-card:hover {
+  background: #ffffff;
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.12);
+}
+
+/* ── Contact card ── */
+.light #contact .gradient-border {
+  background: #ffffff;
+  border-color: rgba(124, 58, 237, 0.15);
+  box-shadow: 0 20px 60px rgba(124, 58, 237, 0.08);
+}
+
+/* ── Contact link cards ── */
+.light #contact a.group {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(124, 58, 237, 0.15);
+}
+.light #contact a.group:hover {
+  background: #ffffff;
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+/* ── Footer ── */
+.light footer {
+  border-color: rgba(124, 58, 237, 0.1);
+}
+
+/* ── Section wash overlays ── */
+.light .section-wash {
+  background: linear-gradient(to bottom, transparent, rgba(139, 92, 246, 0.03), transparent);
+}
+
+/* ── Outline buttons (Download CV etc) ── */
+.light .glass-effect.bg-transparent {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-color: rgba(124, 58, 237, 0.25);
+  color: #374151;
+}
+.light .glass-effect.bg-transparent:hover {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(124, 58, 237, 0.5);
+  color: #5b21b6;
 }
 
 /* Spotlight cursor effect container */

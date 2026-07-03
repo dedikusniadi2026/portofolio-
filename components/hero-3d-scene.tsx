@@ -1,309 +1,98 @@
 "use client"
 
-import { useEffect, useRef } from "react"
-import * as THREE from "three"
+import Image from "next/image"
 
 export function Hero3DScene() {
-  const mountRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const mount = mountRef.current
-    if (!mount) return
-
-    const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 200)
-    camera.position.set(0, 0, 7)
-
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.shadowMap.enabled = true
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap
-    renderer.outputColorSpace = THREE.SRGBColorSpace
-    renderer.toneMapping = THREE.ACESFilmicToneMapping
-    renderer.toneMappingExposure = 1.2
-    mount.appendChild(renderer.domElement)
-
-    const mainGroup = new THREE.Group()
-    scene.add(mainGroup)
-
-    // === CORE: Crystalline geometry ===
-    const coreGeo = new THREE.IcosahedronGeometry(1.3, 5)
-    const coreMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color("#7c3aed"),
-      metalness: 0.8,
-      roughness: 0.05,
-      transmission: 0.3,
-      thickness: 1.5,
-      emissive: new THREE.Color("#4c1d95"),
-      emissiveIntensity: 0.6,
-      iridescence: 1,
-      iridescenceIOR: 2.0,
-      iridescenceThicknessRange: [100, 800],
-      envMapIntensity: 1.5,
-    })
-    const core = new THREE.Mesh(coreGeo, coreMat)
-    core.castShadow = true
-    mainGroup.add(core)
-
-    // === OUTER WIREFRAME ===
-    const wireGeo = new THREE.IcosahedronGeometry(1.6, 2)
-    const wireMat = new THREE.MeshBasicMaterial({
-      color: "#22d3ee",
-      wireframe: true,
-      transparent: true,
-      opacity: 0.2,
-    })
-    const wire = new THREE.Mesh(wireGeo, wireMat)
-    mainGroup.add(wire)
-
-    // === SECOND WIREFRAME (rotated) ===
-    const wire2Geo = new THREE.OctahedronGeometry(1.8, 2)
-    const wire2Mat = new THREE.MeshBasicMaterial({
-      color: "#f472b6",
-      wireframe: true,
-      transparent: true,
-      opacity: 0.15,
-    })
-    const wire2 = new THREE.Mesh(wire2Geo, wire2Mat)
-    mainGroup.add(wire2)
-
-    // === ORBITING RINGS with glow ===
-    const ringData = [
-      { radius: 2.1, tube: 0.008, color: "#a78bfa", tilt: Math.PI / 2.2, speed: 0.4 },
-      { radius: 2.45, tube: 0.006, color: "#22d3ee", tilt: Math.PI / 3.5, speed: -0.3 },
-      { radius: 2.75, tube: 0.005, color: "#f472b6", tilt: Math.PI / 5, speed: 0.25 },
-    ]
-
-    const rings = ringData.map((rd) => {
-      const geo = new THREE.TorusGeometry(rd.radius, rd.tube, 16, 200)
-      const mat = new THREE.MeshBasicMaterial({
-        color: rd.color,
-        transparent: true,
-        opacity: 0.7,
-      })
-      const ring = new THREE.Mesh(geo, mat)
-      ring.rotation.x = rd.tilt
-      mainGroup.add(ring)
-      return { mesh: ring, speed: rd.speed }
-    })
-
-    // === ORBITING SPHERES ===
-    const orbitSpheres: THREE.Mesh[] = []
-    const orbitData = [
-      { r: 2.1, angle: 0, speed: 1.1, size: 0.08, color: "#a78bfa", tiltX: 0.3, tiltZ: 0 },
-      { r: 2.5, angle: Math.PI * 0.66, speed: -0.8, size: 0.06, color: "#22d3ee", tiltX: -0.5, tiltZ: 0.4 },
-      { r: 2.8, angle: Math.PI * 1.3, speed: 0.6, size: 0.1, color: "#f472b6", tiltX: 0.8, tiltZ: -0.3 },
-    ]
-
-    const orbitGroups = orbitData.map((od) => {
-      const group = new THREE.Group()
-      group.rotation.x = od.tiltX
-      group.rotation.z = od.tiltZ
-      const sGeo = new THREE.SphereGeometry(od.size, 16, 16)
-      const sMat = new THREE.MeshPhysicalMaterial({
-        color: od.color,
-        emissive: od.color,
-        emissiveIntensity: 1.5,
-        metalness: 1,
-        roughness: 0,
-      })
-      const sphere = new THREE.Mesh(sGeo, sMat)
-      sphere.position.x = od.r
-      group.add(sphere)
-      orbitSpheres.push(sphere)
-      mainGroup.add(group)
-      return { group, speed: od.speed, angle: od.angle }
-    })
-
-    // === PARTICLES (two layers) ===
-    function makeParticles(count: number, minR: number, maxR: number, color: string, size: number) {
-      const geo = new THREE.BufferGeometry()
-      const pos = new Float32Array(count * 3)
-      for (let i = 0; i < count; i++) {
-        const r = minR + Math.random() * (maxR - minR)
-        const theta = Math.random() * Math.PI * 2
-        const phi = Math.acos(Math.random() * 2 - 1)
-        pos[i * 3] = r * Math.sin(phi) * Math.cos(theta)
-        pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta)
-        pos[i * 3 + 2] = r * Math.cos(phi)
-      }
-      geo.setAttribute("position", new THREE.BufferAttribute(pos, 3))
-      return new THREE.Points(
-        geo,
-        new THREE.PointsMaterial({ color, size, transparent: true, opacity: 0.8, sizeAttenuation: true })
-      )
-    }
-
-    const particles1 = makeParticles(180, 2.5, 4.5, "#a7f3d0", 0.03)
-    const particles2 = makeParticles(100, 3.5, 6.0, "#c4b5fd", 0.02)
-    scene.add(particles1)
-    scene.add(particles2)
-
-    // === LIGHTNING BOLT connections ===
-    const connections: THREE.Line[] = []
-    const connMat = new THREE.LineBasicMaterial({ color: "#a78bfa", transparent: true, opacity: 0.3 })
-    for (let i = 0; i < 6; i++) {
-      const points = []
-      const theta1 = Math.random() * Math.PI * 2
-      const phi1 = Math.acos(Math.random() * 2 - 1)
-      const theta2 = Math.random() * Math.PI * 2
-      const phi2 = Math.acos(Math.random() * 2 - 1)
-      const r = 1.32
-      points.push(new THREE.Vector3(r * Math.sin(phi1) * Math.cos(theta1), r * Math.sin(phi1) * Math.sin(theta1), r * Math.cos(phi1)))
-      points.push(new THREE.Vector3(r * Math.sin(phi2) * Math.cos(theta2), r * Math.sin(phi2) * Math.sin(theta2), r * Math.cos(phi2)))
-      const lineGeo = new THREE.BufferGeometry().setFromPoints(points)
-      const line = new THREE.Line(lineGeo, connMat.clone())
-      mainGroup.add(line)
-      connections.push(line)
-    }
-
-    // === LIGHTS ===
-    scene.add(new THREE.AmbientLight("#ffffff", 0.5))
-
-    const keyLight = new THREE.PointLight("#c084fc", 8, 20)
-    keyLight.position.set(4, 4, 5)
-    scene.add(keyLight)
-
-    const fillLight = new THREE.PointLight("#22d3ee", 5, 15)
-    fillLight.position.set(-5, -3, 3)
-    scene.add(fillLight)
-
-    const rimLight = new THREE.PointLight("#f472b6", 4, 12)
-    rimLight.position.set(0, -5, -4)
-    scene.add(rimLight)
-
-    // Pulsing light
-    const pulseLight = new THREE.PointLight("#7c3aed", 6, 8)
-    pulseLight.position.set(0, 0, 0)
-    mainGroup.add(pulseLight)
-
-    // === POINTER ===
-    const pointer = new THREE.Vector2(0, 0)
-    let targetRotX = 0
-    let targetRotY = 0
-    let currentRotX = 0
-    let currentRotY = 0
-
-    const onPointerMove = (event: PointerEvent) => {
-      const rect = mount.getBoundingClientRect()
-      const nx = ((event.clientX - rect.left) / rect.width - 0.5) * 2
-      const ny = -((event.clientY - rect.top) / rect.height - 0.5) * 2
-      pointer.set(nx, ny)
-      targetRotX = ny * 0.3
-      targetRotY = nx * 0.5
-    }
-
-   const resize = () => {
-  const { width, height } = mount.getBoundingClientRect()
-
-  renderer.setSize(width, height, false)
-
-  camera.aspect = width / height
-
-  if (width < 768) {
-    camera.position.z = 9
-    camera.fov = 50
-  } else {
-    camera.position.z = 7.5
-    camera.fov = 45
-  }
-
-  camera.updateProjectionMatrix()
-}
-
-    mount.addEventListener("pointermove", onPointerMove)
-    window.addEventListener("resize", resize)
-    resize()
-
-    let animationId = 0
-    const clock = new THREE.Clock()
-
-    const animate = () => {
-      const elapsed = clock.getElapsedTime()
-
-      // Smooth pointer tracking
-      currentRotX += (targetRotX - currentRotX) * 0.04
-      currentRotY += (targetRotY - currentRotY) * 0.04
-
-      mainGroup.rotation.y = elapsed * 0.15 + currentRotY
-      mainGroup.rotation.x = Math.sin(elapsed * 0.4) * 0.08 + currentRotX
-
-      core.rotation.y = elapsed * 0.5
-      core.rotation.z = elapsed * 0.2
-
-      wire.rotation.x = -elapsed * 0.2
-      wire.rotation.y = elapsed * 0.3
-      wire.rotation.z = elapsed * 0.1
-
-      wire2.rotation.x = elapsed * 0.15
-      wire2.rotation.y = -elapsed * 0.25
-
-      // Orbiting groups
-      orbitGroups.forEach((od) => {
-        od.group.rotation.y = elapsed * od.speed
-      })
-
-      // Pulsing core scale
-      const pulse = 1 + Math.sin(elapsed * 2.5) * 0.04
-      core.scale.setScalar(pulse)
-
-      // Pulsing light
-      pulseLight.intensity = 4 + Math.sin(elapsed * 3) * 3
-
-      // Rings
-      rings.forEach((rd, i) => {
-        rd.mesh.rotation.z = elapsed * rd.speed
-        rd.mesh.rotation.y = elapsed * rd.speed * 0.3
-      })
-
-      // Connection opacity pulsing
-      connections.forEach((line, i) => {
-        ;(line.material as THREE.LineBasicMaterial).opacity = 0.1 + Math.abs(Math.sin(elapsed * 0.8 + i * 1.2)) * 0.4
-      })
-
-      particles1.rotation.y = elapsed * 0.04
-      particles1.rotation.x = Math.sin(elapsed * 0.2) * 0.06
-      particles2.rotation.y = -elapsed * 0.03
-      particles2.rotation.z = elapsed * 0.02
-
-      renderer.render(scene, camera)
-      animationId = window.requestAnimationFrame(animate)
-    }
-
-    animate()
-
-    return () => {
-      window.cancelAnimationFrame(animationId)
-      mount.removeEventListener("pointermove", onPointerMove)
-      window.removeEventListener("resize", resize)
-      renderer.dispose()
-      renderer.domElement.remove()
-    }
-  }, [])
-
   return (
-    <div className="relative h-[320px] w-full overflow-hidden sm:h-[400px] md:h-[560px]">
-      {/* Multi-layer glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,0.25),transparent_60%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_30%,rgba(34,211,238,0.15),transparent_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_70%,rgba(244,114,182,0.15),transparent_50%)]" />
+    <div className="relative h-[340px] w-full sm:h-[420px] md:h-[580px] flex items-center justify-center">
 
-      <div ref={mountRef} className="absolute inset-0" aria-hidden="true" />
+      {/* Glow background */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_70%_at_50%_50%,rgba(124,58,237,0.18),transparent)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_70%_25%,rgba(34,211,238,0.10),transparent)]" />
+
+      {/* Decorative ring — outer */}
+      <div
+        className="absolute rounded-full border border-violet-500/20 animate-spin-slow"
+        style={{ width: "92%", maxWidth: 420, aspectRatio: "1", animationDuration: "18s" }}
+      />
+      {/* Decorative ring — middle */}
+      <div
+        className="absolute rounded-full border border-cyan-400/15"
+        style={{ width: "78%", maxWidth: 360, aspectRatio: "1" }}
+      />
+
+      {/* Floating accent dot — top right */}
+      <span
+        className="absolute top-[12%] right-[15%] h-3 w-3 rounded-full bg-cyan-400 shadow-[0_0_12px_4px_rgba(34,211,238,0.5)]"
+        style={{ animation: "pulse 2.4s ease-in-out infinite" }}
+      />
+      {/* Floating accent dot — bottom left */}
+      <span
+        className="absolute bottom-[18%] left-[12%] h-2 w-2 rounded-full bg-pink-400 shadow-[0_0_10px_4px_rgba(244,114,182,0.5)]"
+        style={{ animation: "pulse 3s ease-in-out infinite 0.8s" }}
+      />
+      {/* Floating accent dot — top left */}
+      <span
+        className="absolute top-[22%] left-[16%] h-1.5 w-1.5 rounded-full bg-violet-400 shadow-[0_0_8px_3px_rgba(124,58,237,0.5)]"
+        style={{ animation: "pulse 2.8s ease-in-out infinite 1.4s" }}
+      />
+
+      {/* Photo — main */}
+      <div className="relative z-10 group">
+        {/* Gradient border ring */}
+        <div
+          className="rounded-full p-[3px]"
+          style={{
+            background: "linear-gradient(135deg, #7c3aed, #22d3ee, #f472b6, #7c3aed)",
+            backgroundSize: "300% 300%",
+            animation: "gradient-shift 5s ease infinite",
+            boxShadow: "0 0 40px rgba(124,58,237,0.35), 0 0 80px rgba(34,211,238,0.15)",
+          }}
+        >
+          {/* Inner ring gap */}
+          <div className="rounded-full bg-background p-1">
+            <Image
+              src="/1609985817736.jpg"
+              alt="Dedi Kusniadi"
+              width={280}
+              height={280}
+              priority
+              className="rounded-full object-cover w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px] group-hover:scale-[1.03] transition-transform duration-500"
+            />
+          </div>
+        </div>
+
+        {/* Subtle glow under photo */}
+        <div
+          className="absolute inset-0 rounded-full blur-2xl opacity-30 -z-10 scale-90"
+          style={{ background: "radial-gradient(circle, #7c3aed 0%, #22d3ee 60%, transparent 100%)" }}
+        />
+      </div>
 
       {/* Stat badges */}
       <div className="pointer-events-none absolute inset-x-4 bottom-4 grid grid-cols-3 gap-2 md:inset-x-6 md:bottom-6 md:gap-3">
         {[
-          ["13+", "Years"],
-          ["35+", "Projects"],
-          ["4", "Stacks"],
-        ].map(([value, label]) => (
+          { val: "13+", lbl: "Years",    darkColor: "rgba(167,139,250,0.95)", lightColor: "#5b21b6" },
+          { val: "35+", lbl: "Projects", darkColor: "rgba(34,211,238,0.95)",  lightColor: "#0e7490" },
+          { val: "4",   lbl: "Stacks",   darkColor: "rgba(244,114,182,0.95)", lightColor: "#9d174d" },
+        ].map(({ val, lbl, darkColor, lightColor }) => (
           <div
-            key={label}
-            className="rounded-xl border border-white/15 bg-black/30 px-2 py-2 text-center backdrop-blur-xl"
-            style={{ boxShadow: "0 4px 24px rgba(124,58,237,0.2), inset 0 1px 0 rgba(255,255,255,0.1)" }}
+            key={lbl}
+            className="hero-stat-badge relative overflow-hidden rounded-xl border px-2 py-2.5 text-center backdrop-blur-xl"
           >
-            <div className="text-base font-bold text-white md:text-lg">{value}</div>
-            <div className="text-[10px] uppercase tracking-widest text-white/60">{label}</div>
+            <div
+              className="hero-stat-accent absolute top-0 inset-x-0 h-px"
+              style={{
+                background: `linear-gradient(90deg, transparent, ${darkColor}, transparent)`,
+              }}
+            />
+            <div
+              className="hero-stat-val text-base font-black md:text-xl"
+              style={{ ["--dark-color" as string]: darkColor, ["--light-color" as string]: lightColor }}
+            >
+              {val}
+            </div>
+            <div className="hero-stat-lbl text-[10px] uppercase tracking-widest">{lbl}</div>
           </div>
         ))}
       </div>
