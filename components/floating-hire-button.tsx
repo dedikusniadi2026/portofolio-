@@ -9,29 +9,21 @@ export function FloatingHireButton() {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
-        setIsVisible(true)
-      } else {
-        setIsVisible(false)
-      }
+      setIsVisible(window.pageYOffset > 400)
     }
-
     window.addEventListener("scroll", toggleVisibility)
     return () => window.removeEventListener("scroll", toggleVisibility)
   }, [])
 
   return (
     <div
-      className={`fixed bottom-8 right-8 z-50 transition-all duration-300 ${
+      className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${
         isVisible ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0"
       }`}
     >
       <a href="mailto:dedikusniadi.bisnis@gmail.com">
-        <Button
-          size="lg"
-          className="rounded-full bg-gradient-to-r from-primary to-accent hover:scale-110 transition-all duration-300 animate-bounce shadow-2xl"
-        >
-          <MessageCircle className="w-5 h-5 mr-2" />
+        <Button size="lg" className="rounded-full shadow-lg transition-transform hover:scale-105">
+          <MessageCircle className="mr-2 h-4 w-4" />
           Hire Me
         </Button>
       </a>

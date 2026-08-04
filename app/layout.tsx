@@ -25,10 +25,10 @@ export const metadata: Metadata = {
     siteName: "Dedi Kusniadi Portfolio",
     images: [
       {
-        url: "https://portofolio-yvp2.vercel.app/images/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Preview of Dedi Kusniadi Portfolio",
+        url: "https://portofolio-yvp2.vercel.app/1609985817736.jpg",
+        width: 640,
+        height: 800,
+        alt: "Dedi Kusniadi — Senior Frontend Engineer",
       },
     ],
     locale: "en_US",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: "Dedi Kusniadi | Frontend Developer",
     description:
       "Portfolio of Dedi Kusniadi, Frontend Developer specializing in Angular, React, and Next.js.",
-    images: ["https://portofolio-yvp2.vercel.app/images/og-image.jpg"],
+    images: ["https://portofolio-yvp2.vercel.app/1609985817736.jpg"],
   },
   robots: {
     index: true,
@@ -57,8 +57,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon-v2.ico" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon-v2.ico" />
+        <link rel="apple-touch-icon" href="/favicon-v2.ico" />
         {/*
           Anti-FOUC script: runs before paint to apply the saved theme.
           Must be inline so it executes synchronously before hydration.
@@ -89,7 +89,7 @@ export default function RootLayout({
             "@type": "Person",
             name: "Dedi Kusniadi",
             url: "https://portofolio-yvp2.vercel.app",
-            image: "https://portofolio-yvp2.vercel.app/images/profile.jpg",
+            image: "https://portofolio-yvp2.vercel.app/1609985817736.jpg",
             jobTitle: "Frontend Developer",
             worksFor: {
               "@type": "Organization",
