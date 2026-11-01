@@ -2,103 +2,48 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Script from "next/script";
 
-
 export const metadata: Metadata = {
-  title: "Dedi Kusniadi | Frontend Developer",
-  description:
-    "Portfolio of Dedi Kusniadi, Frontend Developer with 13+ years of experience in Angular, React, Next.js, and modern web technologies.",
-  keywords: [
-    "Dedi Kusniadi",
-    "Frontend Developer",
-    "Angular",
-    "React",
-    "Next.js",
-    "Portfolio",
-    "Web Developer",
-  ],
+  title: "Dedi Kusniadi | Senior Frontend Engineer React Next.js - 13+ Years - Available Immediately",
+  description: "Senior Frontend Engineer 13+ years. React, Next.js 14, TypeScript, Zustand, WebSocket. Platforms for 250K to 10M+ users. Bandung → Remote, Open to Work.",
+  keywords: ["Dedi Kusniadi", "Senior Frontend Engineer", "React", "Next.js", "TypeScript", "Zustand", "Remote", "Bandung"],
   authors: [{ name: "Dedi Kusniadi" }],
   openGraph: {
-    title: "Dedi Kusniadi | Frontend Developer",
-    description:
-      "Portfolio of Dedi Kusniadi, Frontend Developer with 13+ years of experience in Angular, React, Next.js, and modern web technologies.",
-    url: "https://portofolio-yvp2.vercel.app",
+    title: "Dedi Kusniadi | Senior Frontend Engineer React Next.js",
+    description: "Senior Frontend Engineer 13+ years. Built platforms for 250K to 10M+ users. Open to Remote.",
+    url: "https://www.dedikusniadi.my.id",
     siteName: "Dedi Kusniadi Portfolio",
-    images: [
-      {
-        url: "https://portofolio-yvp2.vercel.app/1609985817736.jpg",
-        width: 640,
-        height: 800,
-        alt: "Dedi Kusniadi — Senior Frontend Engineer",
-      },
-    ],
+    images: [{ url: "https://www.dedikusniadi.my.id/1609985817736.jpg", width: 640, height: 800, alt: "Dedi Kusniadi" }],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    site: "@dedikusniadi2026",
-    title: "Dedi Kusniadi | Frontend Developer",
-    description:
-      "Portfolio of Dedi Kusniadi, Frontend Developer specializing in Angular, React, and Next.js.",
-    images: ["https://portofolio-yvp2.vercel.app/1609985817736.jpg"],
+    title: "Dedi Kusniadi | Senior Frontend Engineer",
+    description: "Senior Frontend Engineer 13+ years - React, Next.js, TypeScript",
+    images: ["https://www.dedikusniadi.my.id/1609985817736.jpg"],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon-v2.ico" />
-        <link rel="shortcut icon" href="/favicon-v2.ico" />
-        <link rel="apple-touch-icon" href="/favicon-v2.ico" />
-        {/*
-          Anti-FOUC script: runs before paint to apply the saved theme.
-          Must be inline so it executes synchronously before hydration.
-        */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var saved = localStorage.getItem('theme');
-                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  var theme = saved || (prefersDark ? 'dark' : 'light');
-                  document.documentElement.classList.add(theme);
-                } catch(e) {
-                  document.documentElement.classList.add('dark');
-                }
-              })();
-            `,
-          }}
-        />
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var s=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;var t=s||(d?'dark':'light');document.documentElement.classList.add(t)}catch(e){document.documentElement.classList.add('dark')}})()` }} />
       </head>
       <body>
         {children}
-
         <Script id="ld-json" type="application/ld+json" strategy="afterInteractive">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Person",
             name: "Dedi Kusniadi",
-            url: "https://portofolio-yvp2.vercel.app",
-            image: "https://portofolio-yvp2.vercel.app/1609985817736.jpg",
-            jobTitle: "Frontend Developer",
-            worksFor: {
-              "@type": "Organization",
-              name: "Freelance / Open to Opportunities",
-            },
-            sameAs: [
-              "https://github.com/dedikusniadi2026",
-              "https://linkedin.com/in/dedi-kusniadi",
-            ],
+            url: "https://www.dedikusniadi.my.id",
+            image: "https://www.dedikusniadi.my.id/1609985817736.jpg",
+            jobTitle: "Senior Frontend Engineer",
+            worksFor: { "@type": "Organization", name: "Open to Work - Remote" },
+            sameAs: ["https://github.com/dedikusniadi2026", "https://linkedin.com/in/dedi-kusniadi"],
           })}
         </Script>
       </body>
