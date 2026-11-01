@@ -53,7 +53,7 @@ const caseStudies: CaseStudy[] = [
     ],
     archNote: "First version put everything in one WebSocket — map froze when routing service slow. Split: tracking in Web Worker, routing separate REST. Zustand per domain so squads don't conflict.",
     didntWork: "First tried Redux single store — mess with 6 squads. Moved to Zustand per domain.",
-    codeNote: "Code: Private repo — client NDA. Can share sanitized tracking mock + architecture on request.",
+    codeNote: "Code: https://github.com/dedikusniadi2026/logistics-tracking-fe | https://github.com/dedikusniadi2026/logistics-tracking-be | Sanitized rebuild, no company code.",
     photoNote: "Photo: NDA — can't show real tracking, using GIS mock. Real version has 2k dispatchers online."
   },
   {
