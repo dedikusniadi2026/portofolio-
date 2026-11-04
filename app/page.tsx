@@ -89,7 +89,7 @@ const caseStudies: CaseStudy[] = [
   },
   {
     index: "03",
-    title: "Telin Enterprise Portal — billing yang bikin support capek",
+    title: "Telin Enterprise Portal",
     client: "Telin (Telekomunikasi Indonesia Intl.)",
     sector: "Telecommunications",
     image: "/Telin.png",
@@ -121,7 +121,7 @@ const caseStudies: CaseStudy[] = [
   },
   {
     index: "04",
-    title: "E-Working Permit — dari kertas jadi 1 hari",
+    title: "E-Working Permit XL Axiata",
     client: "Industrial Group • Compliance",
     sector: "Compliance / HR",
     image: "/eworking.png",
@@ -153,7 +153,7 @@ const caseStudies: CaseStudy[] = [
   },
   {
     index: "05",
-    title: "ADA BSP — partner graph yang bikin pusing",
+    title: "ADA BSP",
     client: "ADA Business Support Partner",
     sector: "Business Support Systems",
     image: "/ADA.png",
