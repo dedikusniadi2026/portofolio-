@@ -1,18 +1,26 @@
 import type { Metadata } from 'next'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import Script from "next/script";
 
+const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-jakarta', display: 'swap' });
+
 export const metadata: Metadata = {
-  title: "Dedi Kusniadi | Senior Frontend Engineer React Next.js - 13+ Years - Available Immediately",
-  description: "Senior Frontend Engineer 13+ years. React, Next.js 14, TypeScript, Zustand, WebSocket. Platforms for 250K to 10M+ users. Bandung → Remote, Open to Work.",
-  keywords: ["Dedi Kusniadi", "Senior Frontend Engineer", "React", "Next.js", "TypeScript", "Zustand", "Remote", "Bandung"],
+  title: "Dedi Kusniadi | Senior Frontend Engineer — 13+ Years Enterprise Experience",
+  description: "Senior Frontend Engineer & Full Stack Software Engineer with 13+ years building enterprise dashboards, telecommunications platforms, and business-critical web applications. React, Angular, TypeScript, Next.js.",
+  keywords: ["Dedi Kusniadi", "Senior Frontend Engineer", "Full Stack Software Engineer", "React", "Angular", "TypeScript", "Next.js", "Enterprise", "Remote"],
   authors: [{ name: "Dedi Kusniadi" }],
   openGraph: {
     title: "Dedi Kusniadi | Senior Frontend Engineer React Next.js",
     description: "Senior Frontend Engineer 13+ years. Built platforms for 250K to 10M+ users. Open to Remote.",
     url: "https://www.dedikusniadi.my.id",
     siteName: "Dedi Kusniadi Portfolio",
-    images: [{ url: "https://www.dedikusniadi.my.id/1609985817736.jpg", width: 640, height: 800, alt: "Dedi Kusniadi" }],
+    images: [{
+      url: "https://www.dedikusniadi.my.id/1609985817736.jpg",
+      width: 1200,
+      height: 630,
+      alt: "Dedi Kusniadi — Senior Frontend Engineer"
+    }],
     locale: "en_US",
     type: "website",
   },
@@ -27,10 +35,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={jakarta.variable} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon-v2.ico" />
-        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var s=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;var t=s||(d?'dark':'light');document.documentElement.classList.add(t)}catch(e){document.documentElement.classList.add('dark')}})()` }} />
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var s=localStorage.getItem('theme');if(s==='dark')document.documentElement.classList.add('dark')}catch(e){}})()` }} />
       </head>
       <body>
         {children}
