@@ -221,8 +221,8 @@ export default function HomePage() {
   const navItems = ["About", "Case Studies", "Experience", "Contact"]
   const handleDownload = () => {
     const link = document.createElement("a")
-    link.href = "/CV-Dedi-Kusniadi-1-Halaman-ATS-Frontend.pdf"
-    link.download = "CV-Dedi-Kusniadi-1-Halaman-ATS-Frontend.pdf"
+    link.href = "/CV-Dedi-Kusniadi-Frontend.pdf"
+    link.download = "CV-Dedi-Kusniadi-Frontend.pdf"
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -265,7 +265,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-6xl gap-12 px-6 pb-20 pt-10 md:pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:pb-28">
           <div className="animate-fade-in-up">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs shadow-sm">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" /> Open to Remote • Ex-Axiata Digital Labs (2020-2026) • BSP: bizmsgcore.ada-asia.com
+              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" /> Open to Remote • Ex-Axiata Digital Labs (2020-2026)
             </div>
             <p className="section-kicker mb-4">Senior Frontend Engineer · 13+ years • React / Next.js • Business Messaging (WhatsApp BSP)</p>
             <h1 className="text-4xl font-black leading-[1.05] tracking-tight md:text-5xl">
