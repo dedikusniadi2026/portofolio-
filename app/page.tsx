@@ -393,10 +393,10 @@ export default function HomePage() {
             <span className="dot-grid right-6 top-0 hidden lg:block" aria-hidden />
             <div className="relative mx-auto max-w-[380px] lg:max-w-none">
               <div className="pointer-events-none absolute inset-x-8 bottom-4 top-12 z-0 rounded-full bg-primary/10 blur-3xl" aria-hidden />
-              <Image src="/images/avatar-3d.png" alt="Dedi Kusniadi — Senior Frontend Engineer" width={760} height={1140}
+              <Image src="/images/dedi-cutout-2026.png" alt="Dedi Kusniadi — Senior Frontend Engineer" width={760} height={1140}
                      priority
                      className="relative z-[1] mx-auto aspect-[2/3] w-full max-w-[400px] object-contain drop-shadow-[0_28px_40px_rgba(15,40,90,0.28)] [mask-image:linear-gradient(to_bottom,#000_92%,transparent_99%)]" />
-              <div className="soft-card absolute -bottom-6 -left-3 hidden w-[250px] px-4 py-3 sm:block">
+              <div className="soft-card absolute -bottom-6 -left-3 z-[2] hidden w-[250px] px-4 py-3 sm:block">
                 <p className="flex items-center gap-2 text-xs font-bold">
                   <span className="h-2 w-2 animate-pulse rounded-full bg-success" />Ex-Axiata Digital Labs
                 </p>
