@@ -121,7 +121,7 @@ const caseStudies: CaseStudy[] = [
       { label: "Client", items: ["Angular SPA", "Lazy modules"] },
       { label: "API Gateway", items: ["REST", "OAuth2"] },
       { label: "Services", items: ["Billing", "Service Order", "Support"] },
-      { label: "Data", items: ["Oracle DB", "Redis"] },
+      { label: "Data", items: ["PostgreSQL", "Redis","Grafana"] },
     ],
     archNote: "First lazy-load split too aggressive — users saw blank 2s. Rolled back, only split Billing + Support. Tokens from Figma keep 12 teams consistent.",
     didntWork: "First lazy-load split too aggressive, users saw blank screen 2s. Rolled back and only split Billing + Support modules.",
