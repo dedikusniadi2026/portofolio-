@@ -890,3 +890,154 @@
   background: color-mix(in srgb, var(--primary) 8%, var(--card));
   color: var(--primary);
 }
+
+/* ============================================================
+   CONVERSION PASS — trust badges, tabs, steps, tooltips
+   ============================================================ */
+
+/* Hero trust badges */
+.trust-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  box-shadow: 0 10px 22px -18px rgb(11 27 58 / 0.45);
+}
+
+/* Trusted-by wordmarks (text only — client logos stay private) */
+.trust-logo {
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: color-mix(in srgb, var(--foreground) 55%, var(--muted-foreground));
+  filter: grayscale(1);
+  opacity: 0.75;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.trust-logo:hover {
+  opacity: 1;
+  color: var(--foreground);
+}
+
+/* Provenance label above each project title */
+.cs-top-label {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--primary) 78%, var(--foreground));
+}
+
+/* Case study tabs */
+.cs-tabs {
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.cs-tabs::-webkit-scrollbar { display: none; }
+
+.cs-tabs > * { flex: 0 0 auto; }
+
+.cs-tab {
+  border-radius: 0;
+  background: transparent;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted-foreground);
+  box-shadow: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.cs-tab:hover {
+  color: var(--foreground);
+}
+
+.cs-tab[data-state="active"] {
+  background: transparent;
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  box-shadow: none;
+}
+
+.cs-tabs .cs-tab[data-state="active"],
+.dark .cs-tabs .cs-tab[data-state="active"] {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.cs-panel {
+  animation: fade-in 0.35s ease forwards;
+}
+
+/* How I Work step numbers */
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.1rem;
+  min-width: 2.1rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 12%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+/* Pure-CSS tooltip used on the tech stack chips */
+.tip {
+  position: relative;
+  cursor: help;
+}
+
+.tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 0.55rem);
+  left: 50%;
+  transform: translate(-50%, 4px);
+  width: max-content;
+  max-width: min(16rem, 78vw);
+  border-radius: var(--radius-md);
+  background: var(--foreground);
+  color: var(--background);
+  padding: 0.5rem 0.65rem;
+  font-size: 0.68rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-transform: none;
+  letter-spacing: normal;
+  white-space: normal;
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 30;
+}
+
+.tip:hover::after,
+.tip:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tip::after {
+    transform: translate(-50%, 0);
+    transition: opacity 0.01ms;
+  }
+}
