@@ -8,6 +8,7 @@ const MAX_NAME = 120
 const MAX_EMAIL = 254
 const MAX_MESSAGE = 5_000
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+const NOT_CONFIGURED_ERROR = "Email delivery isn't configured on this site yet — please use the Email me button."
 
 // Single-instance, in-memory. Good enough for a portfolio form; it resets on deploy or restart.
 const lastSubmitAt = new Map<string, number>()
@@ -120,20 +121,22 @@ export async function POST(request: Request) {
   // No key configured (local dev, or env not set on the host): don't leave the visitor stuck.
   // The address stays server-side — we hand back a ready-to-open mailto instead of exposing it.
   if (!apiKey) {
-    console.error("contact/route: RESEND_API_KEY is not set — falling back to mailto")
+    console.error("contact/route: RESEND_API_KEY is not set")
+    const mailto = to ? buildMailto({ to, name, email, message }) : undefined
     return NextResponse.json(
       {
         success: false,
-        fallback: "mailto",
-        mailto: to ? buildMailto({ to, name, email, message }) : undefined,
-        error: "Email delivery is not configured on this deployment.",
+        ...(mailto ? { fallback: "mailto", mailto } : {}),
+        error: mailto
+          ? "Email delivery isn't configured yet — opening your mail app instead."
+          : NOT_CONFIGURED_ERROR,
       },
       { status: 503 },
     )
   }
   if (!to) {
     console.error("contact/route: CONTACT_TO_EMAIL is not set")
-    return NextResponse.json({ success: false, error: "Email delivery is not configured on this deployment." }, { status: 503 })
+    return NextResponse.json({ success: false, error: NOT_CONFIGURED_ERROR }, { status: 503 })
   }
 
   const sentAt = new Date()
