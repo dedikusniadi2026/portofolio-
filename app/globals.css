@@ -955,6 +955,7 @@
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--muted-foreground);
+  cursor: pointer;
   box-shadow: none;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;

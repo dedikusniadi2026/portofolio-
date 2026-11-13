@@ -38,12 +38,57 @@ interface CaseStudy {
 const caseStudies: CaseStudy[] = [
   {
     index: "01",
+    title: "SentinelPay — Wallet Transfers & Double-Entry Ledger",
+    cardTitle: "SentinelPay",
+    cardSubtitle: "IDR & USD wallets, double-entry ledger",
+    client: "Independent R&D • Full Stack • Secure wallet workspace",
+    sector: "FinTech / Payments Infrastructure",
+    badge: "Independent R&D • Full Stack • 151 Automated Tests",
+    topLabel: "Project 01 · Independent R&D — not an employer deliverable",
+    image: "/sentinelpay.png",
+    role: "Fullstack Developer",
+    summary: "Customer-facing brand of an internal wallet workspace: IDR and USD balances, transfers, and a readable history. Every transfer, deposit, withdrawal and reversal posts to an append-only double-entry ledger, so a balance is never a number someone edited.",
+    impact: [
+      "IDR and USD wallets in one place, with an easy-to-read transaction history. The UI renders only API data — no fabricated balances or transactions.",
+      "Layered security: HttpOnly Redis-backed sessions, CSRF-bound state changes, Argon2id passwords, TOTP MFA plus a transaction PIN, and step-up verification before money moves.",
+      "Transparent records: every fund movement is atomic, idempotent where it matters, and posted as a balanced journal, so reconciliation is a query instead of a trust assumption.",
+    ],
+    contributions: [
+      "Built the NestJS API and React SPA together — Redis-backed HttpOnly sessions, a session-bound CSRF token and an exact Origin allowlist for every unsafe request",
+      "Designed the double-entry ledger and the transfer engine: deposits, withdrawals, reversals and refunds post balanced journals inside one PostgreSQL transaction with row locks and idempotency keys",
+      "Implemented TOTP MFA with HKDF-derived AES-256-GCM encrypted secrets, one-time recovery codes, a transaction PIN and 5-minute step-up for money movement",
+      "Set up deny-by-default RBAC — 32 permissions across 20 staff roles; navigation, route guards and action buttons are generated from the server permission list while the API enforces each permission independently of the UI",
+      "Shipped the delivery pipeline: Docker Compose for dev and a production stack with two API replicas behind nginx, plus CI for typecheck, lint, API E2E against real services, image builds, dependency audit and a gitleaks secret scan",
+      "Wired Datadog in for monitoring — APM traces and JSON logs tagged with the API's request correlation ID, dashboards on the in-process metrics snapshot (requests, status classes, latency, memory), and liveness/readiness probes as the deployment gate",
+    ],
+    metrics: [
+      { value: "151", label: "Tests passing (API unit + E2E + web)" },
+      { value: "Double-entry", label: "Append-only ledger, BigInt minor units" },
+      { value: "20 roles", label: "Staff RBAC over 32 permissions" },
+      { value: "18", label: "Checksummed SQL migrations" },
+    ],
+    tech: ["React", "TypeScript", "NestJS", "PostgreSQL", "Redis", "Docker", "Datadog"],
+    arch: [
+      { label: "Edge", items: ["nginx", "TLS terminator"] },
+      { label: "Client", items: ["React SPA", "TanStack Query", "Zod forms"] },
+      { label: "API Gateway", items: ["REST /api/v1", "Session + CSRF", "Throttling"] },
+      { label: "Services", items: ["Wallets", "Transfer Engine", "Ledger", "Risk / KYC"] },
+      { label: "Data", items: ["PostgreSQL", "Redis sessions"] },
+      { label: "Observability", items: ["Datadog APM", "Logs", "Metrics", "Health probes"] },
+    ],
+    archNote: "One API owns both the session and the money path, so the client is never trusted with a balance: journals live in PostgreSQL and Redis only holds sessions plus rate-limit buckets. The SPA and /api/ share one origin behind nginx, which is what makes SameSite=Lax with an exact Origin match enough for CSRF. Datadog sits outside that path — traces and logs carry the same correlation ID the API generates, so one slow transfer is searchable end to end without touching the ledger.",
+    didntWork: "Early version kept the session in browser storage and stored one balance number per wallet — simple to render, impossible to audit. Moved sessions into HttpOnly Redis-backed cookies and derived every balance from the ledger; the extra join cost is worth paying because reconciliation became a query.",
+    codeNote: "Private repo, runs locally (React SPA on Vite + NestJS API + PostgreSQL and Redis in Docker). No public URL — deposit and withdrawal endpoints are simulated cash movements that post real journals, there is no bank or payment-provider integration. Can walk through ledger posting rules, the step-up flow and the permission catalog in an interview.",
+    photoNote: "Login screen from the running local app — dark/gold brand variant, no real user data.",
+  },
+  {
+    index: "02",
     title: "Logistics Tracking System",
     cardTitle: "Logistics Tracking",
     cardSubtitle: "National scale real-time map",
     client: "Freelance • National Logistics",
     sector: "Enterprise Logistics",
-    topLabel: "Project 01 · Independent R&D — not an employer deliverable",
+    topLabel: "Project 02 · Independent R&D — not an employer deliverable",
     badge: "Independent / Open Source • Mar 2026 — Present • Full Stack R&D",
     image: "/gis.png",
     role: "Fullstack Developer",
@@ -74,13 +119,13 @@ const caseStudies: CaseStudy[] = [
     photoNote: "Sanitized GIS mock — real version has 2k dispatchers live. Live demo uses mock WebSocket <1s."
   },
   {
-    index: "02",
+    index: "03",
     title: "Enterprise Analytics Dashboard",
     cardTitle: "Analytics Dashboard",
     cardSubtitle: "60+ KPIs, 250K monthly users",
     client: "Retail Group • 250K MAU",
     sector: "Data & Analytics",
-    topLabel: "Project 02 · Client work — code private under NDA",
+    topLabel: "Project 03 · Client work — code private under NDA",
     image: "/dashboard.png",
     role: "Fullstack Developer",
     summary: "Legacy report suite 60+ KPIs — first paint 8s, sales team on 3G complained. Needed <2s.",
@@ -108,14 +153,14 @@ const caseStudies: CaseStudy[] = [
     codeNote: "Real code private under NDA. Sanitized virtualization demo above — 50k rows 5fps → 60fps.",
   },
   {
-    index: "03",
+    index: "04",
     title: "Telin NeuAPIX — WhatsApp Business Platform",
     cardTitle: "Telin NeuAPIX",
     cardSubtitle: "Telco WhatsApp BSP, CPaaS dashboard",
     client: "Telin (Telekomunikasi Indonesia International) • Official WhatsApp BSP by Meta • CPaaS Platform",
     sector: "Telecommunications / CPaaS",
     badge: "Live: dashboard.neuapix.com • WhatsApp BSP • CPaaS • 100K+ Users",
-    topLabel: "Project 03 · Employer project — live platform, code private",
+    topLabel: "Project 04 · Employer project — live platform, code private",
     image: "/Telin.png",
     role: "Senior Frontend Engineer",
     summary: "WhatsApp Business Platform dashboard for NeuAPIX — Telin's CPaaS product on top of the Meta Cloud API. My scope: WABA onboarding, template management, unified inbox.",
@@ -153,14 +198,14 @@ const caseStudies: CaseStudy[] = [
     photoNote: "Dashboard screenshot shown here is sanitized — live platform is behind Telin login.",
   },
   {
-    index: "04",
+    index: "05",
     title: "E-Working Permit — Office Guest & BTS Permit System",
     cardTitle: "E-Working Permit",
     cardSubtitle: "Office guest & BTS permit system",
     client: "XLSmart (ex-XL Axiata) • ewp.newxlife.xlsmart.co.id • Compliance & Physical Security",
     sector: "Compliance & Physical Security",
     badge: "Live: ewp.newxlife.xlsmart.co.id • 10K+ Permits / Month • 100% Paperless • 5 Days → 1 Day",
-    topLabel: "Project 04 · Employer project — live app, code private",
+    topLabel: "Project 05 · Employer project — live app, code private",
     image: "/eworking.png",
     role: "Senior Frontend Engineer",
     summary: "Two systems in one portal: office guest check-in with selfie capture, and the BTS Electronic Permit to Work. Replaced a 5-day paper approval with a 1-day digital flow.",
@@ -197,13 +242,13 @@ const caseStudies: CaseStudy[] = [
     photoNote: "Sanitized screenshot — live system is behind XL SSO login.",
   },
   {
-    index: "05",
+    index: "06",
     title: "ADA Business Messaging Core",
     cardTitle: "ADA Biz Messaging",
     cardSubtitle: "WhatsApp BSP, 1000+ accounts",
     client: "ADA Asia • bizmsgcore.ada-asia.com • WhatsApp BSP",
     sector: "Business Messaging / MarTech",
-    topLabel: "Project 05 · Employer project — live app, code private",
+    topLabel: "Project 06 · Employer project — live app, code private",
     image: "/ADA.png",
     role: "Frontend Engineer",
     summary: "Business messaging platform — bizmsgcore.ada-asia.com. ADA is official WhatsApp Business Solution Provider (BSP) in APAC. Unified inbox for WhatsApp, SMS, LINE, RCS. Login with verified email.",
@@ -266,7 +311,7 @@ const techStack = [
   { name: "RabbitMQ", logo: "/tech/rabbitmq.svg" },
 ]
 
-const heroTechNames = ["React", "Angular", "TypeScript", "Next.js", "Node.js"]
+const heroTechNames = ["React", "Angular", "TypeScript", "NestJS", "Node.js"]
 const heroTechStack = techStack.filter(({ name }) => heroTechNames.includes(name))
 
 const techGroups = [
@@ -286,6 +331,18 @@ const techGroups = [
     items: [
       { name: "NestJS", tip: "Open R&D project — WebSocket gateway pushing mock tracking events under 1s." },
       { name: "Node.js", tip: "BFF layers, build tooling, small internal services." },
+    ],
+  },
+  {
+    icon: Shield,
+    title: "Security",
+    items: [
+      { name: "Argon2id", tip: "SentinelPay password hashes — profile changes re-verify the current password and sign out other sessions." },
+      { name: "HttpOnly Sessions", tip: "Redis-backed session cookie, SameSite=Lax, regenerated on login — no auth material in browser storage." },
+      { name: "CSRF + Origin check", tip: "Session-bound token in X-CSRF-Token on every unsafe request, plus an exact allowed-origin match." },
+      { name: "TOTP MFA", tip: "RFC 6238 codes with encrypted secrets, one-time recovery codes, a transaction PIN and 5-minute step-up before money moves." },
+      { name: "RBAC", tip: "32-permission deny-by-default catalog over 20 staff roles in SentinelPay; MSAL + Azure AD at Telin and ADA." },
+      { name: "OWASP Top 10", tip: "Threat model and OWASP 2025 control mapping written per project, not a checkbox exercise." },
     ],
   },
   {
@@ -650,9 +707,9 @@ export default function HomePage() {
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
-              {caseStudies.map((cs, i) => (
+              {caseStudies.map((cs) => (
                 <article key={cs.index}
-                         className={`card-lift soft-card flex flex-col overflow-hidden ${i < 3 ? "lg:col-span-2" : "lg:col-span-3"} ${i === 4 ? "sm:col-span-2" : ""}`}>
+                         className="card-lift soft-card flex flex-col overflow-hidden lg:col-span-2">
                   <a href={cs.liveDemo ?? `#case-${cs.index}`}
                      {...(cs.liveDemo ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                      title={cs.demoNote}
@@ -707,7 +764,7 @@ export default function HomePage() {
             <p className="kicker mb-4">Case Studies</p>
             <h2 className="section-head text-[clamp(1.8rem,3.4vw,2.6rem)]">Selected work, in depth.</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              5 flagship projects including 2 WhatsApp BSP platforms (Telin + ADA bizmsgcore).
+              6 flagship projects including 2 WhatsApp BSP platforms (Telin + ADA bizmsgcore).
               Real code is under NDA — sanitized rebuilds and honest engineering notes below.
             </p>
           </div>
@@ -905,7 +962,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid animate-on-scroll gap-5 lg:grid-cols-3">
+          <div className="grid animate-on-scroll gap-5 md:grid-cols-2">
             {techGroups.map(({ icon: Icon, title, items }) => (
               <div key={title} className="card-lift soft-card p-5 md:p-6">
                 <div className="mb-4 flex items-center gap-3">
