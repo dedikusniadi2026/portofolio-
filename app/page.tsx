@@ -13,13 +13,15 @@ import {
   ArrowRight, Briefcase, Rocket, Code2, Shield, BookOpen,
   Menu, Mail, Linkedin, Github, Download, MapPin, Clock, Sparkles,
   Layers, Lock, Users, Gauge, CheckCircle2, TrendingUp, AlertTriangle,
-  CalendarDays, Search, Wrench, Database, MonitorSmartphone, Server, Fingerprint, Quote
+  CalendarDays, Search, Wrench, Database, MonitorSmartphone, Server, Fingerprint, Quote,
+  MessageCircle
 } from "lucide-react"
 
 const contact = {
   email: "dedikusniadi.bisnis@gmail.com",
   linkedin: "https://www.linkedin.com/in/dedi-kusniadi",
   github: "https://github.com/dedikusniadi2026",
+  whatsapp: "https://wa.me/6282215012841",
   calendly: "https://calendly.com/dedikusniadi",
   cv: "/cv/dedi-kusniadi.pdf",
   cvFileName: "CV-Dedi-Kusniadi-Frontend.pdf",
@@ -34,15 +36,15 @@ interface CaseStudy {
   arch: ArchLayer[]; archNote: string; didntWork: string; codeNote: string; ctaLabel: string; cardCtaLabel?: string; photoNote?: string; ctaOnly?: boolean
 }
 
-const caseStudies: CaseStudy[] = [
+const caseStudiesRaw: CaseStudy[] = [
   {
-    index: "01",
+    index: "06",
     title: "SentinelPay — Wallet Transfers & Double-Entry Ledger",
     cardTitle: "SentinelPay",
     cardSubtitle: "IDR & USD wallets, double-entry ledger",
     client: "Internal wallet workspace • IDR & USD",
     sector: "FinTech / Payments Infrastructure",
-    topLabel: "Current Focus • 2026 — Present • Personal R&D",
+    topLabel: "Personal R&D • 2026 — Present",
     image: "/sentinelpay-light.png",
     role: "Fullstack Developer",
     summary: "Customer-facing brand of an internal wallet workspace: IDR and USD balances, transfers, and a readable history. Every transfer, deposit, withdrawal and reversal posts to an append-only double-entry journal, so a balance is always derived — never edited. I built this because in previous enterprise projects, the ledger was often the source of bugs. I want to prove that a balance should come from the journal, not from an edited number.",
@@ -126,7 +128,7 @@ const caseStudies: CaseStudy[] = [
     ctaOnly: true,
   },
   {
-    index: "03",
+    index: "01",
     title: "Telin NeuAPIX — WhatsApp Business Platform",
     cardTitle: "Telin NeuAPIX",
     cardSubtitle: "Telco WhatsApp BSP, CPaaS dashboard",
@@ -135,7 +137,7 @@ const caseStudies: CaseStudy[] = [
     topLabel: "Employer Project • Telco WhatsApp BSP • CPaaS",
     image: "/Telin.png",
     role: "Senior Frontend Engineer",
-    summary: "WhatsApp Business Platform dashboard for NeuAPIX — Telin's CPaaS product on top of the Meta Cloud API. My scope: WABA onboarding, template management, unified inbox and API usage monitoring for 100K+ users.",
+    summary: "WhatsApp Business Platform dashboard for NeuAPIX — Telin's CPaaS product on top of the Meta Cloud API. My scope: WABA onboarding, template management, unified inbox and API usage monitoring for 10M+ users.",
     impact: [
       "Telin is an official Telecom WhatsApp BSP selected by Meta since 2023. NeuAPIX is its CPaaS platform — businesses use the WhatsApp Cloud API without building their own infrastructure.",
       "The dashboard is where those businesses live: WABA onboarding via Meta Embedded Signup, template management with Meta approval status, chatbot flows and the omnichannel inbox.",
@@ -150,7 +152,7 @@ const caseStudies: CaseStudy[] = [
     metrics: [
       { value: "BSP", label: "Official WhatsApp BSP by Meta (since 2023)" },
       { value: "CPaaS", label: "WhatsApp Cloud API, no own infra" },
-      { value: "100K+", label: "Users" },
+      { value: "10M+", label: "Users" },
     ],
     tech: ["Angular", "TypeScript", "SCSS", "WhatsApp Cloud API", "MSAL", "REST"],
     arch: [
@@ -167,7 +169,7 @@ const caseStudies: CaseStudy[] = [
     photoNote: "NeuAPIX dashboard — WABA onboarding, template manager and unified inbox.",
   },
   {
-    index: "04",
+    index: "03",
     title: "E-Working Permit — Office Guest & BTS Permit System",
     cardTitle: "E-Working Permit",
     cardSubtitle: "Office guest & BTS permit system",
@@ -208,7 +210,7 @@ const caseStudies: CaseStudy[] = [
     photoNote: "Guest check-in and the BTS permit wizard — product UI.",
   },
   {
-    index: "05",
+    index: "04",
     title: "ADA Business Messaging Core",
     cardTitle: "ADA Biz Messaging",
     cardSubtitle: "WhatsApp BSP, 1,000+ accounts",
@@ -245,7 +247,7 @@ const caseStudies: CaseStudy[] = [
     photoNote: "BizMsgCore unified inbox — WhatsApp, SMS, LINE and RCS in one queue.",
   },
   {
-    index: "06",
+    index: "05",
     title: "Enterprise Analytics Dashboard",
     cardTitle: "Analytics Dashboard",
     cardSubtitle: "60+ KPIs, 250K monthly users",
@@ -287,6 +289,8 @@ const caseStudies: CaseStudy[] = [
   },
 ]
 
+const caseStudies = caseStudiesRaw.slice().sort((a, b) => a.index.localeCompare(b.index))
+
 interface Experience { company: string; role: string; period: string; note?: string }
 
 const earlierExperiences: Experience[] = [
@@ -300,35 +304,41 @@ const earlierExperiences: Experience[] = [
 
 const experienceGroups: { title: string; items: Experience[]; more?: Experience[] }[] = [
   {
-    title: "Current — Personal R&D",
-    items: [{ company: "SentinelPay", role: "Full-Stack R&D", period: "2026 — Present" }],
-  },
-  {
     title: "Previous Employment",
     items: [
-      { company: "Axiata Digital Labs", role: "Senior Frontend Engineer", period: "Aug 2023 — Mar 2026" },
-      { company: "Axiata Digital Labs", role: "Frontend Engineer", period: "Jul 2020 — Aug 2023" },
+      { company: "Axiata Digital Labs", role: "Senior Frontend Engineer", period: "Jul 2020 — Mar 2026", note: "Promoted from Frontend Developer" },
       { company: "Other Companies", role: "Various Roles", period: "2013 — 2020" },
     ],
     more: earlierExperiences,
   },
+  {
+    title: "Personal R&D",
+    items: [{ company: "SentinelPay", role: "Full-Stack R&D", period: "2026 — Present" }],
+  },
 ]
 
-const techStack = [
-  { name: "React", logo: "/tech/react.svg" },
-  { name: "Angular", logo: "/tech/angular.svg" },
+const employmentHistory = [
+  { period: "Mar 2026 — Present", role: "Independent Consultant — Full Stack", note: "Self-initiated R&D + Contract-ready" },
+  { period: "Jul 2020 — Mar 2026", role: "Senior Frontend Engineer @ Axiata Digital Labs", note: "Promoted from Frontend Developer" },
+  { period: "2019 — 2020 (Contract)", role: "Kreasi Digital • AYO Media • Bank BTPN", note: "POS SaaS, Flutter apps, joint financial system (OJK & BI)" },
+  { period: "2013 — 2019", role: "Web Developer", note: "Bisnis Indonesia, Springfields Asia" },
+]
+
+const heroTechStack = [
+  { name: "React.js", logo: "/tech/react.svg" },
+  { name: "Next.js 14", logo: "/tech/nextjs.svg" },
   { name: "TypeScript", logo: "/tech/typescript.svg" },
-  { name: "Next.js", logo: "/tech/nextjs.svg" },
+  { name: "JavaScript", logo: "/tech/javascript.svg" },
+  { name: "Angular", logo: "/tech/angular.svg" },
   { name: "NestJS", logo: "/tech/nestjs.svg" },
   { name: "Node.js", logo: "/tech/nodejs.svg" },
   { name: "PostgreSQL", logo: "/tech/postgresql.svg" },
   { name: "Redis", logo: "/tech/redis.svg" },
-  { name: "Docker", logo: "/tech/docker.svg" },
-  { name: "RabbitMQ", logo: "/tech/rabbitmq.svg" },
+  { name: "REST API", logo: "/tech/rest-api.svg" },
+  { name: "WebSocket", logo: "/tech/websocket.svg" },
+  { name: "OWASP", logo: "/tech/owasp.svg" },
+  { name: "Agile", logo: "/tech/agile.svg" },
 ]
-
-const heroTechNames = ["React", "Angular", "TypeScript", "NestJS", "Node.js"]
-const heroTechStack = techStack.filter(({ name }) => heroTechNames.includes(name))
 
 const techGroups = [
   {
@@ -422,9 +432,10 @@ const howIWork = [
 ]
 
 const trustBadges = [
-  { value: "13+", label: "Years in enterprise frontend" },
-  { value: "2K+", label: "Dispatchers on my maps at peak" },
-  { value: "100K+", label: "Users on platforms I shipped" },
+  { value: "30s → <1s", label: "Logistics map lag (97%)" },
+  { value: "8.1s → 2.4s", label: "LCP, low-end tablets" },
+  { value: "10M+ users", label: "Telin WhatsApp BSP" },
+  { value: "5 days → 1 day", label: "Permit flow, 10K+/month" },
 ]
 
 const aboutHighlights = [
@@ -562,11 +573,13 @@ export default function HomePage() {
 
             <h1 className="mt-6 text-5xl font-extrabold leading-[1.02] sm:text-6xl lg:text-7xl">Dedi Kusniadi</h1>
             <h2 className="mt-4 max-w-xl text-2xl font-bold leading-tight text-primary/90 sm:text-[28px]">
-              I help enterprise teams fix slow maps, heavy dashboards, and confusing portals — without rewriting everything.
+              Senior Full Stack Software Engineer | 13+ Years (6+ Years Senior Frontend Focus)
             </h2>
             <p className="mt-5 max-w-lg text-[15px] leading-relaxed text-muted-foreground">
-              13+ years building secure, user-focused web applications — from a national logistics map used by
-              2,000 dispatchers to WhatsApp BSP platforms running 1,000+ business accounts.
+              I help enterprise teams fix slow maps, heavy dashboards, and confusing portals — without rewriting everything. From API to UI.
+            </p>
+            <p className="mt-2 max-w-lg text-[15px] leading-relaxed text-muted-foreground">
+              Bandung, Indonesia • Open to Fully Remote Full-time &amp; Contract • Available Immediately
             </p>
 
             <ul className="mt-7 flex flex-wrap gap-2.5">
@@ -579,6 +592,18 @@ export default function HomePage() {
             </ul>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Button size="lg" variant="outline" onClick={handleDownload}
+                      className="btn-pill border-border bg-card px-6 text-[15px] font-semibold hover:bg-secondary">
+                <Download className="mr-2 h-4 w-4" />Download CV
+              </Button>
+              <Button asChild size="lg" variant="outline"
+                      className="btn-pill border-border bg-card px-6 text-[15px] font-semibold hover:bg-secondary">
+                <a href={contact.linkedin} target="_blank" rel="noreferrer"><Linkedin className="mr-2 h-4 w-4" />LinkedIn</a>
+              </Button>
+              <Button asChild size="lg" variant="outline"
+                      className="btn-pill border-border bg-card px-6 text-[15px] font-semibold hover:bg-secondary">
+                <a href={contact.whatsapp} target="_blank" rel="noreferrer"><MessageCircle className="mr-2 h-4 w-4" />WhatsApp</a>
+              </Button>
               <Button asChild size="lg" className="btn-pill bg-primary px-6 text-[15px] text-primary-foreground shadow-[0_16px_30px_-16px_rgba(37,99,235,0.95)]">
                 <a href="#projects">View Projects <ArrowRight className="ml-2 h-4 w-4" /></a>
               </Button>
@@ -586,15 +611,6 @@ export default function HomePage() {
                       className="btn-pill border-border bg-card px-6 text-[15px] font-semibold hover:bg-secondary">
                 <a href="#contact"><Mail className="mr-2 h-4 w-4" />Contact Me</a>
               </Button>
-            </div>
-
-            <div className="mt-7 flex flex-wrap items-center gap-2.5">
-              {socials.map(({ label, href, icon: Icon }) => (
-                <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label} className="social-dot">
-                  <Icon className="h-4 w-4" />
-                </a>
-              ))}
-              <span className="ml-2 text-xs font-medium text-muted-foreground">Open to Remote • Available Now</span>
             </div>
           </div>
 
@@ -632,10 +648,6 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <a href="#tech-stack"
-               className="shrink-0 whitespace-nowrap text-xs font-semibold text-primary transition-colors hover:text-primary/80">
-              +{techStack.length - heroTechStack.length} more in stack below →
-            </a>
           </div>
         </div>
       </section>
@@ -736,7 +748,7 @@ export default function HomePage() {
                   <h2 className="section-head text-[26px]">Featured Projects</h2>
                   <ArrowRight className="h-5 w-5 text-primary" />
                 </div>
-                <p className="text-sm text-muted-foreground">One project in active build, one fullstack client system, four enterprise platforms</p>
+                <p className="text-sm text-muted-foreground">Three enterprise platforms under NDA, two client systems, one personal R&amp;D build</p>
               </div>
               <a href="#case-studies" className="link-group text-sm font-semibold text-primary">
                 View All Projects <ArrowRight className="h-4 w-4" />
@@ -784,6 +796,23 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ================= EMPLOYMENT HISTORY ================= */}
+      <section id="employment-history" className="scroll-mt-24 border-t border-border py-14">
+        <div className="shell">
+          <p className="animate-on-scroll mb-5 text-sm font-bold text-muted-foreground">Employment History</p>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {employmentHistory.map(({ period, role, note }) => (
+              <div key={period} className="animate-on-scroll card-lift soft-card p-5">
+                <span className="icon-badge mb-4"><Briefcase className="h-5 w-5" /></span>
+                <h3 className="text-[15px] font-bold leading-snug">{role}</h3>
+                <p className="mt-1 text-[11px] font-semibold text-primary">{period}</p>
+                <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{note}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ================= CASE STUDIES (detail) ================= */}
       <section id="case-studies" className="scroll-mt-24 border-t border-border bg-secondary/40 py-20 md:py-24">
         <div className="shell">
@@ -791,7 +820,7 @@ export default function HomePage() {
             <p className="kicker mb-4">Case Studies</p>
             <h2 className="section-head text-[clamp(1.8rem,3.4vw,2.6rem)]">Selected work, in depth.</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              6 projects: what I am building now, a national fullstack system, and 3 employer platforms under NDA.
+              6 projects: 3 employer platforms under NDA, 2 client systems, and 1 personal R&amp;D build.
               Each one is the problem, what I actually changed, and the result — plus what didn't work the first time.
             </p>
           </div>
@@ -1111,8 +1140,8 @@ export default function HomePage() {
           </div>
 
           <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Currently building SentinelPay. Open for Senior Frontend / Full-Stack roles.
-            Code walkthrough available on request.
+            Open to Senior Frontend / Full-Stack roles — Remote Full-time &amp; Contract. Available Immediately.
+            Client work shown as sanitized demos due to NDA. Architecture walkthrough available in interview.
           </p>
         </div>
 

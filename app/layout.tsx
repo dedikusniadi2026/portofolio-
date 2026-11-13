@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon-v2.ico" },
   openGraph: {
     title: "Dedi Kusniadi | Senior Frontend Engineer React Next.js",
-    description: "Senior Frontend Engineer 13+ years. Enterprise platforms for 100K+ users, real-time maps for 2K dispatchers. Open to Remote.",
+    description: "Senior Full Stack Software Engineer 13+ years. Enterprise platforms for 10M+ users, real-time maps for 2K dispatchers. Open to Fully Remote.",
     url: SITE_URL,
     siteName: "Dedi Kusniadi Portfolio",
     images: [{
@@ -83,11 +83,11 @@ const jsonLd = {
           position: 1,
           item: {
             "@type": "CreativeWork",
-            name: "SentinelPay — wallet transfers with a double-entry ledger",
+            name: "Telin NeuAPIX — WhatsApp Business Platform (Telco BSP)",
             url: `${SITE_URL}/#case-01`,
             creator: { "@id": `${SITE_URL}/#person` },
-            about: "Current focus, built in 2026: IDR and USD wallets, HttpOnly Redis sessions, CSRF, TOTP MFA with step-up, Argon2id hashing, and every fund movement posted as a balanced append-only journal in PostgreSQL, monitored with Datadog.",
-            keywords: ["React", "TypeScript", "NestJS", "PostgreSQL", "Redis", "Docker", "Datadog"],
+            about: "Telco WhatsApp Business Solution Provider dashboard for NeuAPIX: WABA onboarding via Meta Embedded Signup, template manager, unified inbox and API usage monitoring for 10M+ users.",
+            keywords: ["Angular", "TypeScript", "WhatsApp Cloud API", "MSAL", "CPaaS"],
           },
         },
         {
@@ -107,20 +107,8 @@ const jsonLd = {
           position: 3,
           item: {
             "@type": "CreativeWork",
-            name: "Telin NeuAPIX — WhatsApp Business Platform (Telco BSP)",
-            url: `${SITE_URL}/#case-03`,
-            creator: { "@id": `${SITE_URL}/#person` },
-            about: "Telco WhatsApp Business Solution Provider dashboard for NeuAPIX: WABA onboarding via Meta Embedded Signup, template manager, unified inbox and API usage monitoring for 100K+ users.",
-            keywords: ["Angular", "TypeScript", "WhatsApp Cloud API", "MSAL", "CPaaS"],
-          },
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          item: {
-            "@type": "CreativeWork",
             name: "E-Working Permit — Office Guest & BTS Permit System",
-            url: `${SITE_URL}/#case-04`,
+            url: `${SITE_URL}/#case-03`,
             creator: { "@id": `${SITE_URL}/#person` },
             about: "Two systems in one portal: office guest check-in with selfie capture, and BTS electronic permit-to-work. Replaced a 5-day paper approval with 1 day, 100% paperless, 10K+ permits per month.",
             keywords: ["Angular", "Angular Material", "Camera API", "RBAC", "Audit trail"],
@@ -128,11 +116,11 @@ const jsonLd = {
         },
         {
           "@type": "ListItem",
-          position: 5,
+          position: 4,
           item: {
             "@type": "CreativeWork",
             name: "ADA Business Messaging Core — WhatsApp BSP platform",
-            url: `${SITE_URL}/#case-05`,
+            url: `${SITE_URL}/#case-04`,
             creator: { "@id": `${SITE_URL}/#person` },
             about: "Unified multi-channel inbox for WhatsApp, SMS, LINE and RCS across 1,000+ business accounts.",
             keywords: ["Angular", "MSAL", "WhatsApp Business API"],
@@ -140,14 +128,26 @@ const jsonLd = {
         },
         {
           "@type": "ListItem",
-          position: 6,
+          position: 5,
           item: {
             "@type": "CreativeWork",
             name: "Enterprise Analytics Dashboard",
-            url: `${SITE_URL}/#case-06`,
+            url: `${SITE_URL}/#case-05`,
             creator: { "@id": `${SITE_URL}/#person` },
             about: "60+ KPI dashboard for 250K monthly users; first paint reduced from 8s to under 2s and payload from 4MB to under 400KB.",
             keywords: ["Vue.js", "TypeScript", "Chart.js", "Virtualization"],
+          },
+        },
+        {
+          "@type": "ListItem",
+          position: 6,
+          item: {
+            "@type": "CreativeWork",
+            name: "SentinelPay — wallet transfers with a double-entry ledger",
+            url: `${SITE_URL}/#case-06`,
+            creator: { "@id": `${SITE_URL}/#person` },
+            about: "Personal R&D, built in 2026: IDR and USD wallets, HttpOnly Redis sessions, CSRF, TOTP MFA with step-up, Argon2id hashing, and every fund movement posted as a balanced append-only journal in PostgreSQL, monitored with Datadog.",
+            keywords: ["React", "TypeScript", "NestJS", "PostgreSQL", "Redis", "Docker", "Datadog"],
           },
         },
       ],
