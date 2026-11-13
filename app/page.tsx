@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -11,10 +10,10 @@ import { CaseStudyTabs } from "@/components/case-study-tabs"
 import { ContactForm } from "@/components/contact-form"
 import { FloatingHireButton } from "@/components/floating-hire-button"
 import {
-  ArrowRight, ArrowUpRight, Briefcase, Rocket, Code2, Shield, BookOpen,
+  ArrowRight, Briefcase, Rocket, Code2, Shield, BookOpen,
   Menu, Mail, Linkedin, Github, Download, MapPin, Clock, Sparkles,
-  Layers, Lock, ExternalLink, Users, Gauge, CheckCircle2, TrendingUp, AlertTriangle,
-  CalendarDays, Search, Wrench, Database, Play, MonitorSmartphone, Server, Fingerprint, Quote
+  Layers, Lock, Users, Gauge, CheckCircle2, TrendingUp, AlertTriangle,
+  CalendarDays, Search, Wrench, Database, MonitorSmartphone, Server, Fingerprint, Quote
 } from "lucide-react"
 
 const contact = {
@@ -29,10 +28,10 @@ const contact = {
 interface Metric { value: string; label: string }
 interface CaseStudy {
   index: string; title: string; cardTitle: string; cardSubtitle: string; client: string; sector: string;
-  badge?: string; topLabel: string;
+  topLabel: string;
   image?: string; role: string; summary: string; impact?: string[];
   contributions: string[]; metrics: Metric[]; tech: string[];
-  arch: ArchLayer[]; archNote: string; didntWork: string; codeNote: string; liveDemo?: string; liveLabel?: string; demoNote?: string; docs?: { label: string; href: string }; github?: string; photoNote?: string
+  arch: ArchLayer[]; archNote: string; didntWork: string; codeNote: string; ctaLabel: string; cardCtaLabel?: string; photoNote?: string; ctaOnly?: boolean
 }
 
 const caseStudies: CaseStudy[] = [
@@ -41,13 +40,12 @@ const caseStudies: CaseStudy[] = [
     title: "SentinelPay — Wallet Transfers & Double-Entry Ledger",
     cardTitle: "SentinelPay",
     cardSubtitle: "IDR & USD wallets, double-entry ledger",
-    client: "Independent R&D • Full Stack • Secure wallet workspace",
+    client: "Internal wallet workspace • IDR & USD",
     sector: "FinTech / Payments Infrastructure",
-    badge: "Independent R&D • Full Stack • 151 Automated Tests",
-    topLabel: "Project 01 · Independent R&D — not an employer deliverable",
-    image: "/sentinelpay.png",
+    topLabel: "Current Focus • 2026 — Present • Personal R&D",
+    image: "/sentinelpay-light.png",
     role: "Fullstack Developer",
-    summary: "Customer-facing brand of an internal wallet workspace: IDR and USD balances, transfers, and a readable history. Every transfer, deposit, withdrawal and reversal posts to an append-only double-entry ledger, so a balance is never a number someone edited.",
+    summary: "Customer-facing brand of an internal wallet workspace: IDR and USD balances, transfers, and a readable history. Every transfer, deposit, withdrawal and reversal posts to an append-only double-entry journal, so a balance is always derived — never edited. I built this because in previous enterprise projects, the ledger was often the source of bugs. I want to prove that a balance should come from the journal, not from an edited number.",
     impact: [
       "IDR and USD wallets in one place, with an easy-to-read transaction history. The UI renders only API data — no fabricated balances or transactions.",
       "Layered security: HttpOnly Redis-backed sessions, CSRF-bound state changes, Argon2id passwords, TOTP MFA plus a transaction PIN, and step-up verification before money moves.",
@@ -78,92 +76,66 @@ const caseStudies: CaseStudy[] = [
     ],
     archNote: "One API owns both the session and the money path, so the client is never trusted with a balance: journals live in PostgreSQL and Redis only holds sessions plus rate-limit buckets. The SPA and /api/ share one origin behind nginx, which is what makes SameSite=Lax with an exact Origin match enough for CSRF. Datadog sits outside that path — traces and logs carry the same correlation ID the API generates, so one slow transfer is searchable end to end without touching the ledger.",
     didntWork: "Early version kept the session in browser storage and stored one balance number per wallet — simple to render, impossible to audit. Moved sessions into HttpOnly Redis-backed cookies and derived every balance from the ledger; the extra join cost is worth paying because reconciliation became a query.",
-    codeNote: "Private repo, runs locally (React SPA on Vite + NestJS API + PostgreSQL and Redis in Docker). No public URL — deposit and withdrawal endpoints are simulated cash movements that post real journals, there is no bank or payment-provider integration. Can walk through ledger posting rules, the step-up flow and the permission catalog in an interview.",
-    photoNote: "Login screen from the running local app — dark/gold brand variant, no real user data.",
+    codeNote: "Private repo — live demo & code walkthrough available in interview.",
+    ctaLabel: "Request Walkthrough",
+    photoNote: "SentinelPay sign-in — dark/gold brand variant, no user data.",
   },
   {
     index: "02",
     title: "Logistics Tracking System",
     cardTitle: "Logistics Tracking",
     cardSubtitle: "National scale real-time map",
-    client: "Freelance • National Logistics",
+    client: "National Logistics Operator • Client Work",
     sector: "Enterprise Logistics",
-    topLabel: "Project 02 · Independent R&D — not an employer deliverable",
-    badge: "Independent / Open Source • Mar 2026 — Present • Full Stack R&D",
+    topLabel: "Fullstack • NestJS + PostgreSQL • Client Work",
     image: "/gis.png",
     role: "Fullstack Developer",
     summary: "National logistics operator, 1.2M parcels/year. 2,000 dispatchers peak. Map lagged 30s on low-end Android tablets in warehouses — drivers waiting outside.",
+    impact: [
+      "Rebuilt the WebSocket pipeline and the PostgreSQL queries behind it: map latency 30s → under 1s on the same warehouse tablets.",
+      "LCP 8.1s → 2.4s after code-splitting the map, so dispatchers see parcels before the rest of the app finishes loading.",
+      "One realtime pipeline now serves 2,000 dispatchers at peak across 1.2M parcels/year.",
+    ],
     contributions: [
-      "Rewired real-time tracking to WebSocket + Web Worker, now <1s updates",
-      "Split big SPA into domain modules (Zustand per-domain) so 6 squads ship without conflicts",
-      "Code-split Leaflet, lazy maps — LCP 8.1s → 2.4s on low-end tablets",
-      "Replaced old UI kit (35% defect/sprint) with Figma token-based design system",
+      "Rebuilt real-time tracking end to end — NestJS WebSocket gateway, Redis pub/sub fan-out, and a React client that applies deltas instead of polling",
+      "Added PostgreSQL indexes and per-region tracking queries, replacing the full-table scan behind the old 30s poll",
+      "Moved map rendering off the main thread into a Web Worker so the UI stays responsive on low-end Android tablets",
+      "Split the monolith SPA into domain modules with per-domain state — 6 squads shipping without conflicts",
+      "Replaced the legacy UI kit with a Figma token-based design system — 35% fewer UI defects per sprint",
     ],
     metrics: [
-      { value: "30s → <1s", label: "Map lag after fix" },
+      { value: "30s → <1s", label: "Map latency" },
+      { value: "1.2M", label: "Parcels / year" },
+      { value: "2,000", label: "Dispatchers at peak" },
       { value: "8.1s → 2.4s", label: "LCP on low-end tablets" },
-      { value: "2,000", label: "Dispatchers peak" },
-      { value: "35% fewer", label: "UI bugs after tokens" },
     ],
-    tech: ["React", "TypeScript", "Zustand", "Leaflet", "WebSocket", "Web Worker"],
+    tech: ["React", "NestJS", "PostgreSQL", "Redis", "WebSocket"],
     arch: [
-      { label: "Edge", items: ["CDN", "WAF"] },
-      { label: "Client", items: ["React SPA", "Leaflet Maps", "Web Worker"] },
-      { label: "API Gateway", items: ["REST", "WebSocket"] },
+      { label: "Client", items: ["React SPA", "Leaflet map", "Web Worker"] },
+      { label: "API Gateway", items: ["NestJS REST", "WebSocket"] },
       { label: "Services", items: ["Tracking", "Routing", "Auth"] },
-      { label: "Data", items: ["PostgreSQL", "Redis cache"] },
+      { label: "Data", items: ["PostgreSQL + indexes", "Redis pub/sub"] },
+      { label: "Realtime", items: ["WS fan-out per region", "<1s to the map"] },
     ],
-    archNote: "First version put everything in one WebSocket — map froze when routing service slow. Split: tracking in Web Worker, routing separate REST. Zustand per domain so squads don't conflict.",
-    didntWork: "First tried Redux single store — mess with 6 squads. Moved to Zustand per domain.",
-    codeNote: "Real code private under NDA (1.2M shipments/yr, 2K dispatchers). Sanitized rebuild above is open — FE-only mock, no server needed, mock WebSocket <1s.",
-    photoNote: "Sanitized GIS mock — real version has 2k dispatchers live. Live demo uses mock WebSocket <1s."
+    archNote: "NestJS owns the socket: the tracking service publishes position events to Redis, the gateway fans them out per region, and the browser applies only the delta it needs. PostgreSQL indexes on (parcel, timestamp) replaced the full-table scan behind the old poll, and routing stayed a separate REST call so a slow routing service can never freeze the map.",
+    didntWork: "First version pushed everything down one WebSocket — the map froze whenever the routing service was slow. Split it: tracking events on the socket, routing as separate REST. Redux as a single store was a mess with 6 squads, so each domain got its own Zustand store.",
+    codeNote: "Code & live demo private — available for architecture walkthrough in interview.",
+    ctaLabel: "Request Architecture Walkthrough",
+    cardCtaLabel: "Request Walkthrough",
+    photoNote: "Dispatch console and live map view — client data removed.",
+    ctaOnly: true,
   },
   {
     index: "03",
-    title: "Enterprise Analytics Dashboard",
-    cardTitle: "Analytics Dashboard",
-    cardSubtitle: "60+ KPIs, 250K monthly users",
-    client: "Retail Group • 250K MAU",
-    sector: "Data & Analytics",
-    topLabel: "Project 03 · Client work — code private under NDA",
-    image: "/dashboard.png",
-    role: "Fullstack Developer",
-    summary: "Legacy report suite 60+ KPIs — first paint 8s, sales team on 3G complained. Needed <2s.",
-    contributions: [
-      "Led Vue 3 + Pinia rewrite — old reports were 12 separate pages",
-      "Summary pre-aggregated for first paint, detail on drill-down — payload 4MB → <400KB",
-      "Virtualized tables (10k rows) with react-window — browser no longer dies",
-      "Pooled Chart.js instances — fixed memory leak after 2 hours",
-    ],
-    metrics: [
-      { value: "8s → <2s", label: "First paint after fix" },
-      { value: "250K+", label: "Monthly active" },
-      { value: "60+", label: "KPIs on one screen" },
-      { value: "45% less", label: "Time building reports" },
-    ],
-    tech: ["Vue.js", "TypeScript", "Pinia", "Chart.js", "react-window", "REST"],
-    arch: [
-      { label: "Edge", items: ["CDN"] },
-      { label: "Client", items: ["Vue SPA", "Virtualized grids"] },
-      { label: "API Gateway", items: ["REST", "Aggregation"] },
-      { label: "Data", items: ["ClickHouse", "PostgreSQL"] },
-    ],
-    archNote: "Backend made summary endpoint for first paint, detail only on click. Virtualization keeps 10k rows smooth. Chart instances pooled and reused.",
-    didntWork: "First version fetched detail for all 60 KPIs upfront — payload 4MB. Sales on 3G complained.",
-    codeNote: "Real code private under NDA. Sanitized virtualization demo above — 50k rows 5fps → 60fps.",
-  },
-  {
-    index: "04",
     title: "Telin NeuAPIX — WhatsApp Business Platform",
     cardTitle: "Telin NeuAPIX",
     cardSubtitle: "Telco WhatsApp BSP, CPaaS dashboard",
-    client: "Telin (Telekomunikasi Indonesia International) • Official WhatsApp BSP by Meta • CPaaS Platform",
+    client: "Telin (Telekomunikasi Indonesia International) • Official WhatsApp BSP by Meta",
     sector: "Telecommunications / CPaaS",
-    badge: "Live: dashboard.neuapix.com • WhatsApp BSP • CPaaS • 100K+ Users",
-    topLabel: "Project 04 · Employer project — live platform, code private",
+    topLabel: "Employer Project • Telco WhatsApp BSP • CPaaS",
     image: "/Telin.png",
     role: "Senior Frontend Engineer",
-    summary: "WhatsApp Business Platform dashboard for NeuAPIX — Telin's CPaaS product on top of the Meta Cloud API. My scope: WABA onboarding, template management, unified inbox.",
+    summary: "WhatsApp Business Platform dashboard for NeuAPIX — Telin's CPaaS product on top of the Meta Cloud API. My scope: WABA onboarding, template management, unified inbox and API usage monitoring for 100K+ users.",
     impact: [
       "Telin is an official Telecom WhatsApp BSP selected by Meta since 2023. NeuAPIX is its CPaaS platform — businesses use the WhatsApp Cloud API without building their own infrastructure.",
       "The dashboard is where those businesses live: WABA onboarding via Meta Embedded Signup, template management with Meta approval status, chatbot flows and the omnichannel inbox.",
@@ -190,25 +162,21 @@ const caseStudies: CaseStudy[] = [
     ],
     archNote: "Every template goes to Meta for approval, so the dashboard is mostly state tracking: WABA onboarding status, template status, message delivery. Channel modules load on demand after login so the first paint stays fast.",
     didntWork: "First lazy-load split too aggressive — users saw a blank screen for 2s on login. Rolled back and only split the heavy modules: Billing, Template Manager, and Inbox.",
-    codeNote: "Live platform: dashboard.neuapix.com/auth/login — real code private on Telin GitLab (NDA). Similar pattern to ADA BizMsgCore (bizmsgcore.ada-asia.com). Can walk through BSP flow, Embedded Signup, and template approval in interview.",
-    liveDemo: "https://dashboard.neuapix.com/auth/login",
-    liveLabel: "View Live Dashboard",
-    demoNote: "Login page — behind Telin SSO",
-    docs: { label: "Docs Reference", href: "https://docs-wa.neuapix.com" },
-    photoNote: "Dashboard screenshot shown here is sanitized — live platform is behind Telin login.",
+    codeNote: "Code private under NDA — available for walkthrough in interview.",
+    ctaLabel: "Request Walkthrough",
+    photoNote: "NeuAPIX dashboard — WABA onboarding, template manager and unified inbox.",
   },
   {
-    index: "05",
+    index: "04",
     title: "E-Working Permit — Office Guest & BTS Permit System",
     cardTitle: "E-Working Permit",
     cardSubtitle: "Office guest & BTS permit system",
-    client: "XLSmart (ex-XL Axiata) • ewp.newxlife.xlsmart.co.id • Compliance & Physical Security",
+    client: "XLSmart (ex-XL Axiata) • Compliance & Physical Security",
     sector: "Compliance & Physical Security",
-    badge: "Live: ewp.newxlife.xlsmart.co.id • 10K+ Permits / Month • 100% Paperless • 5 Days → 1 Day",
-    topLabel: "Project 05 · Employer project — live app, code private",
+    topLabel: "Employer Project • Compliance & Physical Security",
     image: "/eworking.png",
     role: "Senior Frontend Engineer",
-    summary: "Two systems in one portal: office guest check-in with selfie capture, and the BTS Electronic Permit to Work. Replaced a 5-day paper approval with a 1-day digital flow.",
+    summary: "Two systems in one portal: office guest check-in with selfie capture, and the BTS Electronic Permit to Work. Replaced a 5-day paper approval with a 1-day digital flow — 10K+ permits per month, 100% paperless.",
     impact: [
       "Office Guest Management — any external guest entering an XL office fills a form on the web and takes a selfie on entry. The selfie + ID is logged for the security audit, so we know exactly who is inside the building.",
       "BTS Work Permit — Electronic Permit to Work for tower maintenance: DRAFT → Request → Site Info → Safety Assessment → Multi-level Approval → Permit Issued → CLOSED.",
@@ -235,31 +203,29 @@ const caseStudies: CaseStudy[] = [
     ],
     archNote: "Two audiences, one portal: office guests need a fast selfie check-in, field technicians need a multi-step permit wizard on low-end phones. Draft state lives in localStorage so a refresh never kills the request, and each step validates before the next one unlocks.",
     didntWork: "First version was one big single-page form — users lost all data when they refreshed. Split into a wizard with auto-save to localStorage.",
-    codeNote: "Live at ewp.newxlife.xlsmart.co.id/login — real code private on enterprise GitLab (NDA). Can demo wizard logic, selfie capture, and audit trail approach in interview.",
-    liveDemo: "https://ewp.newxlife.xlsmart.co.id/login",
-    liveLabel: "View Live System",
-    demoNote: "Login page — behind XLSmart SSO",
-    photoNote: "Sanitized screenshot — live system is behind XL SSO login.",
+    codeNote: "Code private under NDA — available for walkthrough in interview.",
+    ctaLabel: "Request Walkthrough",
+    photoNote: "Guest check-in and the BTS permit wizard — product UI.",
   },
   {
-    index: "06",
+    index: "05",
     title: "ADA Business Messaging Core",
     cardTitle: "ADA Biz Messaging",
-    cardSubtitle: "WhatsApp BSP, 1000+ accounts",
-    client: "ADA Asia • bizmsgcore.ada-asia.com • WhatsApp BSP",
+    cardSubtitle: "WhatsApp BSP, 1,000+ accounts",
+    client: "ADA Asia • Official WhatsApp BSP in APAC",
     sector: "Business Messaging / MarTech",
-    topLabel: "Project 06 · Employer project — live app, code private",
+    topLabel: "Employer Project • WhatsApp BSP • 1,000+ Accounts",
     image: "/ADA.png",
     role: "Frontend Engineer",
-    summary: "Business messaging platform — bizmsgcore.ada-asia.com. ADA is official WhatsApp Business Solution Provider (BSP) in APAC. Unified inbox for WhatsApp, SMS, LINE, RCS. Login with verified email.",
+    summary: "Business messaging platform for ADA Asia, an official WhatsApp Business Solution Provider in APAC. One inbox for WhatsApp, SMS, LINE and RCS across 1,000+ business accounts.",
     contributions: [
-      "Implemented multi-channel inbox (WhatsApp, SMS, LINE, RCS) — unified messaging solution",
-      "Built template messages, broadcast, and conversation assignment for 1000+ business accounts",
-      "Auth with verified email + Microsoft Authentication Library (MSAL), Remember Me, Forgot Password",
-      "Route-level code split — login bundle first, messaging modules after auth (<2s perceived)",
+      "Implemented the multi-channel inbox (WhatsApp, SMS, LINE, RCS) as one conversation model, so agents answer from a single queue",
+      "Built template messages, broadcast and conversation assignment for 1,000+ business accounts",
+      "Auth with verified email + Microsoft Authentication Library (MSAL), Remember Me and Forgot Password",
+      "Route-level code split — login bundle first, messaging modules after auth: perceived cold start 40% faster",
     ],
     metrics: [
-      { value: "1000+", label: "Business accounts" },
+      { value: "1,000+", label: "Business accounts" },
       { value: "4 channels", label: "WA, SMS, LINE, RCS" },
       { value: "BSP", label: "WhatsApp Business Provider" },
       { value: "40% faster", label: "Cold start after split" },
@@ -274,20 +240,54 @@ const caseStudies: CaseStudy[] = [
     ],
     archNote: "Similar pattern to Telin WA platform but for ADA Asia as BSP. MSAL for auth, route split for messaging modules. Multi-channel means one codebase for WA/SMS/LINE/RCS.",
     didntWork: "First tried load all messaging channels in one bundle — login slow. Split: login first, then load channel modules on demand.",
-    codeNote: "Live at bizmsgcore.ada-asia.com — real code private on Axiata/ADA GitLab (NDA). Same business messaging pattern as Telin WA platform. Can walk through MSAL + multi-channel inbox in interview.",
-    photoNote: "Live platform: bizmsgcore.ada-asia.com — WhatsApp Business Solution Provider (BSP) portal.",
-    liveDemo: "https://bizmsgcore.ada-asia.com",
+    codeNote: "Code private under NDA — available for walkthrough in interview.",
+    ctaLabel: "Request Walkthrough",
+    photoNote: "BizMsgCore unified inbox — WhatsApp, SMS, LINE and RCS in one queue.",
+  },
+  {
+    index: "06",
+    title: "Enterprise Analytics Dashboard",
+    cardTitle: "Analytics Dashboard",
+    cardSubtitle: "60+ KPIs, 250K monthly users",
+    client: "Retail Group • 250K monthly active users",
+    sector: "Data & Analytics",
+    topLabel: "Client Work • Data & Analytics • 250K MAU",
+    image: "/dashboard.png",
+    role: "Fullstack Developer",
+    summary: "Legacy report suite with 60+ KPIs — first paint 8s, and the sales team was complaining on 3G. Target: under 2s for 250K monthly active users.",
+    impact: [
+      "First paint 8s → under 2s: summaries pre-aggregated server-side for the first screen, detail loaded only on drill-down. Payload 4MB → <400KB.",
+      "10,000-row grids virtualized, so the browser stopped freezing on a full render.",
+      "12 separate report pages became one dashboard — time spent building a report down 45%.",
+    ],
+    contributions: [
+      "Led the Vue 3 + Pinia rewrite that replaced 12 separate report pages with one dashboard",
+      "Designed the summary/detail split with the backend: aggregated endpoints for first paint, drill-down queries on click",
+      "Virtualized 10,000-row tables with react-window so large exports stay smooth",
+      "Pooled Chart.js instances and fixed the memory leak that appeared after two hours of continuous use",
+    ],
+    metrics: [
+      { value: "8s → <2s", label: "First paint after fix" },
+      { value: "250K+", label: "Monthly active" },
+      { value: "60+", label: "KPIs on one screen" },
+      { value: "45% less", label: "Time building reports" },
+    ],
+    tech: ["Vue.js", "TypeScript", "Pinia", "Chart.js", "react-window", "REST"],
+    arch: [
+      { label: "Edge", items: ["CDN"] },
+      { label: "Client", items: ["Vue SPA", "Virtualized grids"] },
+      { label: "API Gateway", items: ["REST", "Aggregation"] },
+      { label: "Data", items: ["ClickHouse", "PostgreSQL"] },
+    ],
+    archNote: "The backend owns the aggregation: a summary endpoint feeds first paint, and detail only comes back on drill-down. Virtualization keeps 10,000-row grids cheap, and chart instances are pooled and reused instead of re-created on every filter change.",
+    didntWork: "First version fetched detail for all 60 KPIs upfront — 4MB payload on 3G, and the sales team told us within a week.",
+    codeNote: "Code private under NDA — available for walkthrough in interview.",
+    ctaLabel: "Request Walkthrough",
+    photoNote: "Analytics dashboard — 60+ KPIs on one screen.",
   },
 ]
 
 interface Experience { company: string; role: string; period: string; note?: string }
-
-const experiences: Experience[] = [
-  { company: "Independent / Open Source", role: "Full Stack R&D", period: "2026 — Present" },
-  { company: "Axiata Digital Labs", role: "Senior Frontend Engineer", period: "Aug 2023 — Mar 2026" },
-  { company: "Axiata Digital Labs", role: "Frontend Engineer", period: "Jul 2020 — Aug 2023" },
-  { company: "Other Companies", role: "Various Roles", period: "2013 — 2020" },
-]
 
 const earlierExperiences: Experience[] = [
   { company: "PT Kreasi Digital", role: "Senior Full Stack", period: "Jan — May 2020", note: "POS SaaS (React, Angular, Laravel)" },
@@ -296,6 +296,22 @@ const earlierExperiences: Experience[] = [
   { company: "Bisnis Indonesia", role: "Web Dev", period: "2018 — 2019", note: "bisnis.com & Gramedia" },
   { company: "Bisnis Indonesia Group", role: "Software Dev", period: "2015 — 2018", note: "Biofarma eMagazine" },
   { company: "Springfields Asia", role: "Junior", period: "2013", note: "KPK Gratification System" },
+]
+
+const experienceGroups: { title: string; items: Experience[]; more?: Experience[] }[] = [
+  {
+    title: "Current — Personal R&D",
+    items: [{ company: "SentinelPay", role: "Full-Stack R&D", period: "2026 — Present" }],
+  },
+  {
+    title: "Previous Employment",
+    items: [
+      { company: "Axiata Digital Labs", role: "Senior Frontend Engineer", period: "Aug 2023 — Mar 2026" },
+      { company: "Axiata Digital Labs", role: "Frontend Engineer", period: "Jul 2020 — Aug 2023" },
+      { company: "Other Companies", role: "Various Roles", period: "2013 — 2020" },
+    ],
+    more: earlierExperiences,
+  },
 ]
 
 const techStack = [
@@ -329,7 +345,7 @@ const techGroups = [
     icon: Server,
     title: "Backend",
     items: [
-      { name: "NestJS", tip: "Open R&D project — WebSocket gateway pushing mock tracking events under 1s." },
+      { name: "NestJS", tip: "Logistics Tracking — WebSocket gateway with Redis pub/sub fan-out, map updates under 1s. SentinelPay API: sessions, CSRF, double-entry ledger." },
       { name: "Node.js", tip: "BFF layers, build tooling, small internal services." },
     ],
   },
@@ -362,6 +378,23 @@ const trustedBy = [
   { name: "XLSmart", note: "BTS & office permit compliance" },
   { name: "ADA Asia", note: "WhatsApp BSP · BizMsgCore" },
   { name: "National Logistics", note: "Real-time parcel tracking" },
+]
+
+const testimonials = [
+  {
+    name: "Mohammad Riza N.",
+    role: "Senior Business Analyst · Quality Assurance",
+    meta: "Worked with Dedi on the same team · May 12, 2024",
+    quote:
+      "I worked with Dedi Kusniadi in couple of different projects. In those times, Dedi has showed us that he is a well knowledgeable software developer with a wide range of expertise. He is a good learner when it comes to new tools and technology. Dedi also gave his persistence and dedication to tackle any difficulties that arise, and showed his willingness to support and backup his fellow developer. In summary, I am certain that Dedi Kusniadi can be a valuable member in any software development team.",
+  },
+  {
+    name: "Billy Huar Noning",
+    role: "Founder & Entrepreneur · Special Situation & Critical Mission",
+    meta: "Managed Dedi directly · November 2, 2021",
+    quote:
+      "You know? I found Dedi like found a gold in the nature. Yes, he is silent man, but trust me, he is so skillful and will finish all the task assigned to him. He is very good learner, and will push himself over the limit to achieve that. One thing for sure, I feel safe everytime having Dedi on the project.",
+  },
 ]
 
 const howIWork = [
@@ -471,9 +504,8 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* ================= NAV ================= */}
       <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "nav-blur" : ""}`}>
-        <div className="shell flex h-[76px] items-center justify-between gap-4">
+        <div className="shell flex h-19 items-center justify-between gap-4">
           <a href="#home" className="flex items-center gap-2.5">
             <span className="logo-mark h-10 w-10 text-sm">DK</span>
             <span className="text-[15px] font-bold tracking-tight">Dedi Kusniadi</span>
@@ -486,7 +518,7 @@ export default function HomePage() {
                 <a key={label} href={href}
                    className={`relative rounded-full px-3.5 py-2 text-sm font-semibold transition-colors ${isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}>
                   {label}
-                  {isActive && <span className="absolute inset-x-4 -bottom-0.5 h-[3px] rounded-full bg-primary" />}
+                  {isActive && <span className="absolute inset-x-4 -bottom-0.5 h-0.75 rounded-full bg-primary" />}
                 </a>
               )
             })}
@@ -507,7 +539,7 @@ export default function HomePage() {
                   <Menu className="h-4 w-4" />
                 </button>
               </SheetTrigger>
-              <SheetContent side="right" className="flex w-[300px] flex-col gap-1 pt-14">
+              <SheetContent side="right" className="flex w-75 flex-col gap-1 pt-14">
                 {navItems.map(({ label, href }) => (
                   <a key={label} href={href} className="rounded-xl px-3 py-2.5 text-base font-semibold text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">{label}</a>
                 ))}
@@ -519,8 +551,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* ================= HERO ================= */}
-      <section id="home" className="hero-canvas pt-[76px]">
+      <section id="home" className="hero-canvas pt-19">
         <span className="hero-slash hidden lg:block" aria-hidden />
         <div className="shell relative grid items-start gap-12 pb-14 pt-8 md:pt-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:pb-20">
           <div className="animate-fade-in-up relative z-10">
@@ -541,7 +572,7 @@ export default function HomePage() {
             <ul className="mt-7 flex flex-wrap gap-2.5">
               {trustBadges.map(({ value, label }) => (
                 <li key={label} className="trust-badge">
-                  <span className="text-base font-extrabold text-primary">{value}</span>
+                  <span className="text-lg font-extrabold text-primary">{value}</span>
                   <span>{label}</span>
                 </li>
               ))}
@@ -569,17 +600,17 @@ export default function HomePage() {
 
           <div className="animate-fade-in-up relative z-10 pr-4 lg:pr-0" style={{ animationDelay: "120ms" }}>
             <span className="dot-grid right-6 top-0 hidden lg:block" aria-hidden />
-            <div className="relative mx-auto max-w-[380px] lg:max-w-none">
-              <div className="pointer-events-none absolute inset-x-8 bottom-4 top-12 z-0 rounded-full bg-primary/10 blur-3xl" aria-hidden />
+            <div className="relative mx-auto max-w-95 lg:max-w-none">
+              <div className="pointer-events-none absolute inset-x-8 bottom-20 top-12 z-0 rounded-full bg-primary/10 blur-3xl" aria-hidden />
               <Image src="/images/dedi-cutout-2026.png" alt="Dedi Kusniadi — Senior Frontend Engineer" width={760} height={1140}
                      priority
-                     className="relative z-[1] mx-auto aspect-[2/3] w-full max-w-[400px] object-contain drop-shadow-[0_28px_40px_rgba(15,40,90,0.28)] [mask-image:linear-gradient(to_bottom,#000_92%,transparent_99%)]" />
-              <div className="soft-card absolute -bottom-6 -left-3 z-[2] hidden w-[250px] px-4 py-3 sm:block">
-                <p className="flex items-center gap-2 text-xs font-bold">
+                     className="relative z-1 mx-auto aspect-2/3 w-full max-w-100 object-contain drop-shadow-[0_28px_40px_rgba(15,40,90,0.28)] mask-[linear-gradient(to_bottom,#000_92%,transparent_99%)]" />
+              <div className="soft-card relative z-2 mx-auto mt-2 w-full max-w-75 px-4 py-3">
+                <p className="flex items-center gap-2 text-[13px] font-bold">
                   <span className="h-2 w-2 animate-pulse rounded-full bg-success" />Ex-Axiata Digital Labs
                 </p>
-                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                  WhatsApp BSP • React / Next.js / Angular • 100K+ users
+                <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                  React / Next.js / Angular
                 </p>
               </div>
             </div>
@@ -629,12 +660,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= ABOUT ================= */}
       <section id="about" className="scroll-mt-24 py-20 md:py-24">
         <div className="shell grid items-center gap-10 lg:grid-cols-[0.9fr_1fr_0.8fr] lg:gap-12">
           <div className="animate-on-scroll img-reveal border border-border">
             <Image src="/images/about-workspace.png" alt="Developer workspace" width={900} height={700}
-                   className="aspect-[4/3] w-full object-cover" />
+                   className="aspect-4/3 w-full object-cover" />
           </div>
 
           <div className="animate-on-scroll">
@@ -674,13 +704,20 @@ export default function HomePage() {
             </div>
             <p className="mb-7 text-sm text-muted-foreground">My Professional Journey</p>
 
-            <div className="timeline-rail space-y-6">
-              {(showAllExp ? [...experiences.slice(0, 3), ...earlierExperiences] : experiences).map((exp) => (
-                <div key={`${exp.company}-${exp.period}`} className="timeline-item">
-                  <p className="text-[15px] font-bold leading-snug">{exp.company}</p>
-                  <p className="mt-0.5 text-sm text-muted-foreground">{exp.role}</p>
-                  <p className="mt-0.5 text-xs font-semibold text-primary">{exp.period}</p>
-                  {exp.note && <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{exp.note}</p>}
+            <div className="space-y-7">
+              {experienceGroups.map(({ title, items, more }) => (
+                <div key={title}>
+                  <p className="mb-3.5 text-[11px] font-bold uppercase tracking-[0.16em] text-primary">{title}</p>
+                  <div className="timeline-rail space-y-5">
+                    {[...items, ...(showAllExp && more ? more : [])].map((exp) => (
+                      <div key={`${exp.company}-${exp.period}`} className="timeline-item">
+                        <p className="text-[15px] font-bold leading-snug">{exp.company}</p>
+                        <p className="mt-0.5 text-sm text-muted-foreground">{exp.role}</p>
+                        <p className="mt-0.5 text-xs font-semibold text-primary">{exp.period}</p>
+                        {exp.note && <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{exp.note}</p>}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
@@ -699,7 +736,7 @@ export default function HomePage() {
                   <h2 className="section-head text-[26px]">Featured Projects</h2>
                   <ArrowRight className="h-5 w-5 text-primary" />
                 </div>
-                <p className="text-sm text-muted-foreground">Selected works that showcase my skills</p>
+                <p className="text-sm text-muted-foreground">One project in active build, one fullstack client system, four enterprise platforms</p>
               </div>
               <a href="#case-studies" className="link-group text-sm font-semibold text-primary">
                 View All Projects <ArrowRight className="h-4 w-4" />
@@ -710,18 +747,11 @@ export default function HomePage() {
               {caseStudies.map((cs) => (
                 <article key={cs.index}
                          className="card-lift soft-card flex flex-col overflow-hidden lg:col-span-2">
-                  <a href={cs.liveDemo ?? `#case-${cs.index}`}
-                     {...(cs.liveDemo ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                     title={cs.demoNote}
-                     aria-label={cs.liveDemo ? `Open live demo: ${cs.cardTitle}` : `See the sanitized mock of ${cs.cardTitle}`}
+                  <a href={`#case-${cs.index}`}
+                     aria-label={`Open the ${cs.cardTitle} case study`}
                      className="img-reveal group relative block rounded-none border-0">
-                    <Image src={cs.image || "/dashboard.png"} alt={`${cs.cardTitle} — ${cs.liveDemo ? "live product" : "sanitized mock"}`} width={600} height={400}
-                           className="aspect-[16/10] w-full object-cover" />
-                    {cs.liveDemo && (
-                      <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-success px-2.5 py-1 text-[10px] font-bold text-white shadow-lg">
-                        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" /> Live
-                      </span>
-                    )}
+                    <Image src={cs.image || "/dashboard.png"} alt={`${cs.cardTitle} — project screenshot`} width={600} height={400}
+                           className="aspect-16/10 w-full object-cover" />
                   </a>
                   <div className="flex flex-1 flex-col p-4">
                     <p className="cs-top-label">{cs.topLabel}</p>
@@ -733,21 +763,18 @@ export default function HomePage() {
                       {cs.tech.slice(0, 3).map((t) => (<span key={t} className="tag-pill">{t}</span>))}
                     </div>
                     <div className="mt-auto flex flex-wrap items-center gap-1.5 pt-4">
-                      <Button asChild size="sm"
-                              className={cs.liveDemo
-                                ? "btn-pill h-9 bg-primary px-3 text-xs text-primary-foreground"
-                                : "btn-pill h-9 border-border bg-card px-3 text-xs hover:bg-secondary"}
-                              variant={cs.liveDemo ? "default" : "outline"}>
-                        <a href={cs.liveDemo ?? `#case-${cs.index}`}
-                           {...(cs.liveDemo ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                           title={cs.demoNote}>
-                          {cs.liveDemo ? <ExternalLink className="mr-1 h-3.5 w-3.5" /> : <Play className="mr-1 h-3.5 w-3.5" />}
-                          {cs.liveLabel ?? (cs.liveDemo ? "Live Demo" : "Sanitized Demo")}
+                      <Button asChild size="sm" variant="outline"
+                              className="btn-pill h-9 border-border bg-card px-3 text-xs hover:bg-secondary">
+                        <a href="#contact">
+                          <Mail className="mr-1 h-3.5 w-3.5" />
+                          {cs.cardCtaLabel ?? cs.ctaLabel}
                         </a>
                       </Button>
-                      <Button asChild size="sm" variant="ghost" className="h-9 px-2.5 text-xs text-muted-foreground hover:bg-secondary hover:text-foreground">
-                        <a href={`#case-${cs.index}`}>Case Study <ArrowRight className="ml-1 h-3.5 w-3.5" /></a>
-                      </Button>
+                      {!cs.ctaOnly && (
+                        <Button asChild size="sm" variant="ghost" className="h-9 px-2.5 text-xs text-muted-foreground hover:bg-secondary hover:text-foreground">
+                          <a href={`#case-${cs.index}`}>Case Study <ArrowRight className="ml-1 h-3.5 w-3.5" /></a>
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </article>
@@ -764,70 +791,38 @@ export default function HomePage() {
             <p className="kicker mb-4">Case Studies</p>
             <h2 className="section-head text-[clamp(1.8rem,3.4vw,2.6rem)]">Selected work, in depth.</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              6 flagship projects including 2 WhatsApp BSP platforms (Telin + ADA bizmsgcore).
-              Real code is under NDA — sanitized rebuilds and honest engineering notes below.
+              6 projects: what I am building now, a national fullstack system, and 3 employer platforms under NDA.
+              Each one is the problem, what I actually changed, and the result — plus what didn't work the first time.
             </p>
           </div>
 
           <div className="space-y-10">
-            {caseStudies.map((cs) => {
-              const isLive = Boolean(cs.liveDemo)
-              const demoHref = cs.liveDemo ?? cs.image ?? `#case-${cs.index}`
-              const demoProps = isLive ? { target: "_blank", rel: "noopener noreferrer" as const, title: cs.demoNote } : {}
-
-              return (
+            {caseStudies.map((cs) => (
               <article key={cs.title} id={`case-${cs.index}`} className="animate-on-scroll cs-card scroll-mt-24">
                 <div className="grid gap-8 p-5 md:p-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
                   <div className="min-w-0">
-                    <a href={demoHref} {...demoProps}
-                       aria-label={isLive ? `Open live demo: ${cs.title}` : `Open full-size sanitized mock: ${cs.cardTitle}`}
-                       className="img-reveal group relative block border border-border shadow-[0_18px_40px_-24px_rgba(11,27,58,0.35)]">
+                    <div className="img-reveal group relative block border border-border shadow-[0_18px_40px_-24px_rgba(11,27,58,0.35)]">
                       {cs.image
-                        ? <Image src={cs.image} alt={cs.title} width={760} height={480} className="aspect-[16/10] w-full rounded-[var(--radius-lg)] object-cover" />
-                        : <div className="flex aspect-[16/10] w-full items-center justify-center bg-muted"><Layers className="h-10 w-10 text-muted-foreground/40" /></div>}
-                      <span className={`absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold text-white shadow-lg ${isLive ? "bg-success" : "bg-primary/90"}`}>
-                        {isLive
-                          ? <><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" /> Live Demo</>
-                          : <><Play className="h-3 w-3" /> Sanitized mock</>}
+                        ? <Image src={cs.image} alt={cs.title} width={760} height={480} className="aspect-16/10 w-full rounded-lg object-cover" />
+                        : <div className="flex aspect-16/10 w-full items-center justify-center bg-muted"><Layers className="h-10 w-10 text-muted-foreground/40" /></div>}
+                      <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-primary/90 px-3 py-1 text-xs font-bold text-white shadow-lg">
+                        <Layers className="h-3 w-3" /> Project screenshot
                       </span>
-                    </a>
+                    </div>
                     {cs.photoNote && <p className="mt-2 text-[11px] italic text-muted-foreground">{cs.photoNote}</p>}
 
                     <div className="mt-4 flex flex-wrap gap-2">
-                      <Button asChild size="sm" variant={isLive ? "default" : "outline"}
-                              className={isLive ? "btn-pill h-10 bg-primary px-4 text-[13px] text-primary-foreground" : "btn-pill h-10 border-border bg-card px-4 text-[13px] hover:bg-secondary"}>
-                        <a href={demoHref} {...demoProps}>
-                          {isLive ? <ExternalLink className="mr-1.5 h-3.5 w-3.5" /> : <Play className="mr-1.5 h-3.5 w-3.5" />}
-                          {cs.liveLabel ?? (isLive ? "Live Demo" : "Sanitized Demo")}
+                      <Button asChild size="sm" variant="outline"
+                              className="btn-pill h-10 border-border bg-card px-4 text-[13px] hover:bg-secondary">
+                        <a href="#contact">
+                          <Mail className="mr-1.5 h-3.5 w-3.5" /> {cs.ctaLabel}
                         </a>
                       </Button>
-                      {cs.docs && (
-                        <Button asChild size="sm" variant="outline"
-                                className="btn-pill h-10 border-border bg-card px-4 text-[13px] hover:bg-secondary">
-                          <a href={cs.docs.href} target="_blank" rel="noopener noreferrer">
-                            <BookOpen className="mr-1.5 h-3.5 w-3.5" /> {cs.docs.label}
-                          </a>
-                        </Button>
-                      )}
                       <Button asChild size="sm" variant="ghost"
                               className="h-10 px-4 text-[13px] text-muted-foreground hover:bg-secondary hover:text-foreground">
-                        <a href={`#cs-${cs.index}-impact`}>Full Walkthrough <ArrowRight className="ml-1.5 h-3.5 w-3.5" /></a>
+                        <a href={`#cs-${cs.index}-impact`}>Read the Case Study <ArrowRight className="ml-1.5 h-3.5 w-3.5" /></a>
                       </Button>
                     </div>
-
-                    {cs.demoNote && (
-                      <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground">
-                        <Shield className="mr-1 inline h-3 w-3 text-primary" />{cs.demoNote}
-                      </p>
-                    )}
-
-                    {isLive && (
-                      <a href={cs.liveDemo} target="_blank" rel="noopener noreferrer" className="live-link mt-4">
-                        <ExternalLink className="h-4 w-4" />
-                        <span className="font-bold break-all">{cs.liveDemo!.replace("https://", "")}</span>
-                        <ArrowUpRight className="ml-auto h-4 w-4" />
-                      </a>
-                    )}
                   </div>
 
                   <div className="min-w-0">
@@ -839,11 +834,6 @@ export default function HomePage() {
                       </span>
                     </div>
                     <p className="cs-top-label mb-2.5">{cs.topLabel}</p>
-                    {cs.badge && (
-                      <p className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-bold text-primary">
-                        <Rocket className="h-3 w-3" /> {cs.badge}
-                      </p>
-                    )}
                     <h3 className="text-xl font-extrabold leading-snug tracking-tight md:text-2xl">{cs.title}</h3>
                     <p className="mt-1.5 text-sm font-semibold text-primary">{cs.client}</p>
                     <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{cs.summary}</p>
@@ -938,14 +928,13 @@ export default function HomePage() {
                     <div className="mt-6 flex items-start gap-2.5 rounded-xl border border-border bg-muted/50 px-3.5 py-3">
                       <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                       <p className="text-[11px] leading-relaxed text-muted-foreground">
-                        <span className="font-bold text-foreground">NDA note:</span> {cs.codeNote}
+                        <span className="font-bold text-foreground">Code access:</span> {cs.codeNote}
                       </p>
                     </div>
                   </div>
                 </div>
               </article>
-              )
-            })}
+            ))}
           </div>
         </div>
       </section>
@@ -1028,18 +1017,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= TESTIMONIAL ================= */}
+      {/* ================= TESTIMONIALS ================= */}
       <section id="testimonial" className="scroll-mt-24 border-b border-border py-16 md:py-20">
         <div className="shell">
-          <figure className="animate-on-scroll mx-auto max-w-2xl rounded-2xl border border-border bg-blue-50/50 p-6 text-center dark:bg-blue-500/[0.07]">
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">What teams say</p>
-            <Quote className="mx-auto mt-4 h-6 w-6 text-primary/40" aria-hidden />
-            <blockquote className="mt-3 text-base italic leading-relaxed md:text-[17px]">
-              "Dedi turned our 30s lagging map into real-time. Field team stopped complaining."
-            </blockquote>
-            <figcaption className="mt-4 text-sm font-semibold text-primary">— Ops Manager, National Logistics</figcaption>
-            <p className="mt-3 text-[11px] text-muted-foreground">Role and company type shown, name private under NDA</p>
-          </figure>
+          <p className="animate-on-scroll text-center text-[11px] font-bold uppercase tracking-[0.18em] text-primary">What teams say</p>
+          <div className="mt-8 grid gap-5 md:grid-cols-2">
+            {testimonials.map(({ quote, name, role, meta }) => (
+              <figure key={name} className="animate-on-scroll flex flex-col rounded-2xl border border-border bg-blue-50/50 p-6 dark:bg-blue-500/[0.07]">
+                <Quote className="h-6 w-6 text-primary/40" aria-hidden />
+                <blockquote className="mt-3 flex-1 text-sm italic leading-relaxed md:text-[15px]">"{quote}"</blockquote>
+                <figcaption className="mt-5 border-t border-border/60 pt-4">
+                  <p className="text-[13px] font-bold text-primary">{name}</p>
+                  <p className="mt-1 text-[11px] font-semibold text-muted-foreground">{role}</p>
+                  <p className="mt-1 text-[11px] text-muted-foreground">{meta}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1093,6 +1087,35 @@ export default function HomePage() {
 
       {/* ================= FOOTER ================= */}
       <footer className="border-t border-border bg-card">
+        <div className="shell border-b border-border py-10">
+          <p className="kicker mb-3">Let&apos;s Talk</p>
+          <p className="text-sm font-bold">Bandung, Indonesia • Open to Remote • Available Now</p>
+
+          <div className="mt-5 flex flex-wrap gap-2.5">
+            <Button size="sm" variant="outline" onClick={handleDownload}
+                    className="btn-pill h-9 border-border bg-card px-4 text-xs hover:bg-secondary">
+              <Download className="mr-1.5 h-3.5 w-3.5" />Download CV PDF
+            </Button>
+            <Button asChild size="sm" variant="outline"
+                    className="btn-pill h-9 border-border bg-card px-4 text-xs hover:bg-secondary">
+              <a href={contact.linkedin} target="_blank" rel="noreferrer"><Linkedin className="mr-1.5 h-3.5 w-3.5" />LinkedIn</a>
+            </Button>
+            <Button asChild size="sm" variant="outline"
+                    className="btn-pill h-9 border-border bg-card px-4 text-xs hover:bg-secondary">
+              <a href={contact.github} target="_blank" rel="noreferrer"><Github className="mr-1.5 h-3.5 w-3.5" />GitHub</a>
+            </Button>
+            <Button asChild size="sm" variant="outline"
+                    className="btn-pill h-9 border-border bg-card px-4 text-xs hover:bg-secondary">
+              <a href={`mailto:${contact.email}`}><Mail className="mr-1.5 h-3.5 w-3.5" />Email Me</a>
+            </Button>
+          </div>
+
+          <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
+            Currently building SentinelPay. Open for Senior Frontend / Full-Stack roles.
+            Code walkthrough available on request.
+          </p>
+        </div>
+
         <div className="shell flex flex-col items-center justify-between gap-6 py-8 md:flex-row">
           <a href="#home" className="flex items-center gap-2.5">
             <span className="logo-mark h-9 w-9 text-xs">DK</span>

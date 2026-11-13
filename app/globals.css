@@ -843,24 +843,6 @@
   padding: 0.9rem 1rem;
 }
 
-.live-link {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  border: 1px solid color-mix(in srgb, var(--success) 40%, var(--border));
-  border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--success) 8%, var(--card));
-  padding: 0.7rem 0.9rem;
-  font-size: 0.8rem;
-  color: var(--success);
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.live-link:hover {
-  background: color-mix(in srgb, var(--success) 16%, var(--card));
-  transform: translateX(3px);
-}
-
 .cs-foot {
   border-top: 1px solid var(--border);
   background: color-mix(in srgb, var(--secondary) 50%, var(--card));
@@ -903,8 +885,9 @@
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--card);
-  padding: 0.4rem 0.9rem;
-  font-size: 0.72rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.8rem;
+  line-height: 1.25;
   font-weight: 600;
   color: var(--muted-foreground);
   box-shadow: 0 10px 22px -18px rgb(11 27 58 / 0.45);
