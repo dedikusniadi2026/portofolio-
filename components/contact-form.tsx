@@ -99,7 +99,7 @@ export function ContactForm() {
       <div className="space-y-2">
         <Label htmlFor="cf-message" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Message</Label>
         <Textarea id="cf-message" name="message" value={message} onChange={(e) => setMessage(e.target.value)} rows={5}
-                  placeholder="What breaks, and what should it do instead?" required
+                  placeholder="The role, the team, and the stack — or just a link to the job post." required
                   className="min-h-[130px] rounded-xl border-border bg-card text-sm" />
       </div>
 

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
@@ -11,9 +11,9 @@ import { ContactForm } from "@/components/contact-form"
 import { FloatingHireButton } from "@/components/floating-hire-button"
 import {
   ArrowRight, Briefcase, Rocket, Code2, Shield, BookOpen,
-  Menu, Mail, Linkedin, Github, Download, MapPin, Clock, Sparkles,
-  Layers, Lock, Users, Gauge, CheckCircle2, TrendingUp, AlertTriangle,
-  CalendarDays, Search, Wrench, Database, MonitorSmartphone, Server, Fingerprint, Quote,
+  Menu, Mail, Linkedin, Github, Download, MapPin, Clock,
+  Layers, Lock, Gauge, CheckCircle2, TrendingUp, AlertTriangle,
+  MonitorSmartphone, Quote,
   MessageCircle
 } from "lucide-react"
 
@@ -22,8 +22,7 @@ const contact = {
   linkedin: "https://www.linkedin.com/in/dedi-kusniadi",
   github: "https://github.com/dedikusniadi2026",
   whatsapp: "https://wa.me/6282215012841",
-  calendly: "https://calendly.com/dedikusniadi",
-  cv: "/cv/dedi-kusniadi.pdf",
+  cv: "/CV-Dedi-Kusniadi-Frontend.pdf",
   cvFileName: "CV-Dedi-Kusniadi-Frontend.pdf",
 }
 
@@ -38,23 +37,23 @@ interface CaseStudy {
 
 const caseStudiesRaw: CaseStudy[] = [
   {
-    index: "06",
+    index: "02",
     title: "SentinelPay — Wallet Transfers & Double-Entry Ledger",
     cardTitle: "SentinelPay",
-    cardSubtitle: "IDR & USD wallets, double-entry ledger",
-    client: "Internal wallet workspace • IDR & USD",
+    cardSubtitle: "IDR & USD — balance always derived from the journal, never edited",
+    client: "Personal R&D • Internal wallet workspace • IDR & USD",
     sector: "FinTech / Payments Infrastructure",
     topLabel: "Personal R&D • 2026 — Present",
     image: "/sentinelpay-light.png",
-    role: "Fullstack Developer",
-    summary: "Customer-facing brand of an internal wallet workspace: IDR and USD balances, transfers, and a readable history. Every transfer, deposit, withdrawal and reversal posts to an append-only double-entry journal, so a balance is always derived — never edited. I built this because in previous enterprise projects, the ledger was often the source of bugs. I want to prove that a balance should come from the journal, not from an edited number.",
+    role: "Full-Stack R&D — personal project",
+    summary: "Problem — in the enterprise projects I worked on, the ledger was often the source of bugs: one editable balance number per wallet, simple to render and impossible to audit. I built SentinelPay to prove the opposite: IDR and USD balances, transfers and a readable history where every movement posts to an append-only double-entry journal, so a balance is always derived — never edited.",
     impact: [
-      "IDR and USD wallets in one place, with an easy-to-read transaction history. The UI renders only API data — no fabricated balances or transactions.",
-      "Layered security: HttpOnly Redis-backed sessions, CSRF-bound state changes, Argon2id passwords, TOTP MFA plus a transaction PIN, and step-up verification before money moves.",
-      "Transparent records: every fund movement is atomic, idempotent where it matters, and posted as a balanced journal, so reconciliation is a query instead of a trust assumption.",
+      "Result — every fund movement is atomic, idempotent where it matters, and posted as a balanced journal, so reconciliation is a query instead of a trust assumption.",
+      "The UI renders only API data — no fabricated balances or transactions anywhere on screen.",
+      "Layered security in place: HttpOnly Redis-backed sessions, CSRF-bound state changes, Argon2id passwords, TOTP MFA plus a transaction PIN, and step-up verification before money moves.",
     ],
     contributions: [
-      "Built the NestJS API and React SPA together — Redis-backed HttpOnly sessions, a session-bound CSRF token and an exact Origin allowlist for every unsafe request",
+      "Action — built the NestJS API and React SPA together: Redis-backed HttpOnly sessions, a session-bound CSRF token and an exact Origin allowlist for every unsafe request",
       "Designed the double-entry ledger and the transfer engine: deposits, withdrawals, reversals and refunds post balanced journals inside one PostgreSQL transaction with row locks and idempotency keys",
       "Implemented TOTP MFA with HKDF-derived AES-256-GCM encrypted secrets, one-time recovery codes, a transaction PIN and 5-minute step-up for money movement",
       "Set up deny-by-default RBAC — 32 permissions across 20 staff roles; navigation, route guards and action buttons are generated from the server permission list while the API enforces each permission independently of the UI",
@@ -78,57 +77,55 @@ const caseStudiesRaw: CaseStudy[] = [
     ],
     archNote: "One API owns both the session and the money path, so the client is never trusted with a balance: journals live in PostgreSQL and Redis only holds sessions plus rate-limit buckets. The SPA and /api/ share one origin behind nginx, which is what makes SameSite=Lax with an exact Origin match enough for CSRF. Datadog sits outside that path — traces and logs carry the same correlation ID the API generates, so one slow transfer is searchable end to end without touching the ledger.",
     didntWork: "Early version kept the session in browser storage and stored one balance number per wallet — simple to render, impossible to audit. Moved sessions into HttpOnly Redis-backed cookies and derived every balance from the ledger; the extra join cost is worth paying because reconciliation became a query.",
-    codeNote: "Private repo — live demo & code walkthrough available in interview.",
+    codeNote: "Code private under NDA — Demo & walkthrough available in interview.",
     ctaLabel: "Request Walkthrough",
+    cardCtaLabel: "Request Walkthrough",
     photoNote: "SentinelPay sign-in — dark/gold brand variant, no user data.",
   },
   {
-    index: "02",
+    index: "01",
     title: "Logistics Tracking System",
     cardTitle: "Logistics Tracking",
     cardSubtitle: "National scale real-time map",
     client: "National Logistics Operator • Client Work",
     sector: "Enterprise Logistics",
-    topLabel: "Fullstack • NestJS + PostgreSQL • Client Work",
+    topLabel: "Client Work • Frontend + Architecture",
     image: "/gis.png",
-    role: "Fullstack Developer",
-    summary: "National logistics operator, 1.2M parcels/year. 2,000 dispatchers peak. Map lagged 30s on low-end Android tablets in warehouses — drivers waiting outside.",
+    role: "Solo Frontend + Architecture",
+    summary: "Problem — the dispatch map lagged 30 seconds on the low-end Android tablets used inside the warehouses. 2,000 dispatchers at peak, 1.2M parcels/year, and drivers waiting outside while the screen caught up.",
     impact: [
-      "Rebuilt the WebSocket pipeline and the PostgreSQL queries behind it: map latency 30s → under 1s on the same warehouse tablets.",
+      "Result — map latency 30s → 1s (97%) on the same warehouse tablets.",
       "LCP 8.1s → 2.4s after code-splitting the map, so dispatchers see parcels before the rest of the app finishes loading.",
       "One realtime pipeline now serves 2,000 dispatchers at peak across 1.2M parcels/year.",
     ],
     contributions: [
-      "Rebuilt real-time tracking end to end — NestJS WebSocket gateway, Redis pub/sub fan-out, and a React client that applies deltas instead of polling",
-      "Added PostgreSQL indexes and per-region tracking queries, replacing the full-table scan behind the old 30s poll",
+      "Action — rebuilt the realtime client: position events arrive over WebSocket and are applied as deltas straight to the map, no polling loop",
       "Moved map rendering off the main thread into a Web Worker so the UI stays responsive on low-end Android tablets",
-      "Split the monolith SPA into domain modules with per-domain state — 6 squads shipping without conflicts",
+      "Code-split Leaflet so the map bundle only loads on the screens that actually draw it",
+      "Split global state into per-domain Zustand stores — 6 squads shipping without stepping on each other",
       "Replaced the legacy UI kit with a Figma token-based design system — 35% fewer UI defects per sprint",
     ],
     metrics: [
-      { value: "30s → <1s", label: "Map latency" },
+      { value: "30s → 1s", label: "Map lag (97%)" },
+      { value: "8.1s → 2.4s", label: "LCP on low-end tablets" },
       { value: "1.2M", label: "Parcels / year" },
       { value: "2,000", label: "Dispatchers at peak" },
-      { value: "8.1s → 2.4s", label: "LCP on low-end tablets" },
     ],
-    tech: ["React", "NestJS", "PostgreSQL", "Redis", "WebSocket"],
+    tech: ["Next.js", "TypeScript", "Zustand", "Leaflet", "WebSocket"],
     arch: [
-      { label: "Client", items: ["React SPA", "Leaflet map", "Web Worker"] },
-      { label: "API Gateway", items: ["NestJS REST", "WebSocket"] },
-      { label: "Services", items: ["Tracking", "Routing", "Auth"] },
-      { label: "Data", items: ["PostgreSQL + indexes", "Redis pub/sub"] },
-      { label: "Realtime", items: ["WS fan-out per region", "<1s to the map"] },
+      { label: "Client", items: ["Next.js app", "Leaflet map", "Web Worker"] },
+      { label: "State", items: ["Zustand store per domain", "Delta-applied positions"] },
+      { label: "Realtime", items: ["WebSocket position events", "Apply delta, never poll"] },
+      { label: "Delivery", items: ["Route-level code split", "Map loads only where drawn"] },
     ],
-    archNote: "NestJS owns the socket: the tracking service publishes position events to Redis, the gateway fans them out per region, and the browser applies only the delta it needs. PostgreSQL indexes on (parcel, timestamp) replaced the full-table scan behind the old poll, and routing stayed a separate REST call so a slow routing service can never freeze the map.",
-    didntWork: "First version pushed everything down one WebSocket — the map froze whenever the routing service was slow. Split it: tracking events on the socket, routing as separate REST. Redux as a single store was a mess with 6 squads, so each domain got its own Zustand store.",
-    codeNote: "Code & live demo private — available for architecture walkthrough in interview.",
-    ctaLabel: "Request Architecture Walkthrough",
-    cardCtaLabel: "Request Walkthrough",
+    archNote: "The browser only pays for what it shows: the map bundle splits per route, position events come over the socket as deltas and are patched straight into the markers, and the heavy rendering work sits in a Web Worker so the main thread keeps the UI responsive on warehouse-grade Android tablets.",
+    didntWork: "First version pushed everything down one WebSocket and kept a single global store. The map froze whenever another service was slow, and six squads kept colliding in one state tree. Split it: only tracking events on the socket, state per domain.",
+    codeNote: "Code private under NDA — Demo & walkthrough available in interview.",
+    ctaLabel: "Request Walkthrough",
     photoNote: "Dispatch console and live map view — client data removed.",
-    ctaOnly: true,
   },
   {
-    index: "01",
+    index: "03",
     title: "Telin NeuAPIX — WhatsApp Business Platform",
     cardTitle: "Telin NeuAPIX",
     cardSubtitle: "Telco WhatsApp BSP, CPaaS dashboard",
@@ -137,42 +134,43 @@ const caseStudiesRaw: CaseStudy[] = [
     topLabel: "Employer Project • Telco WhatsApp BSP • CPaaS",
     image: "/Telin.png",
     role: "Senior Frontend Engineer",
-    summary: "WhatsApp Business Platform dashboard for NeuAPIX — Telin's CPaaS product on top of the Meta Cloud API. My scope: WABA onboarding, template management, unified inbox and API usage monitoring for 10M+ users.",
+    summary: "Problem — WABA onboarding and the unified inbox confused the businesses onboarding onto the platform. 10M+ users behind it, and every unclear step turned into a support ticket.",
     impact: [
-      "Telin is an official Telecom WhatsApp BSP selected by Meta since 2023. NeuAPIX is its CPaaS platform — businesses use the WhatsApp Cloud API without building their own infrastructure.",
-      "The dashboard is where those businesses live: WABA onboarding via Meta Embedded Signup, template management with Meta approval status, chatbot flows and the omnichannel inbox.",
+      "Result — Accessibility score 62 → 95.",
+      "WABA onboarding 5 steps → 2 steps.",
+      "Support tickets about onboarding and inbox down 30%.",
     ],
     contributions: [
-      "Built dashboard modules for WhatsApp Business Account (WABA) onboarding via Meta Embedded Signup",
-      "Developed Template Manager: create, submit to Meta for approval, track status",
-      "Developed Unified Inbox logic for WhatsApp, handling media messages and delivery status",
-      "Implemented RBAC and API usage monitoring (Log API, Hit Rate, Report) — same pattern as the ADA platform",
-      "Performance: split channel modules on demand, login-first bundle — cut initial load",
+      "Action — built the WABA onboarding flow (Meta Embedded Signup) and the Template Manager: create, submit to Meta for approval, track status",
+      "Built the unified inbox for WhatsApp — media messages and delivery status in one conversation model",
+      "Added API usage monitoring (Log API, Hit Rate, Report) with RBAC — same pattern as the ADA platform",
+      "Applied Figma Tokens across the dashboard so design changes ship as token changes, not code changes",
+      "Split channel modules into lazy modules so the heavy screens load only after login",
     ],
     metrics: [
-      { value: "BSP", label: "Official WhatsApp BSP by Meta (since 2023)" },
-      { value: "CPaaS", label: "WhatsApp Cloud API, no own infra" },
+      { value: "62 → 95", label: "Accessibility score" },
+      { value: "5 → 2", label: "WABA onboarding steps" },
+      { value: "-30%", label: "Support tickets" },
       { value: "10M+", label: "Users" },
     ],
-    tech: ["Angular", "TypeScript", "SCSS", "WhatsApp Cloud API", "MSAL", "REST"],
+    tech: ["Angular", "React", "TypeScript", "WhatsApp Cloud API", "Figma Tokens"],
     arch: [
-      { label: "Edge", items: ["CDN", "WAF"] },
-      { label: "Client", items: ["Angular SPA", "Embedded Signup", "Unified Inbox"] },
-      { label: "API Gateway", items: ["REST", "MSAL Auth"] },
-      { label: "Services", items: ["WABA Onboarding", "Template Manager", "Usage Reports"] },
-      { label: "Data", items: ["PostgreSQL", "WhatsApp Cloud API"] },
+      { label: "Client", items: ["Angular / React app", "Embedded Signup", "Unified Inbox"] },
+      { label: "Modules", items: ["Lazy channel modules", "Login-first bundle"] },
+      { label: "Design", items: ["Figma Tokens", "One token set per theme"] },
+      { label: "Platform", items: ["WhatsApp Cloud API", "Meta template approval"] },
     ],
-    archNote: "Every template goes to Meta for approval, so the dashboard is mostly state tracking: WABA onboarding status, template status, message delivery. Channel modules load on demand after login so the first paint stays fast.",
-    didntWork: "First lazy-load split too aggressive — users saw a blank screen for 2s on login. Rolled back and only split the heavy modules: Billing, Template Manager, and Inbox.",
-    codeNote: "Code private under NDA — available for walkthrough in interview.",
+    archNote: "Most of this dashboard is state tracking, because every template goes to Meta for approval: onboarding status, template status, message delivery. Channel modules load lazily after login so the first paint stays small, and the UI is driven by Figma tokens so a design change is a token change rather than a code change.",
+    didntWork: "First lazy-load split was too aggressive — users saw a blank screen for ~2s after login. Rolled it back and split only the heavy modules: Billing, Template Manager, and Inbox.",
+    codeNote: "Code private under NDA — Demo & walkthrough available in interview.",
     ctaLabel: "Request Walkthrough",
     photoNote: "NeuAPIX dashboard — WABA onboarding, template manager and unified inbox.",
   },
   {
-    index: "03",
+    index: "04",
     title: "E-Working Permit — Office Guest & BTS Permit System",
     cardTitle: "E-Working Permit",
-    cardSubtitle: "Office guest & BTS permit system",
+    cardSubtitle: "5 days → 1 day, 10K+/month, 100% paperless",
     client: "XLSmart (ex-XL Axiata) • Compliance & Physical Security",
     sector: "Compliance & Physical Security",
     topLabel: "Employer Project • Compliance & Physical Security",
@@ -205,15 +203,17 @@ const caseStudiesRaw: CaseStudy[] = [
     ],
     archNote: "Two audiences, one portal: office guests need a fast selfie check-in, field technicians need a multi-step permit wizard on low-end phones. Draft state lives in localStorage so a refresh never kills the request, and each step validates before the next one unlocks.",
     didntWork: "First version was one big single-page form — users lost all data when they refreshed. Split into a wizard with auto-save to localStorage.",
-    codeNote: "Code private under NDA — available for walkthrough in interview.",
+    codeNote: "Code private under NDA — Demo & walkthrough available in interview.",
     ctaLabel: "Request Walkthrough",
+    cardCtaLabel: "Request Walkthrough",
     photoNote: "Guest check-in and the BTS permit wizard — product UI.",
+    ctaOnly: true,
   },
   {
-    index: "04",
+    index: "05",
     title: "ADA Business Messaging Core",
     cardTitle: "ADA Biz Messaging",
-    cardSubtitle: "WhatsApp BSP, 1,000+ accounts",
+    cardSubtitle: "1,000+ accounts, WA/SMS/LINE/RCS in one queue",
     client: "ADA Asia • Official WhatsApp BSP in APAC",
     sector: "Business Messaging / MarTech",
     topLabel: "Employer Project • WhatsApp BSP • 1,000+ Accounts",
@@ -242,50 +242,52 @@ const caseStudiesRaw: CaseStudy[] = [
     ],
     archNote: "Similar pattern to Telin WA platform but for ADA Asia as BSP. MSAL for auth, route split for messaging modules. Multi-channel means one codebase for WA/SMS/LINE/RCS.",
     didntWork: "First tried load all messaging channels in one bundle — login slow. Split: login first, then load channel modules on demand.",
-    codeNote: "Code private under NDA — available for walkthrough in interview.",
+    codeNote: "Code private under NDA — Demo & walkthrough available in interview.",
     ctaLabel: "Request Walkthrough",
+    cardCtaLabel: "Request Walkthrough",
     photoNote: "BizMsgCore unified inbox — WhatsApp, SMS, LINE and RCS in one queue.",
+    ctaOnly: true,
   },
   {
-    index: "05",
-    title: "Enterprise Analytics Dashboard",
-    cardTitle: "Analytics Dashboard",
-    cardSubtitle: "60+ KPIs, 250K monthly users",
-    client: "Retail Group • 250K monthly active users",
-    sector: "Data & Analytics",
-    topLabel: "Client Work • Data & Analytics • 250K MAU",
-    image: "/dashboard.png",
-    role: "Fullstack Developer",
-    summary: "Legacy report suite with 60+ KPIs — first paint 8s, and the sales team was complaining on 3G. Target: under 2s for 250K monthly active users.",
+    index: "06",
+    title: "Connectivity+ — Enterprise Data Portal",
+    cardTitle: "Connectivity+",
+    cardSubtitle: "50k-row grid, 5fps → 60fps",
+    client: "XL Axiata • Enterprise Connectivity",
+    sector: "Enterprise Telecom / Data Portal",
+    topLabel: "Employer Project • Enterprise Data Portal",
+    role: "Senior Frontend Engineer, data grid architecture",
+    summary: "Problem — the enterprise connectivity portal rendered a 50,000-row data grid on one page. Every filter change repainted all 50k rows and the grid ran at about 5fps — unusable for the teams living in it all day.",
     impact: [
-      "First paint 8s → under 2s: summaries pre-aggregated server-side for the first screen, detail loaded only on drill-down. Payload 4MB → <400KB.",
-      "10,000-row grids virtualized, so the browser stopped freezing on a full render.",
-      "12 separate report pages became one dashboard — time spent building a report down 45%.",
+      "Result — 5fps → 60fps on the same 50k-row dataset, on the same hardware.",
+      "Cold start 40% faster after route-level code splitting.",
+      "Connection status now updates in the grid in real time over WebSocket, without a manual refresh.",
     ],
     contributions: [
-      "Led the Vue 3 + Pinia rewrite that replaced 12 separate report pages with one dashboard",
-      "Designed the summary/detail split with the backend: aggregated endpoints for first paint, drill-down queries on click",
-      "Virtualized 10,000-row tables with react-window so large exports stay smooth",
-      "Pooled Chart.js instances and fixed the memory leak that appeared after two hours of continuous use",
+      "Action — virtualized the 50k-row grid with react-window so only visible rows render",
+      "Streamed real-time connection status over WebSocket into the virtualized rows",
+      "Applied route-level code splitting: the portal shell loads first, heavy route modules on demand",
+      "Kept Ant Design table semantics (sorting, filters, column config) working on top of virtualization",
     ],
     metrics: [
-      { value: "8s → <2s", label: "First paint after fix" },
-      { value: "250K+", label: "Monthly active" },
-      { value: "60+", label: "KPIs on one screen" },
-      { value: "45% less", label: "Time building reports" },
+      { value: "5fps → 60fps", label: "50k-row grid" },
+      { value: "50,000", label: "Rows in one grid" },
+      { value: "40% faster", label: "Cold start after split" },
+      { value: "Realtime", label: "Status over WebSocket" },
     ],
-    tech: ["Vue.js", "TypeScript", "Pinia", "Chart.js", "react-window", "REST"],
+    tech: ["React", "TypeScript", "Ant Design", "react-window", "WebSocket"],
     arch: [
-      { label: "Edge", items: ["CDN"] },
-      { label: "Client", items: ["Vue SPA", "Virtualized grids"] },
-      { label: "API Gateway", items: ["REST", "Aggregation"] },
-      { label: "Data", items: ["ClickHouse", "PostgreSQL"] },
+      { label: "Client", items: ["React + TypeScript", "Ant Design table semantics"] },
+      { label: "Grid", items: ["react-window virtualization", "Only visible rows render"] },
+      { label: "Realtime", items: ["WebSocket status stream", "Patched into visible rows"] },
+      { label: "Delivery", items: ["Route-level code split", "Shell first, routes on demand"] },
     ],
-    archNote: "The backend owns the aggregation: a summary endpoint feeds first paint, and detail only comes back on drill-down. Virtualization keeps 10,000-row grids cheap, and chart instances are pooled and reused instead of re-created on every filter change.",
-    didntWork: "First version fetched detail for all 60 KPIs upfront — 4MB payload on 3G, and the sales team told us within a week.",
-    codeNote: "Code private under NDA — available for walkthrough in interview.",
+    archNote: "Rendering 50k rows was never the requirement — rendering the rows on screen was. react-window keeps the DOM to a window of visible rows, the WebSocket stream patches status into those rows as it arrives, and route-level splitting means the portal shell paints before the heavy grid module is even downloaded.",
+    didntWork: "First attempt batched the row updates and still repainted everything — it moved the stutter, it didn't remove it. The fix was virtualization: stop rendering rows nobody is looking at.",
+    codeNote: "Code private under NDA — Demo & walkthrough available in interview.",
     ctaLabel: "Request Walkthrough",
-    photoNote: "Analytics dashboard — 60+ KPIs on one screen.",
+    cardCtaLabel: "Request Walkthrough",
+    ctaOnly: true,
   },
 ]
 
@@ -317,68 +319,41 @@ const experienceGroups: { title: string; items: Experience[]; more?: Experience[
   },
 ]
 
-const employmentHistory = [
-  { period: "Mar 2026 — Present", role: "Independent Consultant — Full Stack", note: "Self-initiated R&D + Contract-ready" },
-  { period: "Jul 2020 — Mar 2026", role: "Senior Frontend Engineer @ Axiata Digital Labs", note: "Promoted from Frontend Developer" },
-  { period: "2019 — 2020 (Contract)", role: "Kreasi Digital • AYO Media • Bank BTPN", note: "POS SaaS, Flutter apps, joint financial system (OJK & BI)" },
-  { period: "2013 — 2019", role: "Web Developer", note: "Bisnis Indonesia, Springfields Asia" },
-]
-
-const heroTechStack = [
-  { name: "React.js", logo: "/tech/react.svg" },
-  { name: "Next.js 14", logo: "/tech/nextjs.svg" },
-  { name: "TypeScript", logo: "/tech/typescript.svg" },
-  { name: "JavaScript", logo: "/tech/javascript.svg" },
-  { name: "Angular", logo: "/tech/angular.svg" },
-  { name: "NestJS", logo: "/tech/nestjs.svg" },
-  { name: "Node.js", logo: "/tech/nodejs.svg" },
-  { name: "PostgreSQL", logo: "/tech/postgresql.svg" },
-  { name: "Redis", logo: "/tech/redis.svg" },
-  { name: "REST API", logo: "/tech/rest-api.svg" },
-  { name: "WebSocket", logo: "/tech/websocket.svg" },
-  { name: "OWASP", logo: "/tech/owasp.svg" },
-  { name: "Agile", logo: "/tech/agile.svg" },
-]
-
 const techGroups = [
   {
     icon: MonitorSmartphone,
-    title: "Frontend",
+    title: "Frontend Core",
     items: [
-      { name: "React", tip: "Logistics map (2K dispatchers), Axiata internal tools. Hooks + Zustand per domain." },
-      { name: "Angular", tip: "Telin NeuAPIX, XLSmart EWP, ADA bizmsgcore — lazy modules, Material, RBAC." },
-      { name: "TypeScript", tip: "Every project since 2019. Strict mode on new codebases." },
-      { name: "Next.js", tip: "This portfolio and my open R&D work. App Router, server-rendered marketing pages." },
+      { name: "React", tip: "Connectivity+ data grid, Logistics map client, and my own R&D wallet. Hooks + per-domain state." },
+      { name: "Next.js 14", tip: "Logistics Tracking — route-level code splitting so the map bundle loads only where it is drawn. Also this portfolio." },
+      { name: "TypeScript", tip: "Every case study here. Strict mode on new codebases." },
+      { name: "Angular 2-17", tip: "Telin NeuAPIX, XLSmart EWP, ADA bizmsgcore — lazy modules, Material, RBAC." },
+      { name: "RxJS", tip: "Streams behind the Angular dashboards: status updates and form validation without re-rendering the whole screen." },
+      { name: "NgRx", tip: "Store pattern for large multi-team Angular dashboards; on React I use per-domain Zustand stores instead." },
     ],
   },
   {
-    icon: Server,
-    title: "Backend",
+    icon: Gauge,
+    title: "Performance",
     items: [
-      { name: "NestJS", tip: "Logistics Tracking — WebSocket gateway with Redis pub/sub fan-out, map updates under 1s. SentinelPay API: sessions, CSRF, double-entry ledger." },
-      { name: "Node.js", tip: "BFF layers, build tooling, small internal services." },
+      { name: "WebSocket", tip: "Realtime position events on the logistics map, live connection status in the 50k-row grid. 30s lag → 1s." },
+      { name: "Web Worker", tip: "Map rendering moved off the main thread so the UI stays responsive on low-end warehouse tablets." },
+      { name: "Leaflet", tip: "The map layer itself, split per route: LCP 8.1s → 2.4s." },
+      { name: "Virtualization", tip: "react-window on a 50,000-row grid — 5fps → 60fps on the same hardware." },
+      { name: "LCP Optimization", tip: "Measure on the real device first: cold start 40% faster after route-level splitting." },
     ],
   },
   {
     icon: Shield,
-    title: "Security",
+    title: "Security & Banking",
     items: [
-      { name: "Argon2id", tip: "SentinelPay password hashes — profile changes re-verify the current password and sign out other sessions." },
-      { name: "HttpOnly Sessions", tip: "Redis-backed session cookie, SameSite=Lax, regenerated on login — no auth material in browser storage." },
-      { name: "CSRF + Origin check", tip: "Session-bound token in X-CSRF-Token on every unsafe request, plus an exact allowed-origin match." },
-      { name: "TOTP MFA", tip: "RFC 6238 codes with encrypted secrets, one-time recovery codes, a transaction PIN and 5-minute step-up before money moves." },
-      { name: "RBAC", tip: "32-permission deny-by-default catalog over 20 staff roles in SentinelPay; MSAL + Azure AD at Telin and ADA." },
-      { name: "OWASP Top 10", tip: "Threat model and OWASP 2025 control mapping written per project, not a checkbox exercise." },
-    ],
-  },
-  {
-    icon: Database,
-    title: "Infra & Tools",
-    items: [
-      { name: "PostgreSQL", tip: "Main store behind logistics tracking and portal billing data." },
-      { name: "Redis", tip: "Cache + pub/sub in front of the map feed." },
-      { name: "Docker", tip: "Local stack for the R&D project; CI images for client builds." },
-      { name: "RabbitMQ", tip: "Queue between ingestion and the tracking service so the socket never blocks." },
+      { name: "OWASP Top 10", tip: "Threat model and OWASP control mapping written per project, not a checkbox exercise." },
+      { name: "DOMPurify", tip: "Anything that reaches the DOM as HTML — inbox bodies and template previews — is sanitized before render." },
+      { name: "Helmet", tip: "Secure response headers on the Node services in front of these UIs." },
+      { name: "httpOnly cookies", tip: "Sessions never live in browser storage — no script can read them." },
+      { name: "JWT", tip: "Token auth verified server-side; the UI never decides what a role can do." },
+      { name: "OAuth2", tip: "Delegated consent flows, including Meta Embedded Signup for WhatsApp Business Account onboarding." },
+      { name: "OJK & BI Compliance", tip: "Joint financial system at Bank BTPN built to OJK & BI rules." },
     ],
   },
 ]
@@ -396,65 +371,50 @@ const testimonials = [
     role: "Senior Business Analyst · Quality Assurance",
     meta: "Worked with Dedi on the same team · May 12, 2024",
     quote:
-      "I worked with Dedi Kusniadi in couple of different projects. In those times, Dedi has showed us that he is a well knowledgeable software developer with a wide range of expertise. He is a good learner when it comes to new tools and technology. Dedi also gave his persistence and dedication to tackle any difficulties that arise, and showed his willingness to support and backup his fellow developer. In summary, I am certain that Dedi Kusniadi can be a valuable member in any software development team.",
+      "Dedi is a well knowledgeable software developer with a wide range of expertise, and a good learner when it comes to new tools and technology. He showed persistence and dedication to tackle any difficulty that arose, and always supported his fellow developers. I am certain Dedi can be a valuable member in any software development team.",
   },
   {
     name: "Billy Huar Noning",
     role: "Founder & Entrepreneur · Special Situation & Critical Mission",
     meta: "Managed Dedi directly · November 2, 2021",
     quote:
-      "You know? I found Dedi like found a gold in the nature. Yes, he is silent man, but trust me, he is so skillful and will finish all the task assigned to him. He is very good learner, and will push himself over the limit to achieve that. One thing for sure, I feel safe everytime having Dedi on the project.",
-  },
-]
+      "I found Dedi like finding gold in the nature. He is a silent man, but skillful, and will finish every task assigned to him — he pushes himself over the limit to get there. One thing for sure: I feel safe every time having Dedi on the project.",
+  },]
 
 const howIWork = [
   {
-    icon: Search,
-    title: "Discovery & Audit",
+    title: "Audit & Quick Wins",
     weeks: "Week 1—2",
-    body: "I read the numbers before the code: LCP on real devices, bundle weight, support-ticket categories, where users actually drop off. You get a written audit that separates \"fixable in two weeks\" from \"needs a redesign\".",
-    outcome: "Output: audit doc + prioritised backlog",
+    body: "I read the numbers before touching code: LCP on the devices your users actually have, bundle weight, support-ticket categories. Then I ship the small fixes those numbers already point at, so the team sees movement while the bigger work is still being planned.",
   },
   {
-    icon: Wrench,
-    title: "Build & Ship in Sprints",
+    title: "Ship Every Sprint",
     weeks: "Ongoing",
-    body: "Small increments behind feature flags, one domain module per squad, performance budget checked before and after each release. You see working software every sprint instead of a big-bang rewrite at the end of the quarter.",
-    outcome: "Output: shippable increment every 2 weeks",
+    body: "Small increments behind feature flags, one domain module per squad, and a performance budget checked before and after every release. You get working software each sprint instead of a big-bang rewrite at the end of the quarter.",
   },
   {
-    icon: Fingerprint,
-    title: "Handover & Scale",
-    weeks: "Last 2 weeks",
-    body: "Docs, design tokens, component patterns, and a live walkthrough so the in-house team owns it without me. I stay reachable for the first quarter of edge cases — handover should not be a cliff.",
-    outcome: "Output: docs + team can ship solo",
+    title: "Handover",
+    weeks: "Final weeks",
+    body: "Docs, design tokens, component patterns and a live walkthrough, so the team keeps shipping without me. Handover should not be a cliff.",
   },
 ]
 
 const trustBadges = [
-  { value: "30s → <1s", label: "Logistics map lag (97%)" },
+  { value: "30s → 1s", label: "Logistics map lag (97%)" },
   { value: "8.1s → 2.4s", label: "LCP, low-end tablets" },
   { value: "10M+ users", label: "Telin WhatsApp BSP" },
-  { value: "5 days → 1 day", label: "Permit flow, 10K+/month" },
 ]
 
 const aboutHighlights = [
-  { icon: Rocket, title: "13+ Years of Experience", note: "Enterprise frontend since 2013" },
+  { icon: Rocket, title: "Enterprise Frontend", note: "Telecom, logistics & business messaging platforms" },
   { icon: Shield, title: "Secure & Performant Applications", note: "Bank-grade auth, <2s loads" },
   { icon: Code2, title: "Clean Code & Best Practices", note: "Design tokens, RBAC, a11y 95" },
   { icon: BookOpen, title: "Continuous Learning", note: "React 19, WebSocket, Web Worker" },
 ]
 
-const skillGroups = [
-  { icon: Sparkles, title: "Core 2025-2026", items: ["React", "Next.js 14", "TypeScript", "Zustand", "TanStack Query"] },
-  { icon: Users, title: "Business Messaging", items: ["WhatsApp Business API", "BSP", "MSAL", "Multi-channel (WA/SMS/LINE/RCS)"] },
-  { icon: Gauge, title: "Performance", items: ["WebSocket", "Web Worker", "Leaflet", "react-window", "LCP Optimization"] },
-  { icon: CheckCircle2, title: "Quality", items: ["A11y 95", "Lighthouse", "Code Splitting", "Figma Tokens"] },
-]
-
 const navItems = [
   { label: "Projects", href: "#projects" },
-  { label: "Tech Stack", href: "#tech-stack" },
+  { label: "Skills", href: "#tech-stack" },
   { label: "How I Work", href: "#how-i-work" },
   { label: "Contact", href: "#contact" },
 ]
@@ -513,6 +473,9 @@ export default function HomePage() {
     document.body.removeChild(link)
   }
 
+  const heroProject = caseStudies.find((cs) => cs.index === "01") ?? caseStudies[0]
+  const supportingProjects = caseStudies.filter((cs) => !cs.ctaOnly && cs.index !== heroProject.index)
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "nav-blur" : ""}`}>
@@ -538,11 +501,7 @@ export default function HomePage() {
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <Button asChild className="btn-pill hidden bg-primary px-4 text-[13px] text-primary-foreground shadow-[0_12px_26px_-14px_rgba(37,99,235,0.9)] sm:inline-flex">
-              <a href={contact.calendly} target="_blank" rel="noopener noreferrer"><CalendarDays className="mr-1.5 h-4 w-4" />Book a Call</a>
-            </Button>
-            <Button variant="outline" onClick={handleDownload}
-                    className="btn-pill hidden border-border bg-card px-4 text-[13px] font-semibold hover:bg-secondary lg:inline-flex">
-              <Download className="mr-1.5 h-4 w-4" />Download CV
+              <a href="#contact"><Mail className="mr-1.5 h-4 w-4" />Contact Me</a>
             </Button>
             <Sheet>
               <SheetTrigger asChild>
@@ -554,8 +513,18 @@ export default function HomePage() {
                 {navItems.map(({ label, href }) => (
                   <a key={label} href={href} className="rounded-xl px-3 py-2.5 text-base font-semibold text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">{label}</a>
                 ))}
-                <Button asChild className="btn-pill mt-3"><a href={contact.calendly} target="_blank" rel="noopener noreferrer"><CalendarDays className="mr-2 h-4 w-4" />Book a Call</a></Button>
-                <Button variant="outline" className="btn-pill mt-2" onClick={handleDownload}><Download className="mr-2 h-4 w-4" />Download CV</Button>
+                <Button asChild className="btn-pill mt-3"><a href="#contact"><Mail className="mr-2 h-4 w-4" />Contact Me</a></Button>
+                <Button asChild variant="outline" className="btn-pill mt-2">
+                  <a href={contact.whatsapp} target="_blank" rel="noreferrer"><MessageCircle className="mr-2 h-4 w-4" />WhatsApp Saya</a>
+                </Button>
+                <div className="mt-2 flex gap-2">
+                  <Button asChild variant="outline" className="btn-pill flex-1 border-border px-3 text-[13px]">
+                    <a href={contact.linkedin} target="_blank" rel="noreferrer"><Linkedin className="mr-1.5 h-4 w-4" />LinkedIn</a>
+                  </Button>
+                  <Button asChild variant="outline" className="btn-pill flex-1 border-border px-3 text-[13px]">
+                    <a href={contact.github} target="_blank" rel="noreferrer"><Github className="mr-1.5 h-4 w-4" />GitHub</a>
+                  </Button>
+                </div>
               </SheetContent>
             </Sheet>
           </div>
@@ -563,90 +532,59 @@ export default function HomePage() {
       </header>
 
       <section id="home" className="hero-canvas pt-19">
-        <span className="hero-slash hidden lg:block" aria-hidden />
-        <div className="shell relative grid items-start gap-12 pb-14 pt-8 md:pt-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:pb-20">
+        <div className="shell relative grid items-start gap-12 pb-12 pt-8 md:pt-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:pb-16">
           <div className="animate-fade-in-up relative z-10">
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-3.5 py-1.5 text-xs font-semibold shadow-sm">
               <span className="h-2 w-2 animate-pulse rounded-full bg-success" />
-              Senior Frontend &amp; Full-Stack Developer
+              Available Immediately • Remote / Hybrid
             </span>
 
             <h1 className="mt-6 text-5xl font-extrabold leading-[1.02] sm:text-6xl lg:text-7xl">Dedi Kusniadi</h1>
             <h2 className="mt-4 max-w-xl text-2xl font-bold leading-tight text-primary/90 sm:text-[28px]">
-              Senior Full Stack Software Engineer | 13+ Years (6+ Years Senior Frontend Focus)
+              Senior Frontend Engineer • Ex-Axiata Digital Labs • Angular / React / Next.js
             </h2>
             <p className="mt-5 max-w-lg text-[15px] leading-relaxed text-muted-foreground">
               I help enterprise teams fix slow maps, heavy dashboards, and confusing portals — without rewriting everything. From API to UI.
             </p>
             <p className="mt-2 max-w-lg text-[15px] leading-relaxed text-muted-foreground">
-              Bandung, Indonesia • Open to Fully Remote Full-time &amp; Contract • Available Immediately
+              Bandung, Indonesia • Remote / Hybrid • Full-time &amp; Contract • Available Immediately
             </p>
 
-            <ul className="mt-7 flex flex-wrap gap-2.5">
+            <ul className="mt-8 grid grid-cols-1 gap-3.5 sm:grid-cols-3">
               {trustBadges.map(({ value, label }) => (
-                <li key={label} className="trust-badge">
-                  <span className="text-lg font-extrabold text-primary">{value}</span>
-                  <span>{label}</span>
+                <li key={label} className="hero-stat">
+                  <span className="block text-xl font-extrabold tracking-tight text-primary">{value}</span>
+                  <span className="mt-1 block text-[11px] leading-snug text-muted-foreground">{label}</span>
                 </li>
               ))}
             </ul>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Button asChild size="lg" className="btn-pill bg-primary px-6 text-[15px] text-primary-foreground shadow-[0_16px_30px_-16px_rgba(37,99,235,0.95)]">
+                <a href={contact.whatsapp} target="_blank" rel="noreferrer"><MessageCircle className="mr-2 h-4 w-4" />WhatsApp Saya</a>
+              </Button>
               <Button size="lg" variant="outline" onClick={handleDownload}
                       className="btn-pill border-border bg-card px-6 text-[15px] font-semibold hover:bg-secondary">
                 <Download className="mr-2 h-4 w-4" />Download CV
               </Button>
-              <Button asChild size="lg" variant="outline"
-                      className="btn-pill border-border bg-card px-6 text-[15px] font-semibold hover:bg-secondary">
-                <a href={contact.linkedin} target="_blank" rel="noreferrer"><Linkedin className="mr-2 h-4 w-4" />LinkedIn</a>
-              </Button>
-              <Button asChild size="lg" variant="outline"
-                      className="btn-pill border-border bg-card px-6 text-[15px] font-semibold hover:bg-secondary">
-                <a href={contact.whatsapp} target="_blank" rel="noreferrer"><MessageCircle className="mr-2 h-4 w-4" />WhatsApp</a>
-              </Button>
-              <Button asChild size="lg" className="btn-pill bg-primary px-6 text-[15px] text-primary-foreground shadow-[0_16px_30px_-16px_rgba(37,99,235,0.95)]">
-                <a href="#projects">View Projects <ArrowRight className="ml-2 h-4 w-4" /></a>
-              </Button>
-              <Button asChild size="lg" variant="outline"
-                      className="btn-pill border-border bg-card px-6 text-[15px] font-semibold hover:bg-secondary">
-                <a href="#contact"><Mail className="mr-2 h-4 w-4" />Contact Me</a>
-              </Button>
             </div>
           </div>
 
-          <div className="animate-fade-in-up relative z-10 pr-4 lg:pr-0" style={{ animationDelay: "120ms" }}>
-            <span className="dot-grid right-6 top-0 hidden lg:block" aria-hidden />
-            <div className="relative mx-auto max-w-95 lg:max-w-none">
-              <div className="pointer-events-none absolute inset-x-8 bottom-20 top-12 z-0 rounded-full bg-primary/10 blur-3xl" aria-hidden />
-              <Image src="/images/dedi-cutout-2026.png" alt="Dedi Kusniadi — Senior Frontend Engineer" width={760} height={1140}
-                     priority
-                     className="relative z-1 mx-auto aspect-2/3 w-full max-w-100 object-contain drop-shadow-[0_28px_40px_rgba(15,40,90,0.28)] mask-[linear-gradient(to_bottom,#000_92%,transparent_99%)]" />
-              <div className="soft-card relative z-2 mx-auto mt-2 w-full max-w-75 px-4 py-3">
-                <p className="flex items-center gap-2 text-[13px] font-bold">
-                  <span className="h-2 w-2 animate-pulse rounded-full bg-success" />Ex-Axiata Digital Labs
-                </p>
-                <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
-                  React / Next.js / Angular
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Tech stack strip */}
-        <div className="shell relative z-10 pb-16">
-          <div className="soft-card flex flex-col gap-6 px-6 py-6 lg:flex-row lg:items-center lg:gap-10">
-            <div className="shrink-0">
-              <p className="text-[15px] font-bold">Tech Stack</p>
-              <p className="text-xs text-muted-foreground">Technologies I work with</p>
-            </div>
-            <div className="grid flex-1 grid-cols-3 items-start gap-x-3 gap-y-5 sm:grid-cols-4 lg:grid-cols-5 lg:border-l lg:pl-8">
-              {heroTechStack.map(({ name, logo }) => (
-                <div key={name} className="tech-item">
-                  <Image src={logo} alt={name} width={48} height={48} unoptimized />
-                  <span>{name}</span>
+          <div className="animate-fade-in-up relative z-10 lg:pl-6" style={{ animationDelay: "120ms" }}>
+            <div className="portrait-matte mx-auto max-w-95 lg:max-w-none">
+              <div className="portrait-inner">
+                <Image src="/images/dedi-cutout-2026.png" alt="Dedi Kusniadi — Senior Frontend Engineer" width={760} height={1140}
+                       priority
+                       className="aspect-4/5 w-full object-cover object-top" />
+                <div className="absolute bottom-3.5 left-3.5 sm:right-auto">
+                  <div className="rounded-xl border border-border bg-card/90 px-4 py-3 shadow-lg backdrop-blur-sm">
+                    <p className="flex items-center gap-2 text-[13px] font-bold">
+                      <span className="h-2 w-2 animate-pulse rounded-full bg-success" />Ex-Axiata Digital Labs
+                    </p>
+                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">React / Next.js / Angular</p>
+                  </div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>
@@ -656,7 +594,7 @@ export default function HomePage() {
       <section id="trusted-by" className="scroll-mt-24 border-y border-border bg-secondary/30 py-10">
         <div className="shell">
           <p className="text-center text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
-            Trusted by enterprise teams
+            Teams I&apos;ve worked with
           </p>
           <ul className="mt-6 grid grid-cols-2 items-center gap-x-6 gap-y-5 sm:grid-cols-4">
             {trustedBy.map(({ name, note }) => (
@@ -667,12 +605,12 @@ export default function HomePage() {
             ))}
           </ul>
           <p className="mt-5 text-center text-[11px] italic text-muted-foreground">
-            Client names shown for context only — logos and internal screens stay under NDA.
+            Company names shown for context only — internal screens and code stay under NDA.
           </p>
         </div>
       </section>
 
-      <section id="about" className="scroll-mt-24 py-20 md:py-24">
+      <section id="about" className="scroll-mt-24 py-16 md:py-20">
         <div className="shell grid items-center gap-10 lg:grid-cols-[0.9fr_1fr_0.8fr] lg:gap-12">
           <div className="animate-on-scroll img-reveal border border-border">
             <Image src="/images/about-workspace.png" alt="Developer workspace" width={900} height={700}
@@ -683,9 +621,7 @@ export default function HomePage() {
             <p className="kicker mb-4">About Me</p>
             <h2 className="section-head">Building Better Digital Experiences</h2>
             <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-              I'm <strong className="text-foreground">Dedi Kusniadi</strong>, a Senior Frontend &amp; Full-Stack Developer
-              with 13+ years of experience building scalable web applications. I love turning complex problems —
-              a 30-second map, a 4MB payload, a 5-day approval form — into simple, elegant solutions.
+              10 years fixing slow dashboards at Axiata Digital Labs, Telin, and national logistics. I hate when users wait 30 seconds just to see a map. My job is to make enterprise software feel fast and obvious — without a big-bang rewrite.
             </p>
             <Button asChild variant="outline" className="btn-pill mt-6 border-primary/40 bg-card px-5 text-primary hover:bg-secondary">
               <a href="#experience">More About Me <ArrowRight className="ml-2 h-4 w-4" /></a>
@@ -707,7 +643,7 @@ export default function HomePage() {
       </section>
 
       {/* ================= EXPERIENCE + FEATURED PROJECTS ================= */}
-      <section className="py-10 md:py-12">
+      <section className="py-16 md:py-20">
         <div className="shell grid gap-10 lg:grid-cols-[300px_1fr] lg:gap-12">
           <div id="experience" className="animate-on-scroll scroll-mt-24">
             <div className="mb-2 flex items-center gap-2">
@@ -748,22 +684,57 @@ export default function HomePage() {
                   <h2 className="section-head text-[26px]">Featured Projects</h2>
                   <ArrowRight className="h-5 w-5 text-primary" />
                 </div>
-                <p className="text-sm text-muted-foreground">Three enterprise platforms under NDA, two client systems, one personal R&amp;D build</p>
+                <p className="text-sm text-muted-foreground">Problem, Action, Result — two enterprise systems I owned the frontend of, plus my own R&D wallet build</p>
               </div>
               <a href="#case-studies" className="link-group text-sm font-semibold text-primary">
-                View All Projects <ArrowRight className="h-4 w-4" />
+                Read the Case Studies <ArrowRight className="h-4 w-4" />
               </a>
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
-              {caseStudies.map((cs) => (
+            <article className="card-lift soft-card animate-on-scroll overflow-hidden">
+              <div className="grid lg:grid-cols-2">
+                <a href={`#case-${heroProject.index}`}
+                   aria-label={`Open the ${heroProject.cardTitle} case study`}
+                   className="img-reveal group relative block border-b border-border lg:border-b-0 lg:border-r">
+                  {heroProject.image
+                    ? <Image src={heroProject.image} alt={`${heroProject.cardTitle} — project screenshot`} width={900} height={620}
+                             className="aspect-16/10 h-full w-full object-cover" />
+                    : <div className="flex aspect-16/10 h-full w-full items-center justify-center bg-muted"><Layers className="h-14 w-14 text-muted-foreground/40" /></div>}
+                </a>
+                <div className="flex flex-col p-6">
+                  <p className="cs-top-label">{heroProject.topLabel}</p>
+                  <h3 className="mt-2.5 text-[26px] font-extrabold leading-tight tracking-tight md:text-3xl">{heroProject.cardTitle}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{heroProject.cardSubtitle}</p>
+                  <div className="mt-3.5 flex flex-wrap gap-2">
+                    {heroProject.tech.slice(0, 4).map((t) => (<span key={t} className="tag-pill">{t}</span>))}
+                  </div>
+                  <div className="mt-auto flex flex-wrap items-center gap-2 pt-5">
+                    <Button asChild size="sm" variant="outline"
+                            className="btn-pill h-10 border-border bg-card px-4 text-[13px] hover:bg-secondary">
+                      <a href="#contact">
+                        <Mail className="mr-1.5 h-4 w-4" />
+                        {heroProject.cardCtaLabel ?? heroProject.ctaLabel}
+                      </a>
+                    </Button>
+                    <Button asChild size="sm" variant="ghost" className="h-10 px-3 text-[13px] text-muted-foreground hover:bg-secondary hover:text-foreground">
+                      <a href={`#case-${heroProject.index}`}>Case Study <ArrowRight className="ml-1.5 h-4 w-4" /></a>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
+              {supportingProjects.map((cs) => (
                 <article key={cs.index}
-                         className="card-lift soft-card flex flex-col overflow-hidden lg:col-span-2">
+                         className="card-lift soft-card flex flex-col overflow-hidden lg:col-span-3">
                   <a href={`#case-${cs.index}`}
                      aria-label={`Open the ${cs.cardTitle} case study`}
                      className="img-reveal group relative block rounded-none border-0">
-                    <Image src={cs.image || "/dashboard.png"} alt={`${cs.cardTitle} — project screenshot`} width={600} height={400}
-                           className="aspect-16/10 w-full object-cover" />
+                    {cs.image
+                      ? <Image src={cs.image} alt={`${cs.cardTitle} — project screenshot`} width={600} height={400}
+                               className="aspect-16/10 w-full object-cover" />
+                      : <div className="flex aspect-16/10 w-full items-center justify-center bg-muted"><Layers className="h-10 w-10 text-muted-foreground/40" /></div>}
                   </a>
                   <div className="flex flex-1 flex-col p-4">
                     <p className="cs-top-label">{cs.topLabel}</p>
@@ -782,13 +753,40 @@ export default function HomePage() {
                           {cs.cardCtaLabel ?? cs.ctaLabel}
                         </a>
                       </Button>
-                      {!cs.ctaOnly && (
-                        <Button asChild size="sm" variant="ghost" className="h-9 px-2.5 text-xs text-muted-foreground hover:bg-secondary hover:text-foreground">
-                          <a href={`#case-${cs.index}`}>Case Study <ArrowRight className="ml-1 h-3.5 w-3.5" /></a>
-                        </Button>
-                      )}
+                      <Button asChild size="sm" variant="ghost" className="h-9 px-2.5 text-xs text-muted-foreground hover:bg-secondary hover:text-foreground">
+                        <a href={`#case-${cs.index}`}>Case Study <ArrowRight className="ml-1 h-3.5 w-3.5" /></a>
+                      </Button>
                     </div>
                   </div>
+                </article>
+              ))}
+            </div>
+
+            <p className="mt-8 mb-4 text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">Also shipped</p>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
+              {caseStudies.filter((cs) => cs.ctaOnly).map((cs) => (
+                <article key={cs.index} className="card-lift soft-card flex flex-col p-4 lg:col-span-2">
+                  <p className="cs-top-label">{cs.topLabel}</p>
+                  <div className="mt-2 flex items-start gap-2">
+                    <Layers className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
+                    <p className="text-sm font-bold leading-snug">{cs.cardTitle}</p>
+                  </div>
+                  <p className="mt-1 text-xs text-muted-foreground">{cs.cardSubtitle}</p>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {cs.tech.slice(0, 3).map((t) => (<span key={t} className="tag-pill">{t}</span>))}
+                  </div>
+                  <div className="mt-auto pt-4">
+                    <Button asChild size="sm" variant="outline"
+                            className="btn-pill h-9 border-border bg-card px-3 text-xs hover:bg-secondary">
+                      <a href="#contact">
+                        <Mail className="mr-1 h-3.5 w-3.5" />
+                        {cs.cardCtaLabel ?? cs.ctaLabel}
+                      </a>
+                    </Button>
+                  </div>
+                  <p className="mt-3 flex items-start gap-1.5 border-t border-border pt-3 text-[10px] leading-relaxed text-muted-foreground">
+                    <Lock className="mt-0.5 h-3 w-3 shrink-0" /> {cs.codeNote}
+                  </p>
                 </article>
               ))}
             </div>
@@ -796,37 +794,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= EMPLOYMENT HISTORY ================= */}
-      <section id="employment-history" className="scroll-mt-24 border-t border-border py-14">
-        <div className="shell">
-          <p className="animate-on-scroll mb-5 text-sm font-bold text-muted-foreground">Employment History</p>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {employmentHistory.map(({ period, role, note }) => (
-              <div key={period} className="animate-on-scroll card-lift soft-card p-5">
-                <span className="icon-badge mb-4"><Briefcase className="h-5 w-5" /></span>
-                <h3 className="text-[15px] font-bold leading-snug">{role}</h3>
-                <p className="mt-1 text-[11px] font-semibold text-primary">{period}</p>
-                <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{note}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ================= CASE STUDIES (detail) ================= */}
-      <section id="case-studies" className="scroll-mt-24 border-t border-border bg-secondary/40 py-20 md:py-24">
+      <section id="case-studies" className="scroll-mt-24 border-t border-border bg-secondary/40 py-16 md:py-20">
         <div className="shell">
           <div className="animate-on-scroll mb-12 max-w-2xl">
             <p className="kicker mb-4">Case Studies</p>
             <h2 className="section-head text-[clamp(1.8rem,3.4vw,2.6rem)]">Selected work, in depth.</h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              6 projects: 3 employer platforms under NDA, 2 client systems, and 1 personal R&amp;D build.
-              Each one is the problem, what I actually changed, and the result — plus what didn't work the first time.
+            <p className="cs-body mt-3 text-muted-foreground">
+              Three systems, in depth: the problem, what I actually changed, and the result — plus what didn't work
+              the first time. The supporting work is listed in Featured Projects.
             </p>
           </div>
 
           <div className="space-y-10">
-            {caseStudies.map((cs) => (
+            {caseStudies.filter((cs) => !cs.ctaOnly).map((cs) => (
               <article key={cs.title} id={`case-${cs.index}`} className="animate-on-scroll cs-card scroll-mt-24">
                 <div className="grid gap-8 p-5 md:p-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
                   <div className="min-w-0">
@@ -865,21 +846,43 @@ export default function HomePage() {
                     <p className="cs-top-label mb-2.5">{cs.topLabel}</p>
                     <h3 className="text-xl font-extrabold leading-snug tracking-tight md:text-2xl">{cs.title}</h3>
                     <p className="mt-1.5 text-sm font-semibold text-primary">{cs.client}</p>
-                    <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{cs.summary}</p>
+                    <p className="cs-label mt-5 mb-2"><AlertTriangle className="h-3.5 w-3.5" /> Problem</p>
+                    <p className="cs-body mt-0 text-muted-foreground">{cs.summary}</p>
 
                     <CaseStudyTabs
                       tabs={[
                         {
+                          value: "did",
+                          label: "Action",
+                          anchorId: `cs-${cs.index}-did`,
+                          children: (
+                            <>
+                              <p className="cs-label mb-3"><CheckCircle2 className="h-3.5 w-3.5" /> Action — what I changed</p>
+                              <ul className="space-y-3">
+                                {cs.contributions.map((c) => (
+                                  <li key={c} className="cs-contrib">
+                                    <span className="cs-contrib-icon"><CheckCircle2 className="h-3.5 w-3.5" /></span>
+                                    <span className="cs-body text-muted-foreground">{c}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                              <div className="mt-4 flex flex-wrap gap-1.5">
+                                {cs.tech.map((t) => (<span key={t} className="tag-pill">{t}</span>))}
+                              </div>
+                            </>
+                          ),
+                        },
+                        {
                           value: "impact",
-                          label: "Impact",
+                          label: "Result",
                           anchorId: `cs-${cs.index}-impact`,
                           children: (
                             <>
-                              <p className="cs-label mb-3"><TrendingUp className="h-3.5 w-3.5" /> Measured outcome</p>
+                              <p className="cs-label mb-3"><TrendingUp className="h-3.5 w-3.5" /> Result — measured outcome</p>
                               {cs.impact && (
-                                <div className="mb-4 space-y-2.5">
+                                <div className="mb-4 space-y-3">
                                   {cs.impact.map((line) => (
-                                    <p key={line} className="text-sm leading-relaxed text-muted-foreground">{line}</p>
+                                    <p key={line} className="cs-body text-muted-foreground">{line}</p>
                                   ))}
                                 </div>
                               )}
@@ -890,27 +893,6 @@ export default function HomePage() {
                                     <div className="metric-label">{m.label}</div>
                                   </div>
                                 ))}
-                              </div>
-                            </>
-                          ),
-                        },
-                        {
-                          value: "did",
-                          label: "What I Did",
-                          anchorId: `cs-${cs.index}-did`,
-                          children: (
-                            <>
-                              <p className="cs-label mb-3"><CheckCircle2 className="h-3.5 w-3.5" /> What I did</p>
-                              <ul className="space-y-2.5">
-                                {cs.contributions.map((c) => (
-                                  <li key={c} className="cs-contrib">
-                                    <span className="cs-contrib-icon"><CheckCircle2 className="h-3.5 w-3.5" /></span>
-                                    <span className="text-sm leading-relaxed text-muted-foreground">{c}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                              <div className="mt-4 flex flex-wrap gap-1.5">
-                                {cs.tech.map((t) => (<span key={t} className="tag-pill">{t}</span>))}
                               </div>
                             </>
                           ),
@@ -927,7 +909,7 @@ export default function HomePage() {
                               </div>
                               <div>
                                 <p className="cs-label mb-3"><Code2 className="h-3.5 w-3.5" /> Engineering Notes — honest version</p>
-                                <p className="rounded-xl border border-border bg-card p-5 text-sm leading-relaxed text-muted-foreground">{cs.archNote}</p>
+                                <p className="cs-body rounded-xl border border-border bg-card p-5 text-muted-foreground">{cs.archNote}</p>
                               </div>
                             </div>
                           ),
@@ -942,7 +924,7 @@ export default function HomePage() {
                                 <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#b45309] dark:text-[#fbbf24]" />
                                 <div>
                                   <p className="text-xs font-bold text-[#b45309] dark:text-[#fbbf24]">What Didn't Work</p>
-                                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{cs.didntWork}</p>
+                                  <p className="cs-body mt-2 text-muted-foreground">{cs.didntWork}</p>
                                 </div>
                               </div>
                               <p className="mt-3 text-[11px] leading-relaxed text-muted-foreground">
@@ -969,18 +951,18 @@ export default function HomePage() {
       </section>
 
       {/* ================= TECH STACK ================= */}
-      <section id="tech-stack" className="scroll-mt-24 py-20 md:py-24">
+      <section id="tech-stack" className="scroll-mt-24 py-16 md:py-20">
         <div className="shell">
           <div className="animate-on-scroll mb-10 max-w-2xl">
-            <p className="kicker mb-4">Tech Stack</p>
-            <h2 className="section-head">What I actually use, and where</h2>
+            <p className="kicker mb-4">Skills</p>
+            <h2 className="section-head">What I use, and where it ran</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Hover any technology for the project it came from. Nothing here is a learning list — each one shipped
               to real users.
             </p>
           </div>
 
-          <div className="grid animate-on-scroll gap-5 md:grid-cols-2">
+          <div className="grid animate-on-scroll gap-5 md:grid-cols-3">
             {techGroups.map(({ icon: Icon, title, items }) => (
               <div key={title} className="card-lift soft-card p-5 md:p-6">
                 <div className="mb-4 flex items-center gap-3">
@@ -997,37 +979,23 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-
-          <div className="mt-10">
-            <p className="animate-on-scroll mb-5 text-sm font-bold text-muted-foreground">What I bring to the team</p>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {skillGroups.map(({ icon: Icon, title, items }) => (
-                <div key={title} className="animate-on-scroll card-lift soft-card p-5">
-                  <span className="icon-badge mb-4"><Icon className="h-5 w-5" /></span>
-                  <h3 className="text-[15px] font-bold">{title}</h3>
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {items.map((item) => (<span key={item} className="skill-chip">{item}</span>))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
       {/* ================= HOW I WORK ================= */}
-      <section id="how-i-work" className="scroll-mt-24 border-y border-border bg-secondary/40 py-20 md:py-24">
+      <section id="how-i-work" className="scroll-mt-24 border-y border-border bg-secondary/40 py-16 md:py-20">
         <div className="shell">
           <div className="animate-on-scroll mb-10 max-w-2xl">
-            <p className="kicker mb-4">How I Work</p>
+            <p className="kicker mb-4">How I Work In Your Team</p>
             <h2 className="section-head">Three steps, no big-bang rewrite</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              The same loop on every engagement, whether it is a national logistics map or a compliance portal.
+              The same loop on every system I have owned, whether it is a national logistics map or a compliance
+              portal — and the goal every time is a team that keeps shipping after I leave.
             </p>
           </div>
 
           <ol className="grid gap-5 md:grid-cols-3">
-            {howIWork.map(({ icon: Icon, title, weeks, body, outcome }, i) => (
+            {howIWork.map(({ title, weeks, body }, i) => (
               <li key={title} className="animate-on-scroll card-lift soft-card relative p-5 md:p-6">
                 <div className="flex items-center gap-3">
                   <span className="step-num">{String(i + 1).padStart(2, "0")}</span>
@@ -1037,9 +1005,6 @@ export default function HomePage() {
                   </div>
                 </div>
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{body}</p>
-                <p className="mt-4 flex items-center gap-2 border-t border-border pt-3 text-[11px] font-semibold text-muted-foreground">
-                  <Icon className="h-3.5 w-3.5 text-primary" /> {outcome}
-                </p>
               </li>
             ))}
           </ol>
@@ -1063,20 +1028,22 @@ export default function HomePage() {
               </figure>
             ))}
           </div>
+          <p className="mt-6 text-center text-[11px] text-muted-foreground">More references available on request.</p>
         </div>
       </section>
 
       {/* ================= CONTACT ================= */}
-      <section id="contact" className="scroll-mt-24 py-20 md:py-24">
+      <section id="contact" className="scroll-mt-24 py-16 md:py-20">
         <div className="shell">
-          <div className="animate-on-scroll soft-card relative overflow-hidden px-6 py-10 md:px-10 md:py-12">
+          <div className="contact-card animate-on-scroll relative overflow-hidden px-6 py-10 md:px-10 md:py-12">
             <span className="hero-slash opacity-60" aria-hidden />
             <div className="relative grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
               <div>
                 <p className="kicker mb-4">Contact</p>
-                <h2 className="section-head text-[clamp(1.8rem,3.6vw,2.6rem)]">Let's fix what's slow, heavy, or confusing</h2>
-                <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-muted-foreground">
-                  Open to Senior Frontend &amp; Full-Stack roles and short performance engagements — remote, worldwide.
+                <h2 className="section-head text-[clamp(1.8rem,3.6vw,2.6rem)] font-black text-foreground">Let's fix what's slow, heavy, or confusing</h2>
+                <p className="mt-4 max-w-lg text-[15px] font-medium leading-relaxed text-foreground">
+                  Open to Senior Frontend roles — full-time or contract, remote or hybrid. Available immediately,
+                  ready for a technical assessment, and ready to join on your start date.
                   I usually reply within a day.
                 </p>
 
@@ -1085,28 +1052,28 @@ export default function HomePage() {
                     <a href={`mailto:${contact.email}`}><Mail className="mr-2 h-4 w-4" />Email me</a>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="btn-pill border-border bg-card px-6 hover:bg-secondary">
-                    <a href={contact.calendly} target="_blank" rel="noreferrer"><CalendarDays className="mr-2 h-4 w-4" />Book a Call</a>
+                    <a href={contact.whatsapp} target="_blank" rel="noreferrer"><MessageCircle className="mr-2 h-4 w-4" />WhatsApp Saya</a>
                   </Button>
-                  <Button size="lg" variant="outline" onClick={handleDownload} className="btn-pill border-border bg-card px-6 hover:bg-secondary">
-                    <Download className="mr-2 h-4 w-4" />Download CV
-                  </Button>
-                  <Button asChild size="lg" variant="ghost" className="btn-pill px-4 text-muted-foreground hover:bg-secondary hover:text-foreground">
+                  <Button asChild size="lg" variant="ghost" className="btn-pill px-4 text-foreground/75 hover:bg-secondary hover:text-foreground">
                     <a href={contact.linkedin} target="_blank" rel="noreferrer"><Linkedin className="mr-2 h-4 w-4" />LinkedIn</a>
                   </Button>
+                  <Button asChild size="lg" variant="ghost" className="btn-pill px-4 text-foreground/75 hover:bg-secondary hover:text-foreground">
+                    <a href={contact.github} target="_blank" rel="noreferrer"><Github className="mr-2 h-4 w-4" />GitHub</a>
+                  </Button>
                 </div>
 
-                <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
-                  <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" />Indonesia (WIB)</span>
-                  <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4 text-primary" />Available for Remote</span>
-                  <span className="inline-flex items-center gap-2"><Briefcase className="h-4 w-4 text-primary" />13+ years experience</span>
+                <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-foreground/70">
+                  <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" />Bandung, Indonesia (WIB)</span>
+                  <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4 text-primary" />Remote / Hybrid</span>
+                  <span className="inline-flex items-center gap-2"><Briefcase className="h-4 w-4 text-primary" />Available Immediately</span>
                 </div>
 
-                <p className="mt-6 text-[11px] leading-relaxed text-muted-foreground">
-                  Prefer email? Use the form above — it sends straight to my inbox, no mail app needed.
+                <p className="mt-6 text-[11px] leading-relaxed text-foreground/60">
+                  Prefer WhatsApp or email? Both buttons above reach me directly — the form sends straight to my inbox.
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-border bg-muted/40 p-5 md:p-6">
+              <div className="rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6">
                 <ContactForm />
               </div>
             </div>
@@ -1118,12 +1085,16 @@ export default function HomePage() {
       <footer className="border-t border-border bg-card">
         <div className="shell border-b border-border py-10">
           <p className="kicker mb-3">Let&apos;s Talk</p>
-          <p className="text-sm font-bold">Bandung, Indonesia • Open to Remote • Available Now</p>
+          <p className="text-sm font-bold">Bandung, Indonesia • Remote / Hybrid • Available Immediately</p>
 
           <div className="mt-5 flex flex-wrap gap-2.5">
             <Button size="sm" variant="outline" onClick={handleDownload}
                     className="btn-pill h-9 border-border bg-card px-4 text-xs hover:bg-secondary">
               <Download className="mr-1.5 h-3.5 w-3.5" />Download CV PDF
+            </Button>
+            <Button asChild size="sm" variant="outline"
+                    className="btn-pill h-9 border-border bg-card px-4 text-xs hover:bg-secondary">
+              <a href={contact.whatsapp} target="_blank" rel="noreferrer"><MessageCircle className="mr-1.5 h-3.5 w-3.5" />WhatsApp Saya</a>
             </Button>
             <Button asChild size="sm" variant="outline"
                     className="btn-pill h-9 border-border bg-card px-4 text-xs hover:bg-secondary">
@@ -1141,7 +1112,10 @@ export default function HomePage() {
 
           <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
             Open to Senior Frontend / Full-Stack roles — Remote Full-time &amp; Contract. Available Immediately.
-            Client work shown as sanitized demos due to NDA. Architecture walkthrough available in interview.
+            Ready for assessment, ready to join on your start date.
+          </p>
+          <p className="mt-2 max-w-xl text-xs leading-relaxed text-muted-foreground">
+            Code private under NDA — Demo &amp; walkthrough available in interview.
           </p>
         </div>
 
@@ -1150,7 +1124,7 @@ export default function HomePage() {
             <span className="logo-mark h-9 w-9 text-xs">DK</span>
             <span className="leading-tight">
               <span className="block text-sm font-bold">Dedi Kusniadi</span>
-              <span className="block text-xs text-muted-foreground">Senior Frontend &amp; Full-Stack Developer</span>
+              <span className="block text-xs text-muted-foreground">Senior Frontend Engineer • Angular / React / Next.js</span>
             </span>
           </a>
 

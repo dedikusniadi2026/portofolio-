@@ -22,7 +22,7 @@ export function FloatingHireButton() {
       }`}
     >
       <a href="mailto:dedikusniadi.bisnis@gmail.com">
-        <Button size="lg" className="rounded-full shadow-lg transition-transform hover:scale-105">
+        <Button size="lg" className="rounded-full shadow-lg transition-transform hover:scale-105 bg-primary text-primary-foreground hover:bg-primary/90">
           <MessageCircle className="mr-2 h-4 w-4" />
           Hire Me
         </Button>

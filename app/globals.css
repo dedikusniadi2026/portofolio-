@@ -309,6 +309,19 @@
   box-shadow: var(--shadow-soft);
 }
 
+/* Contact surface — deeper light-blue wash for contrast */
+.contact-card {
+  border: 1px solid color-mix(in srgb, var(--primary) 28%, var(--border));
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(90% 70% at 85% 0%, color-mix(in srgb, var(--primary) 16%, transparent), transparent 70%),
+    linear-gradient(165deg,
+      color-mix(in srgb, var(--primary) 13%, var(--card)) 0%,
+      color-mix(in srgb, var(--primary) 7%, var(--card)) 60%,
+      color-mix(in srgb, var(--primary) 11%, var(--card)) 100%);
+  box-shadow: var(--shadow-soft);
+}
+
 /* Hero canvas: soft blue wash */
 .hero-canvas {
   position: relative;
@@ -346,14 +359,20 @@
   background: rgb(37 99 235 / 0.10);
 }
 
-.dot-grid {
-  position: absolute;
-  width: 190px;
-  height: 150px;
-  background-image: radial-gradient(currentColor 1.6px, transparent 1.7px);
-  background-size: 16px 16px;
-  color: rgb(37 99 235 / 0.32);
-  pointer-events: none;
+/* Hero portrait — matted frame, no diagonal band behind it */
+.portrait-matte {
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--card);
+  padding: 0.5rem;
+  box-shadow: 0 24px 60px -32px rgb(11 27 58 / 0.35), 0 2px 6px -2px rgb(11 27 58 / 0.08);
+}
+
+.portrait-inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary) 9%, var(--card)) 0%, var(--muted) 100%);
 }
 
 /* Nav backdrop when scrolled */
@@ -802,6 +821,12 @@
   color: var(--primary);
 }
 
+/* Case study body copy — 16px on a 1.7 line, roomy rather than newspaper-tight */
+.cs-body {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
 .cs-metric {
   background: linear-gradient(160deg, color-mix(in srgb, var(--primary) 7%, var(--card)), var(--muted));
   text-align: center;
@@ -826,7 +851,7 @@
   justify-content: center;
   height: 1.4rem;
   width: 1.4rem;
-  margin-top: 0.1rem;
+  margin-top: 0.2rem;
   flex-shrink: 0;
   border-radius: 999px;
   background: color-mix(in srgb, var(--primary) 12%, transparent);
@@ -877,20 +902,21 @@
    CONVERSION PASS — trust badges, tabs, steps, tooltips
    ============================================================ */
 
-/* Hero trust badges */
-.trust-badge {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.45rem;
+/* Hero impact stats — three quiet cards, one clear number each */
+.hero-stat {
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-lg);
   background: var(--card);
-  padding: 0.45rem 1rem;
-  font-size: 0.8rem;
-  line-height: 1.25;
-  font-weight: 600;
-  color: var(--muted-foreground);
-  box-shadow: 0 10px 22px -18px rgb(11 27 58 / 0.45);
+  padding: 0.9rem 1.05rem;
+  box-shadow: 0 12px 26px -22px rgb(11 27 58 / 0.5);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.hero-stat:hover {
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  transform: translateY(-2px);
 }
 
 /* Trusted-by wordmarks (text only — client logos stay private) */
@@ -982,46 +1008,53 @@
   font-weight: 800;
 }
 
-/* Pure-CSS tooltip used on the tech stack chips */
-.tip {
+/* Pure-CSS tooltip used on the tech stack chips — note strip under the card */
+#tech-stack .card-lift {
   position: relative;
+}
+
+.tip {
   cursor: help;
 }
 
 .tip::after {
   content: attr(data-tip);
   position: absolute;
-  bottom: calc(100% + 0.55rem);
-  left: 50%;
-  transform: translate(-50%, 4px);
-  width: max-content;
-  max-width: min(16rem, 78vw);
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
   border-radius: var(--radius-md);
   background: var(--foreground);
   color: var(--background);
-  padding: 0.5rem 0.65rem;
-  font-size: 0.68rem;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.72rem;
   font-weight: 500;
-  line-height: 1.4;
+  line-height: 1.5;
   text-transform: none;
   letter-spacing: normal;
   white-space: normal;
   text-align: left;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition: opacity 0.18s ease;
   z-index: 30;
+  box-shadow: 0 14px 34px -18px rgb(11 27 58 / 0.6);
 }
 
 .tip:hover::after,
 .tip:focus-visible::after {
   opacity: 1;
-  transform: translate(-50%, 0);
+}
+
+/* touch devices have no hover — keep the strip off to avoid stuck states */
+@media (max-width: 767px) {
+  .tip::after {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .tip::after {
-    transform: translate(-50%, 0);
     transition: opacity 0.01ms;
   }
 }
